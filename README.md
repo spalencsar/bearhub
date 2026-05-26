@@ -35,9 +35,9 @@ Bearhub is currently focused on:
 
 Large architectural changes or feature redesigns are not the immediate priority.
 
-Backends outside the Arch-focused scope remain in the codebase for now, but they are not the primary maintenance target of this fork.
+Debian / Apt support is intentionally removed from Bearhub. Other non-Arch backends that remain in the codebase are secondary to the Arch-focused maintenance target.
 
-**bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). It currently supports the following formats: AppImage, Debian and Arch Linux packages (including AUR), Flatpak, Snap and Web applications.
+**bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, Snap, AppImage and Web applications.
 
 Key features
 - A management panel where you can: search, install, uninstall, upgrade, downgrade and launch your applications
@@ -54,7 +54,6 @@ Key features
 ## Index
 1. [Installation](#installation)
     - [AppImage](#inst_appimage)
-    - [Ubuntu 20.04 based distros (Linux Mint, PopOS, ...)](#inst_ubuntu)
     - [Arch-based distros](#inst_arch)
 2. [Isolated installation](#inst_iso)
 3. [Desktop entry / menu shortcut](#desk_entry)
@@ -63,7 +62,6 @@ Key features
 6. [Supported types](#types)
     - [AppImage](#type_appimage)
     - [Arch packages/AUR](#type_arch)
-    - [Debian](#type_deb)
     - [Flatpak](#type_flatpak)
     - [Snap](#type_snap)
     - [Native Web applications](#type_web)
@@ -101,52 +99,6 @@ Key features
 <p align="center">
   <img src="https://raw.githubusercontent.com/vinifmor/bauh-files/master/pictures/releases/0.10.0/appim_self.png">
 </p>
-
-
-#### <a name="inst_ubuntu">Ubuntu 20.04 based distros (Linux Mint, PopOS, ...)</a>
-
-##### Required dependencies
-
-`sudo apt-get install python3 python3-pip python3-yaml python3-dateutil python3-pyqt5 python3-packaging python3-requests`
-
-##### Installing bauh
-
-`sudo pip3 install bauh`
-
-
-##### Optional dependencies (they should be installed with apt-get/apt)
-
-- `aptitude`: Debian package management
-- `timeshift`: system backup
-- `aria2`: multi-threaded downloads
-- `axel`: multi-threaded downloads alternative
-- `libappindicator3-1`: tray-mode
-- `sqlite3`, `fuse`: AppImage support
-- `flatpak`: Flatpaks support
-- `snapd`: Snaps support
-- `python3-lxml`, `python3-bs4`: Web apps support
-- `python3-venv`: [isolated installation](#inst_iso)
-- `xdg-utils`: to open URLs in the browsers (`xdg-open`)
-
-##### Updating bauh
-
-Method 1
-
-`sudo pip3 install bauh --upgrade`
-
-Method 2
-
-```
-sudo pip3 uninstall bauh
-sudo pip3 install bauh
-```
-
-##### Uninstalling bauh
-
-```
-bauh --reset  # removes cache and configurations files from HOME
-sudo pip3 uninstall bauh
-```
 
 
 #### <a name="inst_arch">Arch-based distros</a>
@@ -341,24 +293,6 @@ suggestions_exp: 24  # it defines the period (in hours) in which the suggestions
 ```
 - Cached package suggestions: `~/.cache/bauh/arch/suggestions.txt` (or `/var/cache/bauh/arch/suggestions.yml` for **root**)
 
-##### <a name="type_deb">Debian packages<a>
-- Basic actions supported: **search**, **install**, **uninstall**, **upgrade**
-- Custom actions supported:
-   - **synchronize packages**: synchronize the available packages on the repository (`aptitude update`)
-   - **index applications**: maps runnable installed packages (automatically done during initialization)
-   - **software sources**: launches the application responsible for managing software sources (at the moment only `software-properties-gtk` is supported) 
-- Custom package actions supported: 
-  - **purge**: removes the packages and all related configuration files
-- Files:
-  - runnable applications index: `~/.cache/bauh/debian/apps_idx.json` (or `/var/cache/bauh/debian/apps_idx.json` for **root**)
-  - cached package suggestions: `~/.cache/bauh/debian/suggestions.txt` (or `/var/cache/bauh/debian/suggestions.txt` for **root**)
-  - configuration: `~/.config/bauh/debian.yml` or `/etc/bauh/debian.yml`
-    - `index_apps.exp`: time period (**in minutes**) in which the installed applications cache is considered up-to-date during startup (default: `1440` -> 24 hours)
-    - `sync_pkgs.time`: time period (**in minutes**) in which the packages synchronization must be done on startup (default: `1440` -> 24 hours)
-    - `suggestions.exp`: it defines the period (**in hours**) in which the suggestions stored in disc will be considered up to date. Use 0 if you always want to update them.
-    - `pkg_sources.app`: it defines the application for managing the software sources. A `null` value detects one of the supported applications automatically.
-    - `remove.purge`: if the package configurations should be removed during the uninstallation process (purge). Default: false.
-
 ##### <a name="type_flatpak">Flatpak</a>
 
 - Applications with ignored updates are defined at `~/.config/bauh/flatpak/updates_ignored.txt`
@@ -517,7 +451,6 @@ appimage
 - The software suggestions are download from [bauh-files](https://github.com/vinifmor/bauh-files) by default
   - [appimage](https://github.com/vinifmor/bauh-files/blob/master/appimage/suggestions.txt)
   - [arch](https://github.com/vinifmor/bauh-files/blob/master/appimage/suggestions.txt)
-  - [debian](https://github.com/vinifmor/bauh-files/blob/master/debian/suggestions_v1.txt)
   - [flatpak](https://github.com/vinifmor/bauh-files/blob/master/flatpak/suggestions.txt)
   - [snap](https://github.com/vinifmor/bauh-files/blob/master/snap/suggestions.txt)
   - [web](https://github.com/vinifmor/bauh-files/blob/master/web/env/v2/suggestions.yml)
