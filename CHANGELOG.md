@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.1] 2026-05-26
+### Fork
+- Bearhub established as an Arch-focused fork of bauh
+- project metadata, release metadata, and README updated for the new fork identity
+
+### Changed
+- Debian / Apt support removed from the maintained scope and codebase
+- maintained focus clarified as:
+  - Arch Linux and AUR
+  - Flatpak, Snap, AppImage, and Web applications on Arch-based systems
+
+### Fixes
+- General
+  - restored startup compatibility with Python 3.14+
+  - replaced deprecated runtime patterns that would break on newer Python versions
+  - removed startup-time warnings caused by outdated regex and datetime usage
+- Flatpak
+  - cleaned up subprocess handling that triggered resource warnings during startup
+
 ## [0.10.7] 2024-01-10
 ### Fixes
 - AppImage
