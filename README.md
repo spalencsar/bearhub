@@ -8,6 +8,30 @@ The original project was created by Vinicius Moreira. This fork continues from t
 
 At the moment, parts of the documentation below still refer to the original `bauh` command name, paths, package names, and screenshots. Those references are historical and will be updated incrementally as the fork evolves.
 
+## Status
+
+Bearhub is an active community-maintained fork of `bauh`.
+
+Current focus:
+- keeping the application working on current Arch Linux
+- maintaining compatibility with modern Python versions
+- stabilizing the existing feature set before larger changes
+
+## Why This Fork Exists
+
+The original `bauh` project is the foundation of this codebase and all original authorship remains credited.
+
+Bearhub exists to continue maintenance and compatibility work for users on current Linux systems, especially where the original project is no longer updated quickly enough for platform changes.
+
+## Current Scope
+
+Bearhub is currently focused on:
+- compatibility and bug fixes
+- packaging and runtime maintenance
+- preserving the existing user experience where possible
+
+Large architectural changes or feature redesigns are not the immediate priority.
+
 **bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). It currently supports the following formats: AppImage, Debian and Arch Linux packages (including AUR), Flatpak, Snap and Web applications.
 
 Key features
