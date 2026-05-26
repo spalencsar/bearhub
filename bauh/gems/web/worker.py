@@ -1,7 +1,7 @@
 import logging
 import time
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from threading import Thread
 from typing import Optional
 
@@ -53,7 +53,7 @@ class SuggestionsLoader(Thread):
                 self.suggestions = self.manager.read_cached(check_file=False)
             else:
                 try:
-                    timestamp = datetime.utcnow().timestamp()
+                    timestamp = datetime.now(timezone.utc).timestamp()
                     self.suggestions = self.manager.download()
 
                     if self.suggestions:

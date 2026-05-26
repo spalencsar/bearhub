@@ -1,6 +1,6 @@
 import time
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logging import Logger
 from threading import Thread
 from typing import Optional, Set
@@ -149,14 +149,14 @@ class SynchronizePackages(Thread):
             return True
 
         try:
-            last_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            last_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             logger.error(f'Could not parse the packages synchronization timestamp: {timestamp_str} '
                          f'({PACKAGE_SYNC_TIMESTAMP_FILE})')
             traceback.print_exc()
             return True
 
-        expired = last_timestamp + timedelta(minutes=period) <= datetime.utcnow()
+        expired = last_timestamp + timedelta(minutes=period) <= datetime.now(timezone.utc)
 
         if expired:
             logger.info("Packages synchronization is outdated")
@@ -176,7 +176,7 @@ class SynchronizePackages(Thread):
         self._taskman.update_progress(self._id, 99, None)
 
         if updated:
-            index_timestamp = datetime.utcnow().timestamp()
+            index_timestamp = datetime.now(timezone.utc).timestamp()
             finish_msg = None
             try:
                 with open(PACKAGE_SYNC_TIMESTAMP_FILE, 'w+') as f:

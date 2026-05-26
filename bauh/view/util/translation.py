@@ -50,7 +50,7 @@ def get_locale_keys(key: str = None, locale_dir: str = resource.get_path('locale
 
     if key is None:
         try:
-            current_locale = locale.getdefaultlocale()
+            current_locale = locale.getlocale()
 
             if current_locale is None or current_locale[0] is None:
                 current_locale = ('en', 'UTF-8')

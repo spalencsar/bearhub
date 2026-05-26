@@ -6,7 +6,7 @@ import re
 import shutil
 import time
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Thread
 from typing import Optional
@@ -71,8 +71,8 @@ class AURIndexUpdater(Thread):
             timestamp_str = f.read()
 
         try:
-            index_timestamp = datetime.fromtimestamp(float(timestamp_str))
-            return (index_timestamp + timedelta(hours=exp_hours)) <= datetime.utcnow()
+            index_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
+            return (index_timestamp + timedelta(hours=exp_hours)) <= datetime.now(timezone.utc)
         except Exception:
             traceback.print_exc()
             return True
@@ -81,7 +81,7 @@ class AURIndexUpdater(Thread):
         self.logger.info('Indexing AUR packages')
         self.taskman.update_progress(self.task_id, 5, self.i18n['arch.task.aur.index.substatus.download'])
         try:
-            index_ts = datetime.utcnow().timestamp()
+            index_ts = datetime.now(timezone.utc).timestamp()
             res = self.http_client.get(URL_INDEX)
 
             if res and res.text:

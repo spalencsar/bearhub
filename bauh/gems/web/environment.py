@@ -4,7 +4,7 @@ import os
 import shutil
 import tarfile
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Thread
 from typing import Dict, List, Optional
@@ -245,12 +245,12 @@ class EnvironmentUpdater:
             env_ts_str = f.read()
 
         try:
-            env_timestamp = datetime.fromtimestamp(float(env_ts_str))
+            env_timestamp = datetime.fromtimestamp(float(env_ts_str), tz=timezone.utc)
         except Exception:
             self.logger.error(f"Could not parse environment settings file timestamp: {env_ts_str}")
             return True
 
-        expired = env_timestamp + timedelta(hours=settings_exp) <= datetime.utcnow()
+        expired = env_timestamp + timedelta(hours=settings_exp) <= datetime.now(timezone.utc)
 
         if expired:
             self.logger.info("Environment settings file has expired. It should be re-downloaded")
@@ -314,7 +314,7 @@ class EnvironmentUpdater:
                 self._finish_task_download_settings()
                 return
 
-            cache_timestamp = datetime.utcnow().timestamp()
+            cache_timestamp = datetime.now(timezone.utc).timestamp()
             with open(ENVIRONMENT_SETTINGS_CACHED_FILE, 'w+') as f:
                 f.write(yaml.safe_dump(settings))
 

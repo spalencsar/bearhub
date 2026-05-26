@@ -1,6 +1,6 @@
 import os
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logging import Logger
 from pathlib import Path
 from typing import Optional
@@ -68,12 +68,12 @@ class SuggestionsManager:
             timestamp_str = f.read()
 
         try:
-            sugs_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            sugs_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self.logger.error(f"Could not parse the cached suggestions file timestamp: {timestamp_str}")
             return True
 
-        expired = sugs_timestamp + timedelta(days=exp) <= datetime.utcnow()
+        expired = sugs_timestamp + timedelta(days=exp) <= datetime.now(timezone.utc)
 
         if expired:
             self.logger.info("Cached suggestions file has expired.")

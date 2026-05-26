@@ -1,6 +1,6 @@
 import os
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logging import Logger
 from pathlib import Path
 from threading import Thread
@@ -95,13 +95,13 @@ class DebianSuggestionsDownloader(Thread):
             timestamp_str = f.read()
 
         try:
-            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self._log.error(f'Could not parse the Debian cached suggestions timestamp: {timestamp_str}')
             traceback.print_exc()
             return True
 
-        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.utcnow()
+        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.now(timezone.utc)
         return update
 
     def _save(self, text: str, timestamp: float):
@@ -184,7 +184,7 @@ class DebianSuggestionsDownloader(Thread):
             suggestions = parse(res.text, self._log, 'Debian')
 
             if suggestions:
-                self._save(text=res.text, timestamp=datetime.utcnow().timestamp())
+                self._save(text=res.text, timestamp=datetime.now(timezone.utc).timestamp())
             else:
                 self._log.warning("No Debian suggestions to cache")
         else:

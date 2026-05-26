@@ -81,7 +81,7 @@ class WebApplicationManager(SoftwareManager, SettingsController):
 
     def get_accept_language_header(self) -> str:
         try:
-            syslocale = locale.getdefaultlocale()
+            syslocale = locale.getlocale()
 
             if syslocale:
                 locale_split = syslocale[0].split('_')

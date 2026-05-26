@@ -16,7 +16,7 @@ from bauh.gems.flatpak.constants import FLATHUB_URL
 
 RE_SEVERAL_SPACES = re.compile(r'\s+')
 RE_COMMIT = re.compile(r'(Latest commit|Commit)\s*:\s*(.+)')
-RE_REQUIRED_RUNTIME = re.compile(f'Required\s+runtime\s+.+\(([\w./]+)\)\s*.+\s+remote\s+([\w+./]+)')
+RE_REQUIRED_RUNTIME = re.compile(r'Required\s+runtime\s+.+\(([\w./]+)\)\s*.+\s+remote\s+([\w+./]+)')
 OPERATION_UPDATE_SYMBOLS = {'i', 'u'}
 
 
@@ -56,12 +56,20 @@ def get_fields(app_id: str, branch: str, fields: List[str]) -> List[str]:
     if branch:
         cmd.append(branch)
 
-    info = new_subprocess(cmd).stdout
+    info = run_cmd(' '.join(cmd), print_error=False)
+
+    if not info:
+        return []
 
     res = []
-    for o in new_subprocess(('grep', '-E', '({}):.+'.format('|'.join(fields)), '-o'), stdin=info).stdout:
-        if o:
-            res.append(o.decode().split(':')[-1].strip())
+    for line in info.splitlines():
+        if not line or ':' not in line:
+            continue
+
+        field_name, field_value = line.split(':', 1)
+
+        if field_name.strip() in fields:
+            res.append(field_value.strip())
 
     return res
 
@@ -97,11 +105,14 @@ def list_installed(version: Tuple[str, ...]) -> List[dict]:
     apps = []
 
     if version < VERSION_1_2:
-        app_list = new_subprocess(('flatpak', 'list', '-d'), lang=None)
+        app_list = run_cmd('flatpak list -d', print_error=False, lang=None)
 
-        for o in app_list.stdout:
-            if o:
-                data = o.decode().strip().split('\t')
+        if not app_list:
+            return apps
+
+        for line in app_list.splitlines():
+            if line:
+                data = line.strip().split('\t')
                 ref_split = data[0].split('/')
                 runtime = 'runtime' in data[5]
 
@@ -121,11 +132,14 @@ def list_installed(version: Tuple[str, ...]) -> List[dict]:
     else:
         name_col = '' if version < VERSION_1_3 else 'name,'
         cols = f'application,ref,arch,branch,description,origin,options,{name_col}version'
-        app_list = new_subprocess(('flatpak', 'list', f'--columns={cols}'), lang=None)
+        app_list = run_cmd(f'flatpak list --columns={cols}', print_error=False, lang=None)
 
-        for o in app_list.stdout:
-            if o:
-                data = o.decode().strip().split('\t')
+        if not app_list:
+            return apps
+
+        for line in app_list.splitlines():
+            if line:
+                data = line.strip().split('\t')
                 runtime = 'runtime' in data[6]
 
                 if version < VERSION_1_3:
@@ -237,14 +251,17 @@ def fill_updates(version: Tuple[str, ...], installation: str, res: Dict[str, Set
         except Exception:
             traceback.print_exc()
     else:
-        updates = new_subprocess(('flatpak', 'update', f'--{installation}', '--no-deps')).stdout
-
         reg = r'[0-9]+\.\s+.+'
 
         try:
-            for o in new_subprocess(('grep', '-E', reg, '-o', '--color=never'), stdin=updates).stdout:
-                if o:
-                    line_split = o.decode().strip().split('\t')
+            output = run_cmd(f'flatpak update --{installation} --no-deps', ignore_return_code=True, print_error=False)
+
+            if not output:
+                return
+
+            for line in output.splitlines():
+                if re.match(reg, line):
+                    line_split = line.strip().split('\t')
 
                     if len(line_split) >= 5:
                         if version >= VERSION_1_5:

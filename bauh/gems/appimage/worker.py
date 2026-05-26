@@ -5,7 +5,7 @@ import os
 import tarfile
 import time
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Thread
 from typing import Optional, Generator
@@ -73,13 +73,13 @@ class DatabaseUpdater(Thread):
             dbs_ts_str = f.read()
 
         try:
-            dbs_timestamp = datetime.fromtimestamp(float(dbs_ts_str))
+            dbs_timestamp = datetime.fromtimestamp(float(dbs_ts_str), tz=timezone.utc)
         except Exception:
             self.logger.error('Could not parse the databases timestamp: {}'.format(dbs_ts_str))
             traceback.print_exc()
             return True
 
-        update = dbs_timestamp + timedelta(minutes=db_exp) <= datetime.utcnow()
+        update = dbs_timestamp + timedelta(minutes=db_exp) <= datetime.now(timezone.utc)
         self.logger.info('Finished. Took {0:.2f} seconds'.format(time.time() - ti))
         return update
 
@@ -93,7 +93,7 @@ class DatabaseUpdater(Thread):
         self._update_task_progress(10, self.i18n['appimage.update_database.downloading'])
         self.logger.info('Retrieving AppImage databases')
 
-        database_timestamp = datetime.utcnow().timestamp()
+        database_timestamp = datetime.now(timezone.utc).timestamp()
         try:
             res = self.http_client.get(URL_COMPRESSED_DATABASES, session=False)
         except Exception as e:
@@ -356,13 +356,13 @@ class AppImageSuggestionsDownloader(Thread):
             timestamp_str = f.read()
 
         try:
-            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self.logger.error(f'Could not parse the cached AppImage suggestions timestamp: {timestamp_str}')
             traceback.print_exc()
             return True
 
-        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.utcnow()
+        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.now(timezone.utc)
         return update
 
     def read(self) -> Generator[str, None, None]:
@@ -372,7 +372,7 @@ class AppImageSuggestionsDownloader(Thread):
 
         self.logger.info("Checking if AppImage suggestions should be downloaded")
         if self.should_download(self.config):
-            suggestions_timestamp = datetime.utcnow().timestamp()
+            suggestions_timestamp = datetime.now(timezone.utc).timestamp()
             suggestions_str = self.download()
 
             Thread(target=self.cache_suggestions, args=(suggestions_str, suggestions_timestamp), daemon=True).start()
@@ -466,7 +466,7 @@ class AppImageSuggestionsDownloader(Thread):
 
             try:
                 if should_download:
-                    suggestions_timestamp = datetime.utcnow().timestamp()
+                    suggestions_timestamp = datetime.now(timezone.utc).timestamp()
                     suggestions_str = self.download()
                     self.taskman.update_progress(self.task_id, 70, None)
 

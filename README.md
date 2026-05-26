@@ -1,4 +1,12 @@
-[![GitHub release](https://img.shields.io/github/release/vinifmor/bauh.svg?label=Release)](https://github.com/vinifmor/bauh/releases/) [![PyPI](https://img.shields.io/pypi/v/bauh?label=PyPI)](https://pypi.org/project/bauh) [![AUR](https://img.shields.io/aur/version/bauh?label=AUR)](https://aur.archlinux.org/packages/bauh) [![AUR-staging](https://img.shields.io/aur/version/bauh-staging?label=AUR-staging)](https://aur.archlinux.org/packages/bauh-staging) [![License](https://img.shields.io/github/license/vinifmor/bauh?label=License)](https://github.com/vinifmor/bauh/blob/master/LICENSE) [![kofi](https://img.shields.io/badge/Ko--Fi-Donate-orange?style=flat&logo=ko-fi)](https://ko-fi.com/vinifmor)
+[![License](https://img.shields.io/github/license/spalencsar/bearhub?label=License)](https://github.com/spalencsar/bearhub/blob/master/LICENSE)
+
+# Bearhub
+
+**Bearhub** is a community-maintained fork of [bauh](https://github.com/vinifmor/bauh), focused on keeping the application working on current Linux systems, especially modern Arch Linux and Python versions.
+
+The original project was created by Vinicius Moreira. This fork continues from that codebase under the original license and keeps the history and authorship intact.
+
+At the moment, parts of the documentation below still refer to the original `bauh` command name, paths, package names, and screenshots. Those references are historical and will be updated incrementally as the fork evolves.
 
 **bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). It currently supports the following formats: AppImage, Debian and Arch Linux packages (including AUR), Flatpak, Snap and Web applications.
 

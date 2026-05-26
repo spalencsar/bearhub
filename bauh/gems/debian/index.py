@@ -3,7 +3,7 @@ import os
 import re
 import traceback
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from json import JSONDecodeError
 from logging import Logger
 from pathlib import Path
@@ -52,14 +52,14 @@ class ApplicationIndexer:
             return True
 
         try:
-            timestamp = datetime.fromtimestamp(float(timestamp_str))
+            timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self._log.error(f'Could not parse the Debian applications index timestamp: {timestamp_str} '
                             f'({self._file_timestamp_path})')
             traceback.print_exc()
             return True
 
-        expired = timestamp + timedelta(minutes=exp_minutes) <= datetime.utcnow()
+        expired = timestamp + timedelta(minutes=exp_minutes) <= datetime.now(timezone.utc)
 
         if expired:
             self._log.info("Debian applications index has expired. A new one must be generated.")
@@ -122,7 +122,7 @@ class ApplicationIndexer:
             raise ApplicationIndexError()
 
         if update_timestamp:
-            index_timestamp = datetime.utcnow().timestamp()
+            index_timestamp = datetime.now(timezone.utc).timestamp()
             try:
                 with open(self._file_timestamp_path, 'w+') as f:
                     f.write(str(index_timestamp))
@@ -140,7 +140,7 @@ class ApplicationsMapper:
     def __init__(self, logger: Logger, workers: int = 10):
         self._log = logger
         self._re_desktop_file = re.compile(r'(.+):\s+(/usr/share/applications/.+\.desktop)')
-        self._re_desktop_file_fields = re.compile('(Exec|TryExec|Icon|Categories|NoDisplay|Terminal)\s*=\s*(.+)')
+        self._re_desktop_file_fields = re.compile(r'(Exec|TryExec|Icon|Categories|NoDisplay|Terminal)\s*=\s*(.+)')
         self._workers = workers
 
     def _read_file(self, file_path: str) -> Optional[str]:

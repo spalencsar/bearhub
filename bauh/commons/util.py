@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC
-from datetime import datetime
+from datetime import datetime, timezone
 from logging import Logger
 from typing import Optional, Union
 
@@ -66,7 +66,10 @@ def size_to_byte(size: Union[float, int, str], unit: str, logger: Optional[Logge
         return final_size * (base ** 5)
 
 
-def datetime_as_milis(date: datetime = datetime.utcnow()) -> int:
+def datetime_as_milis(date: Optional[datetime] = None) -> int:
+    if date is None:
+        date = datetime.now(timezone.utc)
+
     return int(round(date.timestamp() * 1000))
 
 

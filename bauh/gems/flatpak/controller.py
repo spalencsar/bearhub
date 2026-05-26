@@ -1,7 +1,7 @@
 import os
 import re
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from operator import attrgetter
 from pathlib import Path
 from threading import Thread
@@ -60,7 +60,7 @@ class FlatpakManager(SoftwareManager, SettingsController):
         if app.runtime and app.latest_version is None:
             app.latest_version = app.version
 
-        expired_data = api_data and api_data.get('expires_at') and api_data['expires_at'] <= datetime.utcnow()
+        expired_data = api_data and api_data.get('expires_at') and api_data['expires_at'] <= datetime.now(timezone.utc)
 
         data_loader: Optional[FlatpakAsyncDataLoader] = None
 

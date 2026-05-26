@@ -1,6 +1,6 @@
 import os
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logging import Logger
 from pathlib import Path
 from threading import Thread
@@ -90,13 +90,13 @@ class RepositorySuggestionsDownloader(Thread):
             timestamp_str = f.read()
 
         try:
-            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            suggestions_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self._log.error(f'Could not parse the Arch cached suggestions timestamp: {timestamp_str}')
             traceback.print_exc()
             return True
 
-        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.utcnow()
+        update = suggestions_timestamp + timedelta(hours=exp_hours) <= datetime.now(timezone.utc)
 
         if update:
             self._log.info("The cached suggestions file is no longer valid")
@@ -166,7 +166,7 @@ class RepositorySuggestionsDownloader(Thread):
             suggestions = parse(res.text, self._log, 'Arch')
 
             if suggestions:
-                self._save(text=res.text, timestamp=datetime.utcnow().timestamp())
+                self._save(text=res.text, timestamp=datetime.now(timezone.utc).timestamp())
             else:
                 self._log.warning(f"Could not parse any Arch suggestion from {self._file_suggestions_ts}")
         else:

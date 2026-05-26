@@ -2,7 +2,7 @@ import logging
 import os
 import time
 import traceback
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Thread
 from typing import Dict, List, Optional
@@ -93,7 +93,7 @@ class CategoriesDownloader(Thread):
         self.logger.info(self._msg('Downloading category definitions from {}'.format(self.url_categories_file)))
 
         try:
-            timestamp = datetime.utcnow().timestamp()
+            timestamp = datetime.now(timezone.utc).timestamp()
             res = self.http_client.get(self.url_categories_file)
         except requests.exceptions.ConnectionError:
             self.logger.error(self._msg('[{}] Could not download categories. The internet connection seems to be off.'.format(self.id_)))
@@ -139,13 +139,13 @@ class CategoriesDownloader(Thread):
             timestamp_str = f.read()
 
         try:
-            categories_timestamp = datetime.fromtimestamp(float(timestamp_str))
+            categories_timestamp = datetime.fromtimestamp(float(timestamp_str), tz=timezone.utc)
         except Exception:
             self.logger.error(self._msg("An exception occurred when trying to parse the categories file timestamp from '{}'. The categories file should be re-downloaded.".format(categories_ts_path)))
             traceback.print_exc()
             return True
 
-        should_download = (categories_timestamp + timedelta(hours=self.expiration) <= datetime.utcnow())
+        should_download = (categories_timestamp + timedelta(hours=self.expiration) <= datetime.now(timezone.utc))
 
         if should_download:
             self.logger.info(self._msg("Cached categories file '{}' has expired. A new one should be downloaded.".format(self.categories_path)))

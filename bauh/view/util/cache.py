@@ -27,7 +27,7 @@ class DefaultMemoryCache(MemoryCache):
 
     def _add(self, key: str, val: object):
         if key:
-            self._cache[key] = {'val': val, 'expires_at': datetime.datetime.utcnow() + datetime.timedelta(seconds=self.expiration_time) if self.expiration_time > 0 else None}
+            self._cache[key] = {'val': val, 'expires_at': datetime.datetime.now(UTC) + datetime.timedelta(seconds=self.expiration_time) if self.expiration_time > 0 else None}
 
     def add_non_existing(self, key: str, val: object):
         if key and self. is_enabled():
@@ -46,7 +46,7 @@ class DefaultMemoryCache(MemoryCache):
             if val:
                 expiration = val.get('expires_at')
 
-                if expiration and expiration <= datetime.datetime.utcnow():
+                if expiration and expiration <= datetime.datetime.now(UTC):
                     if lock:
                         self.lock.acquire()
 
@@ -86,3 +86,4 @@ class DefaultMemoryCacheFactory(MemoryCacheFactory):
 
     def new(self, expiration: Optional[int] = None) -> MemoryCache:
         return DefaultMemoryCache(expiration if expiration is not None else self.expiration_time)
+UTC = datetime.timezone.utc

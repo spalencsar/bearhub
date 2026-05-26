@@ -3,13 +3,16 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bauh"
-description = "Graphical interface to manage Linux applications (AppImage, Arch / AUR, Flatpak, Snap and Web)"
+name = "bearhub"
+description = "Community-maintained fork of bauh focused on modern Linux compatibility"
 license = {file = "LICENSE"}
 requires-python = ">=3.6"
 dynamic = ["version"]
 readme = "README.md"
-authors = [{name = "Vinicius Moreira", email = "vinicius_fmoreira@hotmail.com"}]
+authors = [
+    {name = "Vinicius Moreira", email = "vinicius_fmoreira@hotmail.com"},
+    {name = "Bearhub maintainers"}
+]
 classifiers = [
         'Topic :: Utilities',
         'Programming Language :: Python',
@@ -36,12 +39,12 @@ web = [
 ]
 
 [project.scripts]
-bauh = "bauh.app:main"
-bauh-tray = "bauh.app:tray"
-bauh-cli = "bauh.cli.app:main"
+bearhub = "bauh.app:main"
+bearhub-tray = "bauh.app:tray"
+bearhub-cli = "bauh.cli.app:main"
 
 [project.urls]
-Repository = "https://github.com/vinifmor/bauh"
+Repository = "https://github.com/spalencsar/bearhub"
 
 [tool.setuptools]
 license-files = ["LICENSE"]
