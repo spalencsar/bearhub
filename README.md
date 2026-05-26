@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/github/license/spalencsar/bearhub?label=License)](https://github.com/spalencsar/bearhub/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/spalencsar/bearhub?label=License)](https://github.com/spalencsar/bearhub/blob/main/LICENSE)
 
 # Bearhub
 
