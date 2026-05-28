@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/github/license/spalencsar/bearhub?label=License)](https://github.com/spalencsar/bearhub/blob/main/LICENSE)
 
-# Bearhub
+# <img src="bauh/view/resources/img/logo.svg" alt="Bearhub logo" width="40" valign="middle"> Bearhub
 
 **Bearhub** is a community-maintained fork of [bauh](https://github.com/vinifmor/bauh), focused on Arch Linux and Arch-based distributions, with priority on keeping the application working on modern Arch systems and current Python versions.
 
