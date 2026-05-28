@@ -3379,7 +3379,7 @@ class ArchManager(SoftwareManager, SettingsController):
             return True
 
         body_parts = [
-            '<p><b>Please review system notices before upgrading.</b></p>'
+            '<p><b>Review Arch system notices before continuing.</b></p>'
         ]
 
         if pacnew_files:
@@ -3388,16 +3388,17 @@ class ArchManager(SoftwareManager, SettingsController):
             extra = len(pacnew_files) - max_items
             extra_msg = f'<p>... and {extra} more.</p>' if extra > 0 else ''
             body_parts.append(
-                f"<p>Detected <b>{len(pacnew_files)}</b> pending <code>.pacnew</code> file(s):</p><ul>{listed}</ul>{extra_msg}"
+                f"<p>Detected <b>{len(pacnew_files)}</b> pending <code>.pacnew</code> file(s). "
+                f"These usually require manual merge/review:</p><ul>{listed}</ul>{extra_msg}"
             )
 
         if arch_news:
             listed = ''.join(f"<li><a href='{link_}'>{title}</a></li>" for title, link_ in arch_news)
             body_parts.append(
-                f"<p>Recent Arch Linux news (review before upgrading):</p><ul>{listed}</ul>"
+                f"<p>Recent Arch Linux news (check for manual intervention notices):</p><ul>{listed}</ul>"
             )
 
-        body_parts.append('<p>Proceed with the system upgrade now?</p>')
+        body_parts.append('<p>Proceed with the system upgrade anyway?</p>')
 
         return watcher.request_confirmation(
             title=self.i18n['arch.custom_action.upgrade_system'],
