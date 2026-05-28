@@ -6,7 +6,7 @@
 
 The original project was created by Vinicius Moreira. This fork continues from that codebase under the original license and keeps the history and authorship intact.
 
-At the moment, parts of the documentation below still refer to the original `bauh` command name, paths, package names, and screenshots. Those references are historical and will be updated incrementally as the fork evolves.
+Some sections still include historical `bauh` naming in technical paths or screenshots. Runtime commands and package names below follow Bearhub naming.
 
 ## Status
 
@@ -37,7 +37,7 @@ Large architectural changes or feature redesigns are not the immediate priority.
 
 Debian / Apt support is intentionally removed from Bearhub. Other non-Arch backends that remain in the codebase are secondary to the Arch-focused maintenance target.
 
-**bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, AppImage and Web applications.
+**Bearhub** (forked from bauh) is a graphical interface for managing Linux software. In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, AppImage and Web applications.
 
 Key features
 - A management panel where you can: search, install, uninstall, upgrade, downgrade and launch your applications
@@ -105,14 +105,14 @@ Key features
 
 ##### Using yay
 
-`yay -S bauh`
+`yay -S bearhub`
 
 
 ##### Using git
 
 ```
-git clone  https://aur.archlinux.org/bauh.git
-cd bauh
+git clone  https://aur.archlinux.org/bearhub.git
+cd bearhub
 makepkg -si
 ```
 
@@ -131,10 +131,10 @@ makepkg -si
 - `python-venv`: [isolated installation](#inst_iso)
 
 
-##### Uninstalling bauh
+##### Uninstalling Bearhub
 ```
-bauh --reset  # removes cache and configurations files from HOME
-pacman -R bauh
+bearhub --reset  # removes cache and configurations files from HOME
+pacman -R bearhub
 ```
 
 
@@ -142,52 +142,54 @@ pacman -R bauh
 
 If you prefer an isolated installation from the system libraries, type the following commands:
 
-```
-python3 -m venv bauh_env       # creates an isolated environment inside the directory called "bauh_env"
-bauh_env/bin/pip install bauh  # installs bauh in the isolated environment
-bauh_env/bin/bauh              # launches bauh. For the tray-mode: bauh_env/bin/bauh-tray
-```
-
-
-Updating bauh
-
-```
-bauh_env/bin/pip install bauh --upgrade
+```bash
+python3 -m venv bearhub_env            # creates an isolated environment inside "bearhub_env"
+bearhub_env/bin/pip install -e .       # installs Bearhub from the local source tree
+bearhub_env/bin/bearhub                # launches Bearhub. Tray mode: bearhub_env/bin/bearhub-tray
 ```
 
-Uninstalling bauh
 
+Updating Bearhub
+
+```bash
+bearhub_env/bin/pip install --upgrade -e .
 ```
-bauh_env/bin/bauh --reset  # removes cache and configurations files from HOME
-rm -rf bauh_env` (just remove the directory)
+
+Uninstalling Bearhub
+
+```bash
+bearhub_env/bin/bearhub --reset  # removes cache and configuration files from HOME
+rm -rf bearhub_env
 ```
 
 
 #### <a name="desk_entry">Desktop entry / menu shortcut</a>
 
-To create a shortcut for bauh on your desktop menu:
+To create a shortcut for Bearhub on your desktop menu:
 
-- Copy the files from [bauh/desktop](https://raw.githubusercontent.com/vinifmor/bauh/master/bauh/desktop/bauh.desktop) to `~/.local/share/applications` (or `/usr/share/applications` for **root**)
-- Replace the `Exec` field on theses files by the bauh binary path. e.g: `Exec=/usr/bin/bauh` (or `bauh_env/bin/bauh`)
-- Copy [logo.svg](https://raw.githubusercontent.com/vinifmor/bauh-files/master/pictures/logo.svg) to `/usr/share/icons/hicolor/scalable/apps` as `bauh.svg`
+- Copy desktop files from `bauh/desktop` to `~/.local/share/applications` (or `/usr/share/applications` for **root**)
+- Ensure `Exec` points to the Bearhub binary. e.g: `Exec=/usr/bin/bearhub` (or `bearhub_env/bin/bearhub`)
+- Ensure the icon `bearhub.svg` exists under `/usr/share/icons/hicolor/scalable/apps`
 
 
 #### <a name="autostart">Autostart: tray mode</a>
 
-In order to initialize bauh with the system, use your Desktop Environment settings to register it as a startup application / script (**bauh-tray**). Or
-create a file named **bauh.desktop** in **~/.config/autostart** with the content below:
+In order to initialize Bearhub with the system, use your Desktop Environment settings to register it as a startup application / script (**bearhub-tray**). Or
+create a file named **bearhub.desktop** in **~/.config/autostart** with the content below:
 
 ```
 [Desktop Entry]
 Type=Application
-Name=bauh (tray)
-Exec=/path/to/bauh-tray
+Name=Bearhub (tray)
+Exec=/path/to/bearhub-tray
 ```
 
 
 #### <a name="dist">Distribution</a>
 
-bauh is officially distributed through [PyPi](https://pypi.org/project/bauh) and [AUR](https://aur.archlinux.org) ([bauh](https://aur.archlinux.org/packages/bauh) / [bauh-staging](https://aur.archlinux.org/packages/bauh-staging))
+Bearhub is currently distributed through source releases and AUR:
+- [bearhub](https://aur.archlinux.org/packages/bearhub)
+- [bearhub-git](https://aur.archlinux.org/packages/bearhub-git)
 
 
 #### <a name="types">Supported types</a>

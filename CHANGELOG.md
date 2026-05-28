@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.3] 2026-05-28
+### Packaging
+- AUR dependencies fixed:
+  - replaced invalid `python-python-dateutil` by `python-dateutil`
+- AUR package install step now also deploys:
+  - desktop entries (`bearhub.desktop`, `bearhub-tray.desktop`)
+  - application icon (`bearhub.svg`)
+
+### Documentation
+- README updated to use Bearhub naming for commands and AUR package references
+
 ## [0.10.7-bearhub.2] 2026-05-28
 ### Changed
 - Snap support removed from the maintained scope and codebase
