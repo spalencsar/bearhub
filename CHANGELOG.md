@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.2] 2026-05-28
+### Changed
+- Snap support removed from the maintained scope and codebase
+- Arch system upgrade flow now performs pre-checks for:
+  - pending `.pacnew` files under `/etc`
+  - current Arch Linux news feed entries
+
+### UX
+- refined pre-upgrade warning text to clearly state:
+  - `.pacnew` files require manual review/merge
+  - Arch news may contain required manual intervention notices
+  - user confirmation is required to continue despite warnings
+
 ## [0.10.7-bearhub.1] 2026-05-26
 ### Fork
 - Bearhub established as an Arch-focused fork of bauh
