@@ -3203,15 +3203,6 @@ class ArchManager(SoftwareManager, SettingsController):
                                                     requires_root=True,
                                                     refresh=False,
                                                     manager=self,
-                                                    requires_confirmation=False),
-                'setup_snapd': CustomSoftwareAction(i18n_label_key='arch.custom_action.setup_snapd',
-                                                    i18n_status_key='arch.custom_action.setup_snapd.status',
-                                                    i18n_description_key='arch.custom_action.setup_snapd.desc',
-                                                    manager_method='setup_snapd',
-                                                    icon_path=get_icon_path(),
-                                                    requires_root=False,
-                                                    refresh=False,
-                                                    manager=self,
                                                     requires_confirmation=False)
             }
 
@@ -3225,9 +3216,6 @@ class ArchManager(SoftwareManager, SettingsController):
 
         if bool(arch_config['repositories']):
             yield self._custom_actions['sys_up']
-
-        if pacman.is_snapd_installed():
-            yield self._custom_actions['setup_snapd']
 
     def fill_sizes(self, pkgs: List[ArchPackage]):
         installed, new, all_names, installed_names = [], [], [], []
@@ -3474,89 +3462,6 @@ class ArchManager(SoftwareManager, SettingsController):
     def disable_pkgbuild_edition(self, pkg: ArchPackage, root_password: Optional[str], watcher: ProcessWatcher):
         if self._remove_from_editable_pkgbuilds(pkg.name):
             pkg.pkgbuild_editable = False
-
-    def setup_snapd(self, root_password: Optional[str], watcher: ProcessWatcher) -> bool:
-        # checking services
-        missing_items = []
-        for serv, active in system.check_enabled_services('snapd.service', 'snapd.socket').items():
-            if not active:
-                missing_items.append(InputOption(label=self.i18n['snap.custom_action.setup_snapd.service_disabled'].format("'{}'".format(serv)),
-                                                 value='enable:{}'.format(serv),
-                                                 read_only=True))
-
-        for serv, active in system.check_active_services('snapd.service', 'snapd.socket').items():
-            if not active:
-                missing_items.append(InputOption(label=self.i18n['snap.custom_action.setup_snapd.service_inactive'].format("'{}'".format(serv)),
-                                                 value='start:{}'.format(serv),
-                                                 read_only=True))
-
-        link = '/snap'
-        link_dest = '/var/lib/snapd/snap'
-        if not os.path.exists('/snap'):
-            missing_items.append(InputOption(label=self.i18n['snap.custom_action.setup_snapd.missing_link'].format("'{}'".format(link), "'{}'".format(link_dest)),
-                                             value='link:{}:{}'.format(link, link_dest),
-                                             read_only=True))
-
-        if missing_items:
-            actions = MultipleSelectComponent(label=self.i18n['snap.custom_action.setup_snapd.required_actions'],
-                                              options=missing_items,
-                                              default_options=set(missing_items),
-                                              max_per_line=1,
-                                              spaces=False)
-            if watcher.request_confirmation(title=self.i18n['confirmation'].capitalize(),
-                                            body='',
-                                            components=[actions],
-                                            confirmation_label=self.i18n['proceed'].capitalize(),
-                                            deny_label=self.i18n['cancel'].capitalize()):
-
-                valid_pwd, pwd = watcher.request_root_password()
-
-                if valid_pwd:
-                    handler = ProcessHandler(watcher)
-                    for a in missing_items:
-                        action = a.value.split(':')
-
-                        if action[0] == 'enable':
-                            msg = 'Enabling service {}'.format(action[1])
-                            watcher.print(msg)
-                            self.logger.info(msg)
-                            proc = SimpleProcess(['systemctl', 'enable', '--now', action[1]], root_password=pwd)
-                        elif action[0] == 'start':
-                            msg = 'Starting service {}'.format(action[1])
-                            watcher.print(msg)
-                            self.logger.info(msg)
-                            proc = SimpleProcess(['systemctl', 'start', action[1]], root_password=pwd)
-                        elif action[0] == 'link':
-                            msg = 'Creating symbolic link {} for {}'.format(action[1], action[2])
-                            watcher.print(msg)
-                            self.logger.info(msg)
-                            proc = SimpleProcess(['ln', '-s', action[2], action[1]], root_password=pwd)
-                        else:
-                            msg = "Wrong action '{}'".format(action)
-                            watcher.print(msg)
-                            self.logger.warning(msg)
-                            proc = None
-
-                        if not proc:
-                            return False
-
-                        success, output = handler.handle_simple(proc)
-
-                        if not success:
-                            watcher.show_message(title=self.i18n['error'].capitalize(),
-                                                 body=output,
-                                                 type_=MessageType.ERROR)
-                            return False
-
-                    watcher.show_message(title=self.i18n['snap.custom_action.setup_snapd.ready'],
-                                         body=self.i18n['snap.custom_action.setup_snapd.ready.body'],
-                                         type_=MessageType.INFO)
-            return True
-        else:
-            watcher.show_message(title=self.i18n['snap.custom_action.setup_snapd.ready'],
-                                 body=self.i18n['snap.custom_action.setup_snapd.ready.body'],
-                                 type_=MessageType.INFO)
-            return True
 
     def _gen_custom_pkgbuild_if_required(self, context: TransactionContext) -> Optional[str]:
         build_only_chosen = context.config.get('aur_build_only_chosen')

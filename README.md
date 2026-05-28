@@ -37,7 +37,7 @@ Large architectural changes or feature redesigns are not the immediate priority.
 
 Debian / Apt support is intentionally removed from Bearhub. Other non-Arch backends that remain in the codebase are secondary to the Arch-focused maintenance target.
 
-**bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, Snap, AppImage and Web applications.
+**bauh** (baoo), formerly known as [fpakman](https://github.com/vinifmor/fpakman), is a graphical interface for managing your Linux software (packages/applications). In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, AppImage and Web applications.
 
 Key features
 - A management panel where you can: search, install, uninstall, upgrade, downgrade and launch your applications
@@ -63,7 +63,7 @@ Key features
     - [AppImage](#type_appimage)
     - [Arch packages/AUR](#type_arch)
     - [Flatpak](#type_flatpak)
-    - [Snap](#type_snap)
+
     - [Native Web applications](#type_web)
 7. [General settings](#settings)
    - [Forbidden packaging formats](#forbidden_gems)
@@ -126,7 +126,6 @@ makepkg -si
 - `xdg-utils`: to open URLs in the browser (`xdg-open`)
 - `sqlite`, `fuse2`, `fuse3`: AppImage support
 - `flatpak`: Flatpak support
-- `snapd`: Snap support
 - `pacman`: ArchLinux package management support
 - `python-lxml`, `python-beautifulsoup4`: Web apps support
 - `python-venv`: [isolated installation](#inst_iso)
@@ -252,7 +251,6 @@ suggestions:
     - `Unmark PKGBUILD as editable`: reverts the action described above. Action only available when the configuration property `edit_aur_pkgbuild` is not `false`.
     - `Allow reinstallation check`: it allows to check if a given AUR packages requires to be rebuilt
     - `Ignore reinstallation check`: it does not to check if a given AUR packages requires to be rebuilt
-    - `Check Snaps support`: checks if the Snapd services are properly enabled.
     - `Reinstall` (AUR only): rebuilds an installed package.
 
 - If you have AUR added as a repository on you pacman configuration, make sure to disable bauh's support (through the settings described below)
@@ -302,19 +300,6 @@ installation_level: null # defines a default installation level: "user" or "syst
 ```
 - Custom actions supported:
   - **Full update**: it completely updates the Flatpak apps and components. Useful if you are having issues with runtime updates.
-
-#### <a name="type_snap">Snap</a>
-
-- Make sure **snapd** is properly installed and enabled on your system: https://snapcraft.io/docs/installing-snapd 
-- Extra actions: 
-    - `Refresh`: tries to update the current Snap application revision
-    - `Change channel`: allows to change the Snap application channel
-- The configuration file is located at `~/.config/bauh/snap.yml` and it allows the following customizations:
-```
-install_channel: false  # it allows to select an available channel during the application installation. Default: false
-categories_exp: 24  # It defines the expiration time (in HOURS) of the Snaps categories mapping file stored in disc. Use 0 so that it is always updated during initialization.
-```
-
 
 #### <a name="type_web">Native Web applications</a>
 - It allows the installation of Web applications by typing their addresses/URLs on the search bar
@@ -452,7 +437,7 @@ appimage
   - [appimage](https://github.com/vinifmor/bauh-files/blob/master/appimage/suggestions.txt)
   - [arch](https://github.com/vinifmor/bauh-files/blob/master/appimage/suggestions.txt)
   - [flatpak](https://github.com/vinifmor/bauh-files/blob/master/flatpak/suggestions.txt)
-  - [snap](https://github.com/vinifmor/bauh-files/blob/master/snap/suggestions.txt)
+
   - [web](https://github.com/vinifmor/bauh-files/blob/master/web/env/v2/suggestions.yml)
   
 - Most of the files follow the pattern: `{priority_number}=${id or name}`
