@@ -33,15 +33,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create non-root build user
+        run: |
+          useradd -m builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+
       - name: Validate PKGBUILD and .SRCINFO
         shell: bash
         run: |
           set -euo pipefail
-          cd "packaging/aur/${{ matrix.pkg }}"
+          su builder -c "
+            set -euo pipefail
+            cd \"$GITHUB_WORKSPACE/packaging/aur/${{ matrix.pkg }}\"
 
-          makepkg --printsrcinfo > .SRCINFO.generated
-          diff -u .SRCINFO .SRCINFO.generated
-          rm .SRCINFO.generated
+            makepkg --printsrcinfo > .SRCINFO.generated
+            diff -u .SRCINFO .SRCINFO.generated
+            rm .SRCINFO.generated
 
-          makepkg --verifysource --noconfirm
-          namcap PKGBUILD .SRCINFO
+            makepkg --verifysource --noconfirm
+            namcap PKGBUILD .SRCINFO
+          "
