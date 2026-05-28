@@ -1,0 +1,47 @@
+name: AUR Validate
+
+on:
+  pull_request:
+    paths:
+      - "packaging/aur/**"
+      - ".github/workflows/aur-validate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "packaging/aur/**"
+      - ".github/workflows/aur-validate.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate ${{ matrix.pkg }}
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg: [bearhub, bearhub-git]
+
+    steps:
+      - name: Install build tooling
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm --needed base-devel git namcap
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate PKGBUILD and .SRCINFO
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "packaging/aur/${{ matrix.pkg }}"
+
+          makepkg --printsrcinfo > .SRCINFO.generated
+          diff -u .SRCINFO .SRCINFO.generated
+          rm .SRCINFO.generated
+
+          makepkg --verifysource --noconfirm
+          namcap PKGBUILD .SRCINFO
