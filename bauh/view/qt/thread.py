@@ -931,7 +931,7 @@ class ListWarnings(QThread):
     signal_warnings = pyqtSignal(list)
 
     def __init__(self, man: SoftwareManager, i18n: I18n):
-        super(QThread, self).__init__()
+        super(ListWarnings, self).__init__()
         self.i18n = i18n
         self.man = man
 
