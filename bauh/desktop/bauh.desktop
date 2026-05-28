@@ -1,13 +1,13 @@
 [Desktop Entry]
 Type=Application
 Name=Applications (Bearhub)
-Name[pt]=Aplicativos (bauh)
-Name[es]=Aplicaciones (bauh)
-Name[ca]=Aplicacions (bauh)
-Name[it]=Applicazioni (bauh)
-Name[de]=Anwendungen (bauh)
-Name[ru]=Приложения (bauh)
-Name[tr]=Paket Yönetici (bauh)
+Name[pt]=Aplicativos (Bearhub)
+Name[es]=Aplicaciones (Bearhub)
+Name[ca]=Aplicacions (Bearhub)
+Name[it]=Applicazioni (Bearhub)
+Name[de]=Anwendungen (Bearhub)
+Name[ru]=Приложения (Bearhub)
+Name[tr]=Paket Yönetici (Bearhub)
 Categories=System;
 Comment=Install and remove applications (AppImage, Arch, Flatpak, Snap, Web)
 Comment[pt]=Instale e remova aplicativos (AppImage, Arch, Flatpak, Snap, Web)
@@ -18,4 +18,4 @@ Comment[ca]=Instal·lar i eliminar aplicacions (AppImage, Arch, Flatpak, Snap, W
 Comment[ru]=Установка и удаление приложений (AppImage, Arch, Flatpak, Snap, Web)
 Comment[tr]=Uygulama yükle/kaldır (AppImage, Arch, Flatpak, Snap, Web)
 Exec=/usr/bin/bearhub
-Icon=bauh
+Icon=bearhub

@@ -3,12 +3,13 @@ from glob import glob
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QDialog, QLabel, QWidget, QHBoxLayout, QSizePolicy, QApplication
 
-from bauh import __version__, __app_name__, ROOT_DIR
+from bauh import __version__, ROOT_DIR
 from bauh.context import generate_i18n
 from bauh.view.util import resource
 
-PROJECT_URL = 'https://github.com/vinifmor/' + __app_name__
-LICENSE_URL = 'https://raw.githubusercontent.com/vinifmor/{}/master/LICENSE'.format(__app_name__)
+DISPLAY_NAME = 'bearhub'
+PROJECT_URL = 'https://github.com/spalencsar/bearhub'
+LICENSE_URL = 'https://raw.githubusercontent.com/spalencsar/bearhub/main/LICENSE'
 
 
 class AboutDialog(QDialog):
@@ -16,7 +17,7 @@ class AboutDialog(QDialog):
     def __init__(self, app_config: dict):
         super(AboutDialog, self).__init__()
         i18n = generate_i18n(app_config, resource.get_path('locale/about'))
-        self.setWindowTitle('{} ({})'.format(i18n['about.title'].capitalize(), __app_name__))
+        self.setWindowTitle('{} ({})'.format(i18n['about.title'].capitalize(), DISPLAY_NAME))
         layout = QVBoxLayout()
         self.setLayout(layout)
 
@@ -31,7 +32,7 @@ class AboutDialog(QDialog):
         logo_container.layout().addWidget(label_logo)
         layout.addWidget(logo_container)
 
-        label_name = QLabel(__app_name__)
+        label_name = QLabel(DISPLAY_NAME)
         label_name.setObjectName('app_name')
         layout.addWidget(label_name)
 

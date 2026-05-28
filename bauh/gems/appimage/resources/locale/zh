@@ -12,9 +12,9 @@ appimage.custom_action.manual_update=升级文件
 appimage.custom_action.manual_update.desc=使用另一个文件替换已安装的 AppImage 文件
 appimage.custom_action.manual_update.details=AppImage 升级详情
 appimage.custom_action.manual_update.status=正在升级
-appimage.custom_action.self_install=安装 bauh
-appimage.custom_action.self_install.desc=在系统上安装 bauh 并将其图标添加到菜单
-appimage.custom_action.self_install.status=正在安装 bauh
+appimage.custom_action.self_install=安装 Bearhub
+appimage.custom_action.self_install.desc=在系统上安装 Bearhub 并将其图标添加到菜单
+appimage.custom_action.self_install.status=正在安装 Bearhub
 appimage.custom_action.update_db=更新数据库
 appimage.custom_action.update_db.desc=从 AppImage 应用程序数据库下载更新的文件
 appimage.custom_action.update_db.status=正在更新数据库
@@ -52,4 +52,3 @@ appimage.uninstall.error.remove_folder=无法删除应用程序安装目录 {}
 appimage.warning.missing_db_files={appimage} 数据库文件未找到。某些操作将无法正常工作。
 gem.appimage.info=在 https://appimage.github.io/ 上发布的应用程序
 gem.appimage.label=AppImage
-
