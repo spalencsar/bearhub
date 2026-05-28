@@ -57,6 +57,7 @@ from bauh.gems.arch.worker import AURIndexUpdater, ArchDiskCacheUpdater, ArchCom
 
 URL_GIT = 'https://aur.archlinux.org/{}.git'
 URL_SRC_INFO = 'https://aur.archlinux.org/cgit/aur.git/plain/.SRCINFO?h='
+URL_ARCH_NEWS_FEED = 'https://archlinux.org/feeds/news/'
 
 RE_SPLIT_VERSION = re.compile(r'([=><]+)')
 
@@ -67,6 +68,9 @@ RE_PKGBUILD_PKGNAME = re.compile(r'pkgname\s*=.+')
 RE_CONFLICT_DETECTED = re.compile(r'\n::\s*(.+)\s+are in conflict\s*.')
 RE_DEPENDENCY_BREAKAGE = re.compile(r'\n?::\s+installing\s+(.+\s\(.+\))\sbreaks\sdependency\s\'(.+)\'\srequired\sby\s(.+)\s*', flags=re.IGNORECASE)
 RE_PKG_ENDS_WITH_BIN = re.compile(r'.+[\-_]bin$')
+RE_ARCH_NEWS_ITEM = re.compile(r'<item>(.*?)</item>', flags=re.DOTALL)
+RE_ARCH_NEWS_TITLE = re.compile(r'<title><!\[CDATA\[(.*?)]]></title>|<title>(.*?)</title>', flags=re.DOTALL)
+RE_ARCH_NEWS_LINK = re.compile(r'<link>(.*?)</link>', flags=re.DOTALL)
 
 
 class TransactionContext:
@@ -3267,6 +3271,10 @@ class ArchManager(SoftwareManager, SettingsController):
                                  type_=MessageType.INFO)
             return False
 
+        if not self._confirm_upgrade_risks(watcher=watcher, internet_available=net_available):
+            watcher.print('Operation cancelled')
+            return False
+
         # icon_path = get_repo_icon_path()
 
         # pkg_opts, size = [], 0
@@ -3322,6 +3330,81 @@ class ArchManager(SoftwareManager, SettingsController):
                                                          self.i18n['action.update.success.reboot.line3'])
             watcher.request_reboot(msg)
             return True
+
+    def _read_pending_pacnew_files(self, limit: int = 30) -> List[str]:
+        output = run_cmd("find /etc -type f -name '*.pacnew' 2>/dev/null", print_error=False)
+
+        if not output:
+            return []
+
+        files = sorted((line.strip() for line in output.splitlines() if line and line.strip()))
+        return files[:limit]
+
+    def _fetch_arch_news(self, limit: int = 5) -> List[Tuple[str, str]]:
+        if not self.context.http_client:
+            return []
+
+        try:
+            res = self.context.http_client.get(URL_ARCH_NEWS_FEED, session=True, single_call=True)
+        except Exception:
+            return []
+
+        if not res or res.status_code != 200 or not res.text:
+            return []
+
+        news = []
+        for item in RE_ARCH_NEWS_ITEM.findall(res.text):
+            title_match = RE_ARCH_NEWS_TITLE.search(item)
+            link_match = RE_ARCH_NEWS_LINK.search(item)
+
+            if not title_match or not link_match:
+                continue
+
+            title = (title_match.group(1) or title_match.group(2) or '').strip()
+            link_ = link_match.group(1).strip()
+
+            if title and link_:
+                news.append((title, link_))
+
+            if len(news) >= limit:
+                break
+
+        return news
+
+    def _confirm_upgrade_risks(self, watcher: ProcessWatcher, internet_available: bool) -> bool:
+        pacnew_files = self._read_pending_pacnew_files()
+        arch_news = self._fetch_arch_news() if internet_available else []
+
+        if not pacnew_files and not arch_news:
+            return True
+
+        body_parts = [
+            '<p><b>Please review system notices before upgrading.</b></p>'
+        ]
+
+        if pacnew_files:
+            max_items = 10
+            listed = ''.join(f'<li><code>{p}</code></li>' for p in pacnew_files[:max_items])
+            extra = len(pacnew_files) - max_items
+            extra_msg = f'<p>... and {extra} more.</p>' if extra > 0 else ''
+            body_parts.append(
+                f"<p>Detected <b>{len(pacnew_files)}</b> pending <code>.pacnew</code> file(s):</p><ul>{listed}</ul>{extra_msg}"
+            )
+
+        if arch_news:
+            listed = ''.join(f"<li><a href='{link_}'>{title}</a></li>" for title, link_ in arch_news)
+            body_parts.append(
+                f"<p>Recent Arch Linux news (review before upgrading):</p><ul>{listed}</ul>"
+            )
+
+        body_parts.append('<p>Proceed with the system upgrade now?</p>')
+
+        return watcher.request_confirmation(
+            title=self.i18n['arch.custom_action.upgrade_system'],
+            body=''.join(body_parts),
+            confirmation_label=self.i18n['proceed'].capitalize(),
+            deny_label=self.i18n['cancel'].capitalize()
+        )
 
     def clean_cache(self, root_password: Optional[str], watcher: ProcessWatcher) -> bool:
 
