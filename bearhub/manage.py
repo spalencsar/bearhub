@@ -5,21 +5,21 @@ from typing import Tuple
 from PyQt5.QtWidgets import QApplication, QWidget
 
 from bearhub import ROOT_DIR, __app_name__, __version__
-from bauh.api import user
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.http import HttpClient
-from bauh.commons.internet import InternetChecker
+from bearhub.api import user
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.http import HttpClient
+from bearhub.commons.internet import InternetChecker
 from bearhub.context import generate_i18n, DEFAULT_I18N_KEY, new_qt_application
-from bauh.view.core import gems
-from bauh.view.core.controller import GenericSoftwareManager
-from bauh.view.core.downloader import AdaptableFileDownloader
-from bauh.view.core.suggestions import read_suggestions_mapping
-from bauh.view.qt.prepare import PreparePanel
-from bauh.view.qt.settings import SettingsWindow
-from bauh.view.qt.window import ManageWindow
-from bauh.view.util import resource, util
-from bauh.view.util.cache import DefaultMemoryCacheFactory
-from bauh.view.util.disk import DefaultDiskCacheLoaderFactory
+from bearhub.view.core import gems
+from bearhub.view.core.controller import GenericSoftwareManager
+from bearhub.view.core.downloader import AdaptableFileDownloader
+from bearhub.view.core.suggestions import read_suggestions_mapping
+from bearhub.view.qt.prepare import PreparePanel
+from bearhub.view.qt.settings import SettingsWindow
+from bearhub.view.qt.window import ManageWindow
+from bearhub.view.util import resource, util
+from bearhub.view.util.cache import DefaultMemoryCacheFactory
+from bearhub.view.util.disk import DefaultDiskCacheLoaderFactory
 
 
 def new_manage_panel(app_args: Namespace, app_config: dict, logger: logging.Logger) -> Tuple[QApplication, QWidget]:

@@ -3,17 +3,17 @@ import os
 import urllib3
 
 from bearhub import ROOT_DIR, __version__
-from bauh.api import user
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.http import HttpClient
+from bearhub.api import user
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.http import HttpClient
 from bearhub.cli import __app_name__, cli_args
 from bearhub.cli.controller import CLIManager
-from bauh.commons.internet import InternetChecker
+from bearhub.commons.internet import InternetChecker
 from bearhub.context import generate_i18n, DEFAULT_I18N_KEY
-from bauh.view.core import gems
+from bearhub.view.core import gems
 from bearhub.view.core.config import CoreConfigManager
-from bauh.view.core.controller import GenericSoftwareManager
-from bauh.view.core.downloader import AdaptableFileDownloader
+from bearhub.view.core.controller import GenericSoftwareManager
+from bearhub.view.core.downloader import AdaptableFileDownloader
 from bearhub.view.util import logs, util, resource
 from bearhub.view.util.cache import DefaultMemoryCacheFactory
 from bearhub.view.util.disk import DefaultDiskCacheLoaderFactory

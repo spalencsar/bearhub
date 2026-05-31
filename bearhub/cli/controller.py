@@ -1,7 +1,7 @@
 import json
 
 from bearhub.cli import __app_name__
-from bauh.view.core.controller import GenericSoftwareManager
+from bearhub.view.core.controller import GenericSoftwareManager
 
 
 class CLIManager:

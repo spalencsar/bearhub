@@ -1,5 +1,5 @@
-from bauh.api.paths import CONFIG_DIR
-from bauh.commons.config import YAMLConfigManager
+from bearhub.api.paths import CONFIG_DIR
+from bearhub.commons.config import YAMLConfigManager
 
 FILE_PATH = f'{CONFIG_DIR}/config.yml'
 
