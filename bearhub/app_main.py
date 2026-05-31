@@ -9,7 +9,7 @@ from PyQt5.QtCore import QCoreApplication, Qt
 
 from bearhub import __app_name__
 from bearhub import app_args
-from bauh.view.core.config import CoreConfigManager
+from bearhub.view.core.config import CoreConfigManager
 from bauh.view.util import logs
 
 

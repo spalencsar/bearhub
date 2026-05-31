@@ -11,7 +11,7 @@ from bearhub.cli.controller import CLIManager
 from bauh.commons.internet import InternetChecker
 from bearhub.context import generate_i18n, DEFAULT_I18N_KEY
 from bauh.view.core import gems
-from bauh.view.core.config import CoreConfigManager
+from bearhub.view.core.config import CoreConfigManager
 from bauh.view.core.controller import GenericSoftwareManager
 from bauh.view.core.downloader import AdaptableFileDownloader
 from bauh.view.util import logs, util, resource
