@@ -2,6 +2,6 @@
 Temporary namespace migration shim for CLI entry point.
 """
 
-from bauh.cli.app import main
+from bearhub.cli.app_main import main
 
 __all__ = ["main"]
