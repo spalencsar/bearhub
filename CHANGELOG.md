@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.5] 2026-05-31
+### Packaging
+- Desktop integration finalized under `bearhub/desktop/*`
+- Bearhub resources are now packaged from `bearhub/view/resources/*`
+- AUR packaging paths updated to Bearhub-native locations
+- AUR release metadata updated:
+  - `bearhub` `pkgrel` -> `6`
+  - `bearhub-git` `pkgrel` -> `3`
+- Refreshed `.SRCINFO` in both AUR repositories after PKGBUILD changes
+
 ## [0.10.7-bearhub.4] 2026-05-31
 ### Changed
 - Continued namespace migration to `bearhub` while keeping `bauh` compatibility wrappers
