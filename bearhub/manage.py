@@ -4,7 +4,7 @@ from typing import Tuple
 
 from PyQt5.QtWidgets import QApplication, QWidget
 
-from bauh import ROOT_DIR, __app_name__, __version__
+from bearhub import ROOT_DIR, __app_name__, __version__
 from bauh.api import user
 from bauh.api.abstract.context import ApplicationContext
 from bauh.api.http import HttpClient

@@ -7,7 +7,7 @@ import traceback
 import urllib3
 from PyQt5.QtCore import QCoreApplication, Qt
 
-from bauh import __app_name__
+from bearhub import __app_name__
 from bearhub import app_args
 from bauh.view.core.config import CoreConfigManager
 from bauh.view.util import logs
