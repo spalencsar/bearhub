@@ -39,9 +39,9 @@ web = [
 ]
 
 [project.scripts]
-bearhub = "bauh.app:main"
-bearhub-tray = "bauh.app:tray"
-bearhub-cli = "bauh.cli.app:main"
+bearhub = "bearhub.app:main"
+bearhub-tray = "bearhub.app:tray"
+bearhub-cli = "bearhub.cli.app:main"
 
 [project.urls]
 Repository = "https://github.com/spalencsar/bearhub"
@@ -50,7 +50,7 @@ Repository = "https://github.com/spalencsar/bearhub"
 license-files = ["LICENSE"]
 
 [tool.setuptools.dynamic]
-version = {attr = "bauh.__version__"}
+version = {attr = "bearhub.__version__"}
 
 [tool.setuptools.packages.find]
 exclude = ["tests.*", "tests"]

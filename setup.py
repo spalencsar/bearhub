@@ -41,9 +41,9 @@ setup(
     test_suite="tests",
     entry_points={
         "console_scripts": [
-            "bearhub=bauh.app:main",
-            "bearhub-tray=bauh.app:tray",
-            "bearhub-cli=bauh.cli.app:main"
+            "bearhub=bearhub.app:main",
+            "bearhub-tray=bearhub.app:tray",
+            "bearhub-cli=bearhub.cli.app:main"
         ]
     },
     include_package_data=True,
