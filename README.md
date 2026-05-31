@@ -81,8 +81,10 @@ Key features
 14. [Code structure](#code)
 15. [Roadmap](#roadmap)
 16. [Contributing](https://github.com/vinifmor/bauh/blob/master/CONTRIBUTING.md)
-17. [Maintainer docs](#maintainer_docs)
-18. [Donations](#donations)
+17. [Code of Conduct](CODE_OF_CONDUCT.md)
+18. [Security Policy](SECURITY.md)
+19. [Maintainer docs](#maintainer_docs)
+20. [Donations](#donations)
 
  
 
