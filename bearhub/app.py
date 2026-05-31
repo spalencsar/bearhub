@@ -2,6 +2,6 @@
 Temporary namespace migration shim for application entry points.
 """
 
-from bauh.app import main, tray
+from bearhub.app_main import main, tray
 
 __all__ = ["main", "tray"]
