@@ -5,7 +5,7 @@ from PyQt5.QtCore import QObject
 from PyQt5.QtWidgets import QApplication
 
 from bearhub.context import new_qt_application
-from bauh.view.qt.systray import TrayIcon
+from bearhub.view.qt.systray import TrayIcon
 
 
 def new_tray_icon(app_config: dict, logger: Logger) -> Tuple[QApplication, QObject]:

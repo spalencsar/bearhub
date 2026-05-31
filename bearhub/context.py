@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QApplication
 
 from bearhub import __app_name__, __version__
 from bearhub.stylesheet import process_theme, read_default_themes, read_user_themes, read_theme_metada
-from bauh.view.util import util, translation
-from bauh.view.util.translation import I18n
+from bearhub.view.util import util, translation
+from bearhub.view.util.translation import I18n
 
 DEFAULT_I18N_KEY = 'en'
 PROPERTY_HARDCODED_STYLESHEET = 'hcqss'

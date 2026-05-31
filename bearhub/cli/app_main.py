@@ -14,9 +14,9 @@ from bauh.view.core import gems
 from bearhub.view.core.config import CoreConfigManager
 from bauh.view.core.controller import GenericSoftwareManager
 from bauh.view.core.downloader import AdaptableFileDownloader
-from bauh.view.util import logs, util, resource
-from bauh.view.util.cache import DefaultMemoryCacheFactory
-from bauh.view.util.disk import DefaultDiskCacheLoaderFactory
+from bearhub.view.util import logs, util, resource
+from bearhub.view.util.cache import DefaultMemoryCacheFactory
+from bearhub.view.util.disk import DefaultDiskCacheLoaderFactory
 
 
 def main():
