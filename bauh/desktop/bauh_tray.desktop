@@ -17,5 +17,5 @@ Comment[de]=Anwendungen installieren und entfernen (AppImage, Arch, Flatpak, Web
 Comment[ca]=Instal·lar i eliminar aplicacions (AppImage, Arch, Flatpak, Web)
 Comment[ru]=Установка и удаление приложений (AppImage, Arch, Flatpak, Web)
 Comment[tr]=Uygulama yükle/kaldır (AppImage, Arch, Flatpak, Web)
-Exec=/usr/bin/bearhub-tray
+Exec=env QT_QPA_PLATFORM=xcb /usr/bin/bearhub-tray
 Icon=bearhub
