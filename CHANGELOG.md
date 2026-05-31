@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.4] 2026-05-31
+### Changed
+- Continued namespace migration to `bearhub` while keeping `bauh` compatibility wrappers
+- Migrated core app/CLI imports to `bearhub.*` namespaces (`api`, `commons`, `view.core`, `view.util`, `view.qt`)
+- `bearhub.stylesheet` is now independent from `bauh.stylesheet`
+
+### Runtime
+- `bearhub` now uses its own package root directory (`bearhub.ROOT_DIR`)
+- Introduced native Bearhub resource tree at `bearhub/view/resources`
+- Resource resolver now prefers Bearhub resources and keeps fallback compatibility with legacy `bauh` resource paths
+
+### Packaging
+- Desktop entry sources moved to `bearhub/desktop/*`
+- AUR PKGBUILDs updated to install desktop files and icons from `bearhub/*` paths
+- AUR `pkgrel` bumped:
+  - `bearhub`: `6`
+  - `bearhub-git`: `3`
+
+### Validation
+- CLI smoke tests and offscreen GUI smoke tests executed successfully after migration slices
+
 ## [0.10.7-bearhub.3] 2026-05-28
 ### Packaging
 - AUR dependencies fixed:
