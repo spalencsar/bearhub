@@ -1,6 +1,10 @@
 import os
 
-from bauh import __app_name__, __version__
+try:
+    from bauh import __app_name__, __version__
+except ModuleNotFoundError:
+    __app_name__ = "bearhub"
+    __version__ = "0.10.7"
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
