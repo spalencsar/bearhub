@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Desktop files and icons ship from `bearhub/desktop` and `bearhub/view/resources`
 - AppImage builder migrated to Bearhub naming (`bearhub`, `bearhub-tray`, `BEARHUB_VERSION`)
 - Added brand assets under `gfx/`
-- AUR stable release tag: `0.10.7-bearhub.6` (`pkgrel=1`)
+- AUR stable release tag: `0.10.7-bearhub.6` (`pkgrel=9`)
 - AUR `bearhub-git` `pkgrel` bumped to `5`
 
 ### Documentation
