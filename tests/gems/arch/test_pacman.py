@@ -3,7 +3,7 @@ import warnings
 from unittest import TestCase
 from unittest.mock import patch, Mock
 
-from bauh import __app_name__
+
 from bauh.gems.arch import pacman
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +29,7 @@ class PacmanTest(TestCase):
         self.assertIsNotNone(ignored)
         self.assertEqual(0, len(ignored))
 
-    @patch(f'{__app_name__}.gems.arch.pacman.run_cmd', return_value="""
+    @patch("bauh.gems.arch.pacman.run_cmd", return_value="""
 Name            : package-test
 Version         : 3.4.4-1
 Description     : Test
@@ -42,7 +42,7 @@ Required By     : None
         run_cmd.assert_called_once_with('pacman -Qi package-test')
         self.assertEqual({'package-test': {}}, res)
 
-    @patch(f'{__app_name__}.gems.arch.pacman.run_cmd', return_value="""
+    @patch("bauh.gems.arch.pacman.run_cmd", return_value="""
 Name            : package-test
 Version         : 3.4.4-1
 Description     : Test
@@ -55,7 +55,7 @@ Required By     : None
         run_cmd.assert_called_once_with('pacman -Qi package-test')
         self.assertEqual({'package-test': {'lib32-vulkan-icd-loader': 'Vulkan support'}}, res)
 
-    @patch(f'{__app_name__}.gems.arch.pacman.run_cmd', return_value="""
+    @patch("bauh.gems.arch.pacman.run_cmd", return_value="""
 Name            : package-test
 Version         : 3.4.4-1
 Description     : Test
@@ -68,7 +68,7 @@ Required By     : None
         run_cmd.assert_called_once_with('pacman -Qi package-test')
         self.assertEqual({'package-test': {'pipewire-alsa': ''}}, res)
 
-    @patch(f'{__app_name__}.gems.arch.pacman.run_cmd', return_value="""
+    @patch("bauh.gems.arch.pacman.run_cmd", return_value="""
 Name            : package-test
 Version         : 3.4.4-1
 Description     : Test
@@ -81,7 +81,7 @@ Required By     : None
         run_cmd.assert_called_once_with('pacman -Qi package-test')
         self.assertEqual({'package-test': {}}, res)
 
-    @patch(f'{__app_name__}.gems.arch.pacman.run_cmd', return_value="""
+    @patch("bauh.gems.arch.pacman.run_cmd", return_value="""
 Name            : package-test
 Version         : 3.4.4-1
 Description     : Test

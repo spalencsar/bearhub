@@ -12,6 +12,7 @@ from typing import Set, Type, List, Tuple, Optional, Iterable, Generator
 
 from colorama import Fore
 
+from bauh import __app_name__
 from bauh.api.abstract.context import ApplicationContext
 from bauh.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, UpgradeRequirement, \
     TransactionResult, SoftwareAction, SettingsView, SettingsController
@@ -721,7 +722,7 @@ class AppImageManager(SoftwareManager, SettingsController):
         return TransactionResult.fail()
 
     def _gen_desktop_entry_path(self, app: AppImage) -> str:
-        return f'{DESKTOP_ENTRIES_DIR}/bauh_appimage_{app.get_clean_name()}.desktop'
+        return f'{DESKTOP_ENTRIES_DIR}/{__app_name__}_appimage_{app.get_clean_name()}.desktop'
 
     def is_enabled(self) -> bool:
         return self.enabled
@@ -855,14 +856,14 @@ class AppImageManager(SoftwareManager, SettingsController):
         for f in glob.glob(f'{APPIMAGE_SHARED_DIR}/*.db'):
             try:
                 if logs:
-                    print(f'[bauh][appimage] Deleting {f}')
+                    print(f'[{__app_name__}][appimage] Deleting {f}')
                 os.remove(f)
 
                 if logs:
-                    print(f'{Fore.YELLOW}[bauh][appimage] {f} deleted{Fore.RESET}')
+                    print(f'{Fore.YELLOW}[{__app_name__}][appimage] {f} deleted{Fore.RESET}')
             except Exception:
                 if logs:
-                    print(f'{Fore.RED}[bauh][appimage] An exception has happened when deleting {f}{Fore.RESET}')
+                    print(f'{Fore.RED}[{__app_name__}][appimage] An exception has happened when deleting {f}{Fore.RESET}')
                     traceback.print_exc()
 
     def get_settings(self) -> Optional[Generator[SettingsView, None, None]]:
@@ -1092,7 +1093,7 @@ class AppImageManager(SoftwareManager, SettingsController):
     @property
     def app_repository(self) -> str:
         if self._app_repository is None:
-            self._app_repository = f"https://github.com/vinifmor/{self.context.app_name}"
+            self._app_repository = 'https://github.com/spalencsar/bearhub'
 
         return self._app_repository
 

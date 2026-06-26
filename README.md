@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/github/license/spalencsar/bearhub?label=License)](https://github.com/spalencsar/bearhub/blob/main/LICENSE)
 
 <p align="center">
-  <img src="bauh/view/resources/img/logo.svg" alt="Bearhub logo" width="96">
+  <img src="gfx/bearhub.svg" alt="Bearhub logo" width="96">
 </p>
 
 <h1 align="center">Bearhub</h1>
@@ -10,7 +10,7 @@
 
 The original project was created by Vinicius Moreira. This fork continues from that codebase under the original license and keeps the history and authorship intact.
 
-Some sections still include historical `bauh` naming in technical paths or screenshots. Runtime commands and package names below follow Bearhub naming.
+Legacy `bauh` config and cache directories are migrated automatically on first start when present. Screenshots may still show the original upstream UI.
 
 ## Status
 
@@ -80,7 +80,7 @@ Key features
 13. [bauh-files](#bauh_files)
 14. [Code structure](#code)
 15. [Roadmap](#roadmap)
-16. [Contributing](https://github.com/vinifmor/bauh/blob/master/CONTRIBUTING.md)
+16. [Contributing](CONTRIBUTING.md)
 17. [Code of Conduct](CODE_OF_CONDUCT.md)
 18. [Security Policy](SECURITY.md)
 19. [Maintainer docs](#maintainer_docs)
@@ -97,11 +97,11 @@ Key features
 - `qt5dxcb-plugin` (or equivalent): the package name may vary from distribution
 
 ##### Steps
-- Download the .AppImage file attached with the latest release from https://github.com/vinifmor/bauh/releases
+- Download the .AppImage file attached with the latest release from https://github.com/spalencsar/bearhub/releases (when available)
 - Generally the desktop environment allows you to double-click the downloaded file to execute it. If that's not your case, follow the steps below from a console:
-    - `chmod a+x bauh-${version}-x86_64.AppImage` (replace `${version}` by the respective downloaded version)
-    - `./bauh-${version}-x86_64.AppImage`
-- If you want to integrate bauh to your desktop: click on bauh's settings menu ("sandwich") and then `Install bauh`
+    - `chmod a+x bearhub-${version}-x86_64.AppImage` (replace `${version}` by the respective downloaded version)
+    - `./bearhub-${version}-x86_64.AppImage`
+- If you want to integrate Bearhub to your desktop: click on Bearhub's settings menu ("sandwich") and then `Install Bearhub`
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/vinifmor/bauh-files/master/pictures/releases/0.10.0/appim_self.png">
@@ -174,7 +174,7 @@ rm -rf bearhub_env
 
 To create a shortcut for Bearhub on your desktop menu:
 
-- Copy desktop files from `bauh/desktop` to `~/.local/share/applications` (or `/usr/share/applications` for **root**)
+- Copy desktop files from `bearhub/desktop` to `~/.local/share/applications` (or `/usr/share/applications` for **root**)
 - Ensure `Exec` points to the Bearhub binary. e.g: `Exec=/usr/bin/bearhub` (or `bearhub_env/bin/bearhub`)
 - Ensure the icon `bearhub.svg` exists under `/usr/share/icons/hicolor/scalable/apps`
 
@@ -202,6 +202,14 @@ Bearhub is currently distributed through source releases and AUR:
 #### <a name="maintainer_docs">Maintainer docs</a>
 
 - Namespace migration notes: `NAMESPACE_MIGRATION.md`
+- Qt6 migration plan: `docs/qt6-migration.md`
+- Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` (synced into `bearhub/view/resources/img/logo.svg` for runtime/packaging)
+- AppImage build (from `linux_dist/appimage/`):
+
+```bash
+export BEARHUB_VERSION=0.10.7-bearhub.6  # release tag to build
+./build.sh
+```
 
 
 #### <a name="types">Supported types</a>
@@ -217,14 +225,14 @@ Bearhub is currently distributed through source releases and AUR:
     - `Install AppImage file`: allows to install an external AppImage file
     - `Upgrade file`: allows to upgrade a manually installed AppImage file
     - `Update database`: manually synchronize the AppImage database
-    - `Install bauh`: installs bauh if it is running as an AppImage
+    - `Install Bearhub`: installs Bearhub if it is running as an AppImage
 
-- Installed applications are store at `~/.local/share/bauh/appimage/installed` (or `/usr/local/share/bauh/installed` for **root**)
-- Desktop entries (menu shortcuts) of the installed applications are stored at `~/.local/share/applications` (or `/usr/share/applications` for **root**). Name pattern: `bauh_appimage_appname.desktop`
+- Installed applications are store at `~/.local/share/bearhub/appimage/installed` (or `/usr/local/share/bearhub/installed` for **root**)
+- Desktop entries (menu shortcuts) of the installed applications are stored at `~/.local/share/applications` (or `/usr/share/applications` for **root**). Name pattern: `bearhub_appimage_appname.desktop`
 - Symlinks are created at `~/.local/bin` (or `/usr/local/bin` for **root**). They have the same name of the application (if the name already exists, it will be created as 'app_name-appimage'. e.g: `rpcs3-appimage`)
-- Downloaded database files are stored at `~/.cache/bauh/appimage` (or `/var/cache/bauh/appimage` for **root**) as **apps.db** and **releases.db**
+- Downloaded database files are stored at `~/.cache/bearhub/appimage` (or `/var/cache/bearhub/appimage` for **root**) as **apps.db** and **releases.db**
 - Databases are updated during the initialization process if they are considered outdated
-- The configuration file is located at `~/.config/bauh/appimage.yml` (or `/etc/bauh/appimage.yml` for **root**) and it allows the following customizations:
+- The configuration file is located at `~/.config/bearhub/appimage.yml` (or `/etc/bearhub/appimage.yml` for **root**) and it allows the following customizations:
 
 ```
 database:
@@ -233,8 +241,8 @@ suggestions:
     expiration: 24  # defines the period (in hours) in which the suggestions stored in disc will be considered up to date. Use 0 if you always want to update them. Default: 24.
 ```
 
-- Applications with ignored updates are defined at `~/.config/bauh/appimage/updates_ignored.txt` (or `/etc/bauh/appimage/updates_ignored.txt` for **root**) 
-- Cached package suggestions: `~/.cache/bauh/web/suggestions.txt` (or `/var/cache/bauh/web/suggestions.yml` for **root**)
+- Applications with ignored updates are defined at `~/.config/bearhub/appimage/updates_ignored.txt` (or `/etc/bearhub/appimage/updates_ignored.txt` for **root**) 
+- Cached package suggestions: `~/.cache/bearhub/web/suggestions.txt` (or `/var/cache/bearhub/web/suggestions.yml` for **root**)
 
 
 ##### <a name="type_arch">Arch packages/AUR<a>
@@ -245,7 +253,7 @@ suggestions:
 - Automatically makes simple package compilation improvements (for AUR packages):
 
     a) if `MAKEFLAGS` is not set in `/etc/makepkg.conf`,
-    then a copy of `/etc/makepkg.conf` will be generated at `~/.config/bauh/arch/makepkg.conf` defining MAKEFLAGS to work with
+    then a copy of `/etc/makepkg.conf` will be generated at `~/.config/bearhub/arch/makepkg.conf` defining MAKEFLAGS to work with
     the number of your machine processors (`-j${nproc}`).
 
     b) same as previous, but related to `COMPRESSXZ` and `COMPRESSZST` definitions (if '--threads=0' is not defined)
@@ -267,17 +275,17 @@ suggestions:
     - `Ignore reinstallation check`: it does not to check if a given AUR packages requires to be rebuilt
     - `Reinstall` (AUR only): rebuilds an installed package.
 
-- If you have AUR added as a repository on you pacman configuration, make sure to disable bauh's support (through the settings described below)
-- AUR package compilation may require additional installed packages to work properly. Some of them are defined on the field `optdepends` of the [PKGBUILD](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=bauh) 
-  - for a **root** user the following additional applications must be installed: 
-    - `useradd`: required to create a simple user named **bauh-aur** (since **makepkg** does not allow building packages as the **root** user)
+- If you have AUR added as a repository on you pacman configuration, make sure to disable Bearhub's support (through the settings described below)
+- AUR package compilation may require additional installed packages to work properly. Some of them are defined on the field `optdepends` of the [PKGBUILD](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=bearhub) 
+  - for a **root** user the following additional applications must be installed:
+    - `useradd`: required to create a simple user named **bearhub-aur** (since **makepkg** does not allow building packages as the **root** user)
     - `runuser`: required to run commands as another user
 - **Repository packages currently do not support the following actions: Downgrade and History**
 - If some of your installed packages are not categorized, open a PullRequest to the **bauh-files** repository changing [categories.txt](https://github.com/vinifmor/bauh-files/blob/master/arch/categories.txt)
-- During bauh initialization a full AUR normalized index is saved at `~/.cache/bauh/arch/aur/index.txt`
-- Installed AUR packages have their PKGBUILD files cached at `~/.cache/bauh/arch/installed/$pkgname`
-- Packages with ignored updates are defined at `~/.config/bauh/arch/updates_ignored.txt`
-- The configuration file is located at `~/.config/bauh/arch.yml` and it allows the following customizations:
+- During Bearhub initialization a full AUR normalized index is saved at `~/.cache/bearhub/arch/aur/index.txt`
+- Installed AUR packages have their PKGBUILD files cached at `~/.cache/bearhub/arch/installed/$pkgname`
+- Packages with ignored updates are defined at `~/.config/bearhub/arch/updates_ignored.txt`
+- The configuration file is located at `~/.config/bearhub/arch.yml` and it allows the following customizations:
 ```
 aur:  true # allows to manage AUR packages. Default: true
 repositories: true  # allows to manage packages from the configured repositories. Default: true
@@ -290,7 +298,7 @@ mirrors_sort_limit: 5  # defines the maximum number of mirrors that will be used
 repositories_mthread_download: false  # enable multi-threaded download for repository packages if aria2/axel is installed (otherwise pacman will download the packages). Default: false
 automatch_providers: true  # if a possible provider for a given package dependency exactly matches its name, it will be chosen instead of asking for the user to decide (false). Default: true.
 edit_aur_pkgbuild: false  # if the AUR PKGBUILD file should be displayed for edition before the make process. true (PKGBUILD will always be displayed for edition), false (PKGBUILD never will be displayed), null (a popup will ask if the user want to edit the PKGBUILD). Default: false.
-aur_build_dir: null  # defines a custom build directory for AUR packages (a null value will point to /tmp/bauh/arch (non-root user) or /tmp/bauh_root/arch (root user)). Default: null.
+aur_build_dir: null  # defines a custom build directory for AUR packages (a null value will point to /tmp/bearhub/arch (non-root user) or /tmp/bearhub_root/arch (root user)). Default: null.
 aur_remove_build_dir: true  # it defines if a package's generated build directory should be removed after the operation is finished (installation, upgrading, ...). Options: true, false (default: true).
 aur_build_only_chosen : true  # some AUR packages have a common file definition declaring several packages to be built. When this property is 'true' only the package the user select to install will be built (unless its name is different from those declared in the PKGBUILD base). With a 'null' value a popup asking if the user wants to build all of them will be displayed. 'false' will build and install all packages. Default: true.
 aur_idx_exp: 1  # It defines the period (in HOURS) for the AUR index stored in disc to be considered up to date during the initialization process. Use 0 so that it is always updated. Default: 1. (P.S: this index is always updated when a package is installed/upgraded)
@@ -303,12 +311,12 @@ aur_rebuild_detector: true # it checks if packages built with old library versio
 prefer_repository_provider: true  # when there is just one repository provider for a given a dependency and several from AUR, it will be automatically picked.
 suggestions_exp: 24  # it defines the period (in hours) in which the suggestions stored in disc will be considered up to date. Use 0 if you always want to update them.
 ```
-- Cached package suggestions: `~/.cache/bauh/arch/suggestions.txt` (or `/var/cache/bauh/arch/suggestions.yml` for **root**)
+- Cached package suggestions: `~/.cache/bearhub/arch/suggestions.txt` (or `/var/cache/bearhub/arch/suggestions.yml` for **root**)
 
 ##### <a name="type_flatpak">Flatpak</a>
 
-- Applications with ignored updates are defined at `~/.config/bauh/flatpak/updates_ignored.txt`
-- The configuration file is located at `~/.config/bauh/flatpak.yml` and it allows the following customizations:
+- Applications with ignored updates are defined at `~/.config/bearhub/flatpak/updates_ignored.txt`
+- The configuration file is located at `~/.config/bearhub/flatpak.yml` and it allows the following customizations:
 ```
 installation_level: null # defines a default installation level: "user" or "system". (null will display a popup asking the level)
 ```
@@ -339,13 +347,13 @@ defined at [suggestions.yml](https://raw.githubusercontent.com/vinifmor/bauh-fil
 
 
 - It relies on [NodeJS](https://nodejs.org/en/), [Electron](https://electronjs.org/) and [nativefier](https://github.com/jiahaog/nativefier) to do all the magic, but you do not need them installed on your system. An isolated installation environment
-will be generated at `~/.local/share/bauh/web/env` (or `/usr/local/share/bauh/web/env` for **root**).
+will be generated at `~/.local/share/bearhub/web/env` (or `/usr/local/share/bearhub/web/env` for **root**).
 - It supports DRM protected content through a custom Electron implementation provided by [castLabs](https://github.com/castlabs/electron-releases). nativefier handles the switch between the official Electron and the custom.
 - The isolated environment is created based on the settings defined in [environment.yml](https://raw.githubusercontent.com/vinifmor/bauh-files/master/web/env/v1/environment.yml)
  (downloaded during runtime).
-- Some applications require Javascript fixes to properly work. If there is a known fix, bauh will download the file from [fix](https://github.com/vinifmor/bauh-files/tree/master/web/env/v2/fix) and
-attach it to the generated app. The fix files are saved on the disk following the pattern `~/.local/share/bauh/web/fixes/electron_{branch}/{app_name}.js` (or `/usr/local/share/bauh/web/fixes/...` for **root**)
-- The installed applications are located at `~/.local/share/bauh/installed` (or `/usr/local/share/bauh/web/installed` for **root**).
+- Some applications require Javascript fixes to properly work. If there is a known fix, Bearhub will download the file from [fix](https://github.com/vinifmor/bauh-files/tree/master/web/env/v2/fix) and
+attach it to the generated app. The fix files are saved on the disk following the pattern `~/.local/share/bearhub/web/fixes/electron_{branch}/{app_name}.js` (or `/usr/local/share/bearhub/web/fixes/...` for **root**)
+- The installed applications are located at `~/.local/share/bearhub/installed` (or `/usr/local/share/bearhub/web/installed` for **root**).
 - A desktop entry / menu shortcut will be generated for the installed applications at `~/.local/share/applications` (or `/usr/share/applications` for **root**)
 - If the Tray Mode **Start Minimized** is defined during the installation setup, a desktop entry will be also generated at `~/.config/autostart` (or `/etc/xdg/autostart` for **root**)
 allowing the application to launch automatically after the system's boot attached to the tray.
@@ -358,7 +366,7 @@ allowing the application to launch automatically after the system's boot attache
 - Extra actions
     - `Clean installation environment`: removes all the installation environment folders (it does not remove installed apps)
  
-- The configuration file is located at `~/.config/bauh/web.yml` (or `/etc/bauh/web.yml` for **root**) and it allows the following customizations:
+- The configuration file is located at `~/.config/bearhub/web.yml` (or `/etc/bearhub/web.yml` for **root**) and it allows the following customizations:
 
 ```
 environment:
@@ -370,14 +378,14 @@ environment:
 suggestions:
     cache_exp: 24  # defines the period (in HOURS) in which suggestions stored on the disk are considered up to date during the initialization process. Use 0 so that they are always updated. Default: 24.
 ```
-- Cached package suggestions: `~/.cache/bauh/web/suggestions.txt` (or `/var/cache/bauh/web/suggestions.yml` for **root**)
+- Cached package suggestions: `~/.cache/bearhub/web/suggestions.txt` (or `/var/cache/bearhub/web/suggestions.yml` for **root**)
 
 #### <a name="settings">General settings</a>
 
 ##### Parameters
 
-You can change some application settings via environment variables or arguments (type ```bauh --help``` to get more information).
-- `--tray`: if bauh should be launched attaching itself to the system tray.
+You can change some application settings via environment variables or arguments (type ```bearhub --help``` to get more information).
+- `--tray`: if Bearhub should be launched attaching itself to the system tray.
 - `--settings`: it displays only the settings window.
 - `--reset`: it cleans all configurations and cached data stored in the HOME directory.
 - `--logs`: it enables logs (for debugging purposes).
@@ -385,16 +393,16 @@ You can change some application settings via environment variables or arguments 
 - `--suggestions`: it forces loading software suggestions after the initialization process.
 
 
-##### Configuration file (**~/.config/bauh/config.yml**)
+##### Configuration file (**~/.config/bearhub/config.yml**)
 
 ```
 download:
-  icons: true # allows bauh to download the applications icons when they are not saved on the disk
-  multithreaded: true  # allows bauh to use a multithreaded download client installed on the system to download applications source files faster
+  icons: true # allows Bearhub to download the applications icons when they are not saved on the disk
+  multithreaded: true  # allows Bearhub to use a multithreaded download client installed on the system to download applications source files faster
   multithreaded_client: null  # defines the multi-threaded download tool to be used. If null, the default installed tool will be used (priority: aria2 > axel). Possible tools/values: aria2, axel
   check_ssl: true  # if the security certificate (SSL) should be checked before downloading files.
-gems: null  # defines the enabled applications types managed by bauh (a null value means "all available")
-locale: null  # defines a different translation for bauh (a null value will retrieve the system's default locale)
+gems: null  # defines the enabled applications types managed by Bearhub (a null value means "all available")
+locale: null  # defines a different translation for Bearhub (a null value will retrieve the system's default locale)
 store_root_password: true  # if the root password should be asked only once
 memory_cache:
   data_expiration: 3600 # the interval in SECONDS that data cached in memory will live
@@ -403,8 +411,8 @@ suggestions:
   by_type: 20  # the maximum number of application suggestions that must be retrieved per type
   enabled: true  # if suggestions must be displayed when no application is installed
 system:
-  notifications: true  # if system popup should be displayed for some events. e.g: when there are updates, bauh will display a system popup
-  single_dependency_checking: false  # if bauh should check only once if for the available technologies on the system.
+  notifications: true  # if system popup should be displayed for some events. e.g: when there are updates, Bearhub will display a system popup
+  single_dependency_checking: false  # if Bearhub should check only once if for the available technologies on the system.
 ui:
   qt_style: fusion  # defines the Qt style. A null value will map to 'fusion' as well.
   table:
@@ -415,8 +423,8 @@ ui:
   hdpi: true  # enables HDPI rendering improvements. Use 'false' to disable them if you think the interface looks strange
   auto_scale: false # activates Qt auto screen scale factor (QT_AUTO_SCREEN_SCALE_FACTOR). It fixes scaling issues for some desktop environments (like Gnome)
   scale_factor: 1.0  # defines the interface display scaling factor (Qt). Raise the value to raise the interface size. The settings window display this value as a percentage (e.g: 1.0 -> 100%).
-  theme: defines the path to the theme/stylesheet file with a .qss extension (e.g: /path/to/my/theme.qss). For themes provided by bauh, only a string key is needed (e.g: light). Default: light
-  system_theme: merges the system's theme/stylesheet with bauh's. Default: false.
+  theme: defines the path to the theme/stylesheet file with a .qss extension (e.g: /path/to/my/theme.qss). For themes provided by Bearhub, only a string key is needed (e.g: light). Default: light
+  system_theme: merges the system's theme/stylesheet with Bearhub's. Default: false.
 updates:
   check_interval: 5  # the updates checking interval in minutes
   ask_for_reboot: true  # if a dialog asking for a system reboot should be displayed after a successful upgrade
@@ -438,7 +446,7 @@ boot:
 
 ##### <a name="forbidden_gems">Forbidden packaging formats</a>
 - System administrators and package managers of Linux distributions can disable the usage/management of supported packaging formats
-by adding their ids to the file `/etc/bauh/gems.forbidden`. This will prevent their management code to be loaded.
+by adding their ids to the file `/etc/bearhub/gems.forbidden`. This will prevent their management code to be loaded.
 - Example (one id per line):
 ```
 arch
@@ -459,52 +467,52 @@ appimage
   - The priority number is used to sort the retrieved suggestions
 
 - If Linux distributions want to provide their custom suggestions files:
-  - Create the file `/etc/bauh/suggestions.conf`
+  - Create the file `/etc/bearhub/suggestions.conf`
   - The content is basically a mapping for each gem to a url or local file (absolute path).
     - Example:
     ```
        arch=https://mydomain.com/arch/suggestions.txt  # remote file
-       appimage=/etc/bauh/appimage/suggestions.txt  # local file (absolute path)
+       appimage=/etc/bearhub/appimage/suggestions.txt  # local file (absolute path)
        # snap = my mapping  # comments with a '#' are allowed
     ```
   - If a given gem name is omitted, its suggestions will be downloaded from the default location.
 
 #### <a name="dirs">Directory structure, caching and logs</a>
-- `~/.config/bauh` (or `/etc/bauh` for **root**): stores configuration files
-- `~/.cache/bauh` (or `/var/cache/bauh` for **root**): stores data about your installed applications, databases, indexes, etc. Files are stored here to provide a faster initialization and data recovery. 
-- `/tmp/bauh@$USER` (e.g: `/tmp/bauh@root`): stores logging and temporary files (e.g: build dependencies)
+- `~/.config/bearhub` (or `/etc/bearhub` for **root**): stores configuration files
+- `~/.cache/bearhub` (or `/var/cache/bearhub` for **root**): stores data about your installed applications, databases, indexes, etc. Files are stored here to provide a faster initialization and data recovery. 
+- `/tmp/bearhub@$USER` (e.g: `/tmp/bearhub@root`): stores logging and temporary files (e.g: build dependencies)
 
 
 #### <a name="custom_themes">Custom themes</a>
-- Custom themes can be provided by adding their files at `~/.local/share/bauh/themes` (or `/usr/share/bauh/themes` for **root**). Sub-folders are allowed. 
+- Custom themes can be provided by adding their files at `~/.local/share/bearhub/themes` (or `/usr/share/bearhub/themes` for **root**). Sub-folders are allowed. 
 - Themes are composed by 2 required and 1 optional files sharing the same name:
-    - `my_theme.qss`: file with the qss rules. Full example: [light.qss](https://github.com/vinifmor/bauh/blob/master/bauh/view/resources/style/light/light.qss)
-    - `my_theme.meta`: file defining the theme's data. Full example: [light.meta](https://github.com/vinifmor/bauh/blob/master/bauh/view/resources/style/light/light.meta) 
+    - `my_theme.qss`: file with the qss rules. Full example: [light.qss](https://github.com/spalencsar/bearhub/blob/main/bearhub/view/resources/style/light/light.qss)
+    - `my_theme.meta`: file defining the theme's data. Full example: [light.meta](https://github.com/spalencsar/bearhub/blob/main/bearhub/view/resources/style/light/light.meta)
         - available fields:
             - `name`: name that will be displayed on the interface. It supports translations by adding additional `name` fields with brackets and the language code (e.g: `name[es]=Mi tema`)
             - `description`: theme's description that will be displayed on the interface. It supports translations like `name` (e.g: description[es] = Mi tema).
             - `version`: theme's version. It just works as information at the moment. (e.g: 1.0)
-            - `root_theme`: optional attribute that points to a theme that must be loaded before the theme. It supports the bauh's default theme keys (e.g: default, light, ...) or a file path (e.g: `/path/to/root/file.qss`).
-            - `abstract`: optional boolean attribute (true/false) that should only be used by themes that are not complete on their own and just work as a base (root) for other themes. Abstract themes are not displayed on the interface. Full example: [default.qss](https://github.com/vinifmor/bauh/blob/master/bauh/view/resources/style/default/default.qss) 
-    - `my_theme.vars`: optional file defining `key=value` pairs of variables that will be available for the .qss file (can be referenced through the symbol **@**. e.g `@my_var`). Full example: [light.vars](https://github.com/vinifmor/bauh/blob/master/bauh/view/resources/style/light/light.vars)
+            - `root_theme`: optional attribute that points to a theme that must be loaded before the theme. It supports Bearhub's default theme keys (e.g: default, light, ...) or a file path (e.g: `/path/to/root/file.qss`).
+            - `abstract`: optional boolean attribute (true/false) that should only be used by themes that are not complete on their own and just work as a base (root) for other themes. Abstract themes are not displayed on the interface. Full example: [default.qss](https://github.com/spalencsar/bearhub/blob/main/bearhub/view/resources/style/default/default.qss) 
+    - `my_theme.vars`: optional file defining `key=value` pairs of variables that will be available for the .qss file (can be referenced through the symbol **@**. e.g `@my_var`). Full example: [light.vars](https://github.com/spalencsar/bearhub/blob/main/bearhub/view/resources/style/light/light.vars)
         - common theme variables available: 
             - `style_dir`: path to the .qss file directory. Example: @style_dir/my_icon.svg
-            - `images`: path to bauh's icons directory (gem icons are not available through this variable). Example: @images/logo.svg
+            - `images`: path to Bearhub's icons directory (gem icons are not available through this variable). Example: @images/logo.svg
 
 
 #### <a name="tray_icons">Tray icons</a>
 
 Priority: 
-  1) Icon paths defined in **~/.config/bauh/config.yml**
-  2) Icons from the system with the following names: `bauh_tray_default` and `bauh_tray_updates`
+  1) Icon paths defined in **~/.config/bearhub/config.yml**
+  2) Icons from the system with the following names: `bearhub_tray_default` and `bearhub_tray_updates` (legacy `bauh_tray_*` names are still accepted as fallback)
   3) Own packaged icons
 
   
 #### <a name="cli">CLI (Command Line Interface)</a>
 
-- For now it only allows checking for software updates (`bauh-cli updates`).
-- To verify the available commands: `bauh-cli --help`. 
-- To list the command parameters: `bauh-cli [command] --help`. (e.g: `bauh-cli updates --help`)
+- For now it only allows checking for software updates (`bearhub-cli updates`).
+- To verify the available commands: `bearhub-cli --help`. 
+- To list the command parameters: `bearhub-cli [command] --help`. (e.g: `bearhub-cli updates --help`)
 
 
 #### <a name="performance">Improving performance</a>
@@ -533,7 +541,7 @@ the `view` code is only attached to them (it does not know how the `gems` handle
 - Separate modules for each packaging technology
 - Memory and performance improvements
 - Improve user experience
-- The current development changes can be checked [here](https://github.com/vinifmor/bauh/blob/staging/CHANGELOG.md)
+- The current development changes can be checked in [CHANGELOG.md](CHANGELOG.md)
     
 #### <a name="donations">Donations</a>
 - You can support this project through [ko-fi](https://ko-fi.com/vinifmor).

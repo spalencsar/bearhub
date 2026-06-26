@@ -64,20 +64,20 @@ def get_distro():
 def clean_app_files(managers: List[SoftwareManager], logs: bool = True):
 
     if logs:
-        print('[bauh] Cleaning configuration and cache files')
+        print('[{}] Cleaning configuration and cache files'.format(__app_name__))
 
     for path in (CACHE_DIR, CONFIG_DIR, TEMP_DIR):
         if logs:
-            print('[bauh] Deleting directory {}'.format(path))
+            print('[{}] Deleting directory {}'.format(__app_name__, path))
 
         if os.path.exists(path):
             try:
                 shutil.rmtree(path)
                 if logs:
-                    print('{}[bauh] Directory {} deleted{}'.format(Fore.YELLOW, path, Fore.RESET))
+                    print('{}[{}] Directory {} deleted{}'.format(Fore.YELLOW, __app_name__, path, Fore.RESET))
             except Exception:
                 if logs:
-                    print('{}[bauh] An exception has happened when deleting {}{}'.format(Fore.RED, path, Fore.RESET))
+                    print('{}[{}] An exception has happened when deleting {}{}'.format(Fore.RED, __app_name__, path, Fore.RESET))
                     traceback.print_exc()
 
     if managers:
@@ -85,4 +85,4 @@ def clean_app_files(managers: List[SoftwareManager], logs: bool = True):
             m.clear_data()
 
     if logs:
-        print('[bauh] Cleaning finished')
+        print('[{}] Cleaning finished'.format(__app_name__))

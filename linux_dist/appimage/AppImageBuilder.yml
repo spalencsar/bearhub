@@ -3,26 +3,27 @@ script:
   - rm -rf AppDir appimage-builder-cache *.AppImage *.zsync |true
   - mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
   - mkdir -p AppDir/usr/share/applications
-  - wget https://github.com/vinifmor/bauh/archive/${BAUH_VERSION}.tar.gz || exit 1
-  - tar -xf ${BAUH_VERSION}.tar.gz || exit 1
-  - cd bauh-${BAUH_VERSION} || exit 1
-  - rm setup.cfg setup.py requirements.txt || exit 1  # removing the outdated installation files
+  - wget -O bearhub-${BEARHUB_VERSION}.tar.gz https://github.com/spalencsar/bearhub/archive/refs/tags/${BEARHUB_VERSION}.tar.gz || exit 1
+  - tar -xf bearhub-${BEARHUB_VERSION}.tar.gz || exit 1
+  - cd bearhub-${BEARHUB_VERSION} || exit 1
   - python3 -m build --wheel --no-isolation || exit 1
   - python3 -m installer --destdir=../AppDir --prefix=/usr dist/*.whl || exit 1
-  - test -e ../AppDir/usr/bin/bauh || exit 1
-  - cp bauh/view/resources/img/logo.svg ../AppDir/usr/share/icons/hicolor/scalable/apps/bauh.svg || exit 1
-  - cp bauh/desktop/bauh.desktop ../AppDir/usr/share/applications || exit 1
+  - test -e ../AppDir/usr/bin/bearhub || exit 1
+  - test -e ../AppDir/usr/bin/bearhub-tray || exit 1
+  - cp bearhub/view/resources/img/logo.svg ../AppDir/usr/share/icons/hicolor/scalable/apps/bearhub.svg || exit 1
+  - cp bearhub/desktop/bearhub.desktop ../AppDir/usr/share/applications || exit 1
+  - cp bearhub/desktop/bearhub_tray.desktop ../AppDir/usr/share/applications || exit 1
 
 AppDir:
   path: ./AppDir
 
   app_info:
-    id: bauh
-    name: bauh
-    icon: bauh
-    version: !ENV ${BAUH_VERSION}
+    id: bearhub
+    name: Bearhub
+    icon: bearhub
+    version: !ENV ${BEARHUB_VERSION}
     exec: /usr/bin/python3
-    exec_args: "$APPDIR/usr/bin/bauh $@"
+    exec_args: "$APPDIR/usr/bin/bearhub $@"
 
   apt:
     arch: amd64
@@ -94,7 +95,6 @@ AppDir:
       use_host_x: true
 
 AppImage:
-  update-information: 'gh-releases-zsync|vinifmor|bauh|latest|bauh-*x86_64.AppImage.zsync'
+  update-information: 'gh-releases-zsync|spalencsar|bearhub|latest|bearhub-*x86_64.AppImage.zsync'
   sign-key: None
   arch: x86_64
-

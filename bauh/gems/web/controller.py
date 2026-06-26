@@ -15,6 +15,7 @@ import yaml
 from colorama import Fore
 from requests import Response
 
+from bauh import __app_name__
 from bauh.api.abstract.context import ApplicationContext
 from bauh.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, TransactionResult, \
     SoftwareAction, SettingsView, SettingsController
@@ -1149,15 +1150,15 @@ class WebApplicationManager(SoftwareManager, SettingsController):
     def clear_data(self, logs: bool = True):
         if os.path.exists(ENV_PATH):
             if logs:
-                print('[bauh][web] Deleting directory {}'.format(ENV_PATH))
+                print('[{}][web] Deleting directory {}'.format(__app_name__, ENV_PATH))
 
             try:
                 shutil.rmtree(ENV_PATH)
                 if logs:
-                    print('{}[bauh][web] Directory {} deleted{}'.format(Fore.YELLOW, ENV_PATH, Fore.RESET))
+                    print('{}[{}][web] Directory {} deleted{}'.format(Fore.YELLOW, __app_name__, ENV_PATH, Fore.RESET))
             except Exception:
                 if logs:
-                    print('{}[bauh][web] An exception has happened when deleting {}{}'.format(Fore.RED, ENV_PATH,
+                    print('{}[{}][web] An exception has happened when deleting {}{}'.format(Fore.RED, __app_name__, ENV_PATH,
                                                                                               Fore.RESET))
                     traceback.print_exc()
 

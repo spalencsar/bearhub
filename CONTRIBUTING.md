@@ -23,10 +23,8 @@ The way to go here is to ask yourself if the improvement would be useful for mor
 
 # Adding a new translation
 * To add a new translation, you will have to create a file in each directory listed below named as the first two letters of the language in the ISO format (e.g: for 'english' would be 'en'):
-- `bauh/view/resources/locale`
+- `bearhub/view/resources/locale` (or `bauh/view/resources/locale` during namespace migration)
 - `bauh/gems/appimage/resources/locale`
 - `bauh/gems/arch/resources/locale`
 - `bauh/gems/flatpak/resources/locale`
-- `bauh/gems/snap/resources/locale`
 - `bauh/gems/web/resources/locale`
-- `bauh/gems/debian/resources/locale`

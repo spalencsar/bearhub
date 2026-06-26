@@ -54,3 +54,14 @@ version = {attr = "bearhub.__version__"}
 
 [tool.setuptools.packages.find]
 exclude = ["tests.*", "tests"]
+
+[tool.setuptools.package-data]
+bearhub = ["desktop/*"]
+bauh = [
+    "view/resources/locale/*",
+    "view/resources/img/*",
+    "view/resources/style/*",
+    "view/resources/style/*/img/*",
+    "gems/*/resources/img/*",
+    "gems/*/resources/locale/*",
+]

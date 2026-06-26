@@ -1,14 +1,14 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
 
-from bauh import __app_name__
+
 from bauh.gems.flatpak import flatpak, VERSION_1_2
 
 
 class FlatpakTest(TestCase):
 
-    @patch(f'{__app_name__}.gems.flatpak.flatpak.SimpleProcess')
-    @patch(f'{__app_name__}.gems.flatpak.flatpak.ProcessHandler.handle_simple', return_value=(True, """
+    @patch("bauh.gems.flatpak.flatpak.SimpleProcess")
+    @patch("bauh.gems.flatpak.flatpak.ProcessHandler.handle_simple", return_value=(True, """
     Looking for updates...
 
     \tID\tArch\tBranch\tRemote\tDownload

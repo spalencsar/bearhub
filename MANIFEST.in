@@ -1,6 +1,5 @@
 include LICENSE CHANGELOG.md README.md requirements.txt
-recursive-include bauh/desktop *
-recursive-exclude bauh/desktop *.orig
+recursive-include gfx *
 recursive-include bearhub/desktop *
 recursive-exclude bearhub/desktop *.orig
 recursive-include bauh/view/resources *

@@ -7,7 +7,7 @@ from bauh import __version__, ROOT_DIR
 from bauh.context import generate_i18n
 from bauh.view.util import resource
 
-DISPLAY_NAME = 'bearhub'
+DISPLAY_NAME = 'Bearhub'
 PROJECT_URL = 'https://github.com/spalencsar/bearhub'
 LICENSE_URL = 'https://raw.githubusercontent.com/spalencsar/bearhub/main/LICENSE'
 

@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.10.7-bearhub.6] 2026-06-26
+### Fixed
+- Arch metadata URLs no longer point to non-existent `bearhub-files` (restored `bauh-files` data sources)
+- AppImage repository URL now points to `spalencsar/bearhub` instead of `vinifmor/bearhub`
+- Unit test mocks corrected for namespace transition (`bauh.gems` paths)
+- Web locale tests updated for `locale.getlocale()` behavior
+
+### Changed
+- CLI/log output uses dynamic app name (`bearhub`) instead of hardcoded `[bauh]`
+- Tray icon theme lookup prefers `bearhub_tray_*` with legacy `bauh_tray_*` fallback
+- AppImage-installed desktop entries use `bearhub_appimage_*` prefix
+- About dialog displays `Bearhub` (capitalized)
+- AUR/makepkg.conf marker uses dynamic app name
+
+### Packaging
+- Removed legacy `bauh/desktop/*` entries from distribution
+- Desktop files and icons ship from `bearhub/desktop` and `bearhub/view/resources`
+- AppImage builder migrated to Bearhub naming (`bearhub`, `bearhub-tray`, `BEARHUB_VERSION`)
+- Added brand assets under `gfx/`
+- AUR stable release tag: `0.10.7-bearhub.6` (`pkgrel=1`)
+- AUR `bearhub-git` `pkgrel` bumped to `5`
+
+### Documentation
+- README aligned with Bearhub runtime paths, commands, and maintainer workflows
+- GitHub issue templates updated for Bearhub
+- `CONTRIBUTING.md` locale paths refreshed
+- Added `docs/qt6-migration.md` and roadmap milestone M6 (PySide6 decision)
+- Maintainer docs: AppImage build and Qt6 migration references
+
+### CI
+- Added GitHub Actions workflow for unit tests (Python 3.11 and 3.12)
+
 ## [0.10.7-bearhub.5] 2026-05-31
 ### Packaging
 - Desktop integration finalized under `bearhub/desktop/*`
