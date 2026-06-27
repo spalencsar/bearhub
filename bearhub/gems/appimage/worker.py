@@ -12,14 +12,14 @@ from typing import Optional, Generator
 
 import requests
 
-from bauh.api.abstract.handler import TaskManager, ProcessWatcher
-from bauh.api.http import HttpClient
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.gems.appimage import get_icon_path, INSTALLATION_DIR, SYMLINKS_DIR, util, DATABASES_TS_FILE, \
+from bearhub.api.abstract.handler import TaskManager, ProcessWatcher
+from bearhub.api.http import HttpClient
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.gems.appimage import get_icon_path, INSTALLATION_DIR, SYMLINKS_DIR, util, DATABASES_TS_FILE, \
     APPIMAGE_CACHE_DIR, DATABASE_APPS_FILE, DATABASE_RELEASES_FILE, URL_COMPRESSED_DATABASES
-from bauh.gems.appimage.model import AppImage
-from bauh.view.util.translation import I18n
+from bearhub.gems.appimage.model import AppImage
+from bearhub.view.util.translation import I18n
 
 
 class DatabaseUpdater(Thread):

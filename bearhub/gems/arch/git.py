@@ -3,8 +3,8 @@ from io import StringIO
 from logging import Logger
 from typing import List, Tuple, Optional
 
-from bauh.commons import system
-from bauh.commons.system import SimpleProcess
+from bearhub.commons import system
+from bearhub.commons.system import SimpleProcess
 
 
 def is_installed() -> bool:

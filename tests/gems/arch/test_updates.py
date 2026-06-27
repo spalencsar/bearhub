@@ -1,11 +1,11 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock, MagicMock
 
-from bauh.api.abstract.controller import UpgradeRequirement
-from bauh.gems.arch.dependencies import DependenciesAnalyser
-from bauh.gems.arch.model import ArchPackage
-from bauh.gems.arch.updates import UpdatesSummarizer
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.controller import UpgradeRequirement
+from bearhub.gems.arch.dependencies import DependenciesAnalyser
+from bearhub.gems.arch.model import ArchPackage
+from bearhub.gems.arch.updates import UpdatesSummarizer
+from bearhub.view.util.translation import I18n
 
 
 class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
@@ -27,7 +27,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
                         "prefer_repository_provider": True,
                         "check_dependency_breakage": True}
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_not_return_installed_to_remove_when_conflict_with_installed_version_fails(self, pacman: Mock):
         """
         If the newest version o package A conflicts with an installed package named B, but the conflict expression
@@ -75,7 +75,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertFalse(res.to_install)
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_return_installed_to_remove_when_conflict_with_installed_version_matches(self, pacman: Mock):
         """
         If the newest version o package A conflicts with an installed package named B and the conflict expression
@@ -129,7 +129,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="B", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_return_installed_to_remove_when_conflict_with_installed_matches(self, pacman: Mock):
         """
         If the newest version o package A conflicts with an installed package named B,
@@ -183,7 +183,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="B", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_not_return_installed_to_remove_when_conflict_with_is_self_conflict(self, pacman: Mock):
         """
         If the newest version o package A conflicts with itself, then A should not be marked as a package to be removed.
@@ -225,7 +225,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertFalse(res.to_install)
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_not_return_installed_to_remove_when_conflict_with_provided_version_fails(self, pacman: Mock):
         """
         If the newest version o package A conflicts with a provided package C (by installed package B),
@@ -272,7 +272,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertFalse(res.to_install)
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__not_return_to_remove_when_conflict_with_provided_virtual_package_with_version_fails(self, pacman: Mock):
         """
         Scenario:
@@ -324,7 +324,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertFalse(res.to_install)
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_installed_virtual_with_defined_version_to_remove_when_conflict_version_matches(self, pacman: Mock):
         """
         Scenario:
@@ -389,7 +389,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="X", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'V'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_installed_virtual_with_defined_version_to_remove_when_conflict_matches__case_2(self, pacman: Mock):
         """
         This test case covers the same scenario as the above, but adds an additional provider for the same
@@ -465,7 +465,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="X", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'V'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_return_installed_package_to_remove_when_conflict_with_provided_matches_version(self, pacman: Mock):
         """
         If the newest version o package A conflicts with a provided package C (by installed package B),
@@ -522,7 +522,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="B", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_return_installed_package_to_remove_when_conflict_with_provided_matches(self, pacman: Mock):
         """
         If the newest version o package A conflicts with a provided package C (by installed package B),
@@ -578,7 +578,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         pkg_b = ArchPackage(name="B", installed=True, i18n=self.i18n)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__should_not_return_installed_to_remove_when_conflict_with_provider_is_self_conflict(self, pacman: Mock):
         """
         If the newest version o package A conflicts with a provided package C (by A itself),
@@ -621,7 +621,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertFalse(res.to_install)
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_cannot_upgrade_when_several_to_upgrade_conflict_with_each_other(self, pacman: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -681,7 +681,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertIn(UpgradeRequirement(pkg=pkg_a, reason=" 'B'"), res.cannot_upgrade)
         self.assertIn(UpgradeRequirement(pkg=pkg_b, reason=" 'A'"), res.cannot_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_cannot_upgrade_when_several_to_upgrade_conflict_with_provided_by_each_other(self, pacman: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -743,7 +743,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertIn(UpgradeRequirement(pkg=pkg_a, reason=" 'B'"), res.cannot_upgrade)
         self.assertIn(UpgradeRequirement(pkg=pkg_b, reason=" 'A'"), res.cannot_upgrade)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_a_package_to_upgrade_conflicts_with_another(self, pacman: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -805,7 +805,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_a_package_to_upgrade_conflicts_with_provided_by_another(self, pacman: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -870,7 +870,7 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_a_package_to_upgrade_conflicts_with_provided_version_by_another(self, pacman: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -936,8 +936,8 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, reason=" 'A'", extra_size=1)], res.to_remove)
 
-    @patch("bauh.gems.arch.dependencies.pacman")
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.dependencies.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_cannot_upgrade_when_several_packages_to_install_conflict_with_each_other(self, *mocks: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -1038,8 +1038,8 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertIn(UpgradeRequirement(pkg=pkg_a, reason="'C' 'D'"), res.cannot_upgrade)
         self.assertIn(UpgradeRequirement(pkg=pkg_b, reason="'C' 'D'"), res.cannot_upgrade)
 
-    @patch("bauh.gems.arch.dependencies.pacman")
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.dependencies.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_cannot_upgrade_when_packages_to_install_conflict_with_version_of_each_other(self, *mocks: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -1140,8 +1140,8 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertIn(UpgradeRequirement(pkg=pkg_a, reason="'C' 'D'"), res.cannot_upgrade)
         self.assertIn(UpgradeRequirement(pkg=pkg_b, reason="'C' 'D'"), res.cannot_upgrade)
 
-    @patch("bauh.gems.arch.dependencies.pacman")
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.dependencies.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_to_update_conflicts_with_to_install(self, *mocks: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -1227,8 +1227,8 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, extra_size=1, reason=" 'C'")], res.to_remove)
 
-    @patch("bauh.gems.arch.dependencies.pacman")
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.dependencies.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_to_update_conflicts_with_specific_version_of_install(self, *mocks: Mock):
         """
         Consider package A and B are selected to be upgraded:
@@ -1314,8 +1314,8 @@ class UpdatesSummarizerGetUpgradeRequirementsTest(TestCase):
         self.assertEqual([UpgradeRequirement(pkg=pkg_a, required_size=1, extra_size=0)], res.to_upgrade)
         self.assertEqual([UpgradeRequirement(pkg=pkg_b, extra_size=1, reason=" 'C'")], res.to_remove)
 
-    @patch("bauh.gems.arch.dependencies.pacman")
-    @patch("bauh.gems.arch.updates.pacman")
+    @patch("bearhub.gems.arch.dependencies.pacman")
+    @patch("bearhub.gems.arch.updates.pacman")
     def test__return_as_to_remove_when_to_update_conflicts_with_to_install_and_it_has_deps(self, *mocks: Mock):
         """
         Consider package A and B are selected to be upgraded:

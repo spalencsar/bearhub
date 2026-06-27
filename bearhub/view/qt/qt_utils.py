@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QRect, QPoint
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QWidget, QApplication, QDesktopWidget
 
-from bauh.view.util import resource
+from bearhub.view.util import resource
 
 desktop: Optional[QDesktopWidget] = None
 

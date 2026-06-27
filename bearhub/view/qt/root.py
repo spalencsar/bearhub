@@ -7,12 +7,12 @@ from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QLineEdit, QApplication, QDialog, QPushButton, QVBoxLayout, \
     QSizePolicy, QToolBar, QLabel
 
-from bauh.api.abstract.context import ApplicationContext
-from bauh.commons.system import new_subprocess
-from bauh.view.core.config import CoreConfigManager
-from bauh.view.qt.components import QtComponentsManager, new_spacer
-from bauh.view.util import util
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.commons.system import new_subprocess
+from bearhub.view.core.config import CoreConfigManager
+from bearhub.view.qt.components import QtComponentsManager, new_spacer
+from bearhub.view.util import util
+from bearhub.view.util.translation import I18n
 
 ACTION_ASK_ROOT = 99
 

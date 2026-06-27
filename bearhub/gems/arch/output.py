@@ -3,9 +3,9 @@ import time
 from threading import Thread
 from typing import Optional, Collection
 
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.commons.html import bold
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.commons.html import bold
+from bearhub.view.util.translation import I18n
 
 
 class TransactionStatusHandler(Thread):

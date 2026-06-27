@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from bauh.gems.appimage.util import replace_desktop_entry_exec_command
+from bearhub.gems.appimage.util import replace_desktop_entry_exec_command
 
 
 class TestUtil(TestCase):

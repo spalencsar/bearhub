@@ -3,10 +3,10 @@ from io import StringIO
 from re import Pattern
 from typing import Optional, Iterable, Tuple
 
-from bauh.api.abstract.model import SoftwarePackage, CustomSoftwareAction
-from bauh.commons import resource
-from bauh.gems.appimage import ROOT_DIR, INSTALLATION_DIR
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.model import SoftwarePackage, CustomSoftwareAction
+from bearhub.commons import resource
+from bearhub.gems.appimage import ROOT_DIR, INSTALLATION_DIR
+from bearhub.view.util.translation import I18n
 
 
 class AppImage(SoftwarePackage):

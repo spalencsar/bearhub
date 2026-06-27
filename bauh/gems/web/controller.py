@@ -1,0 +1,1 @@
+from bearhub.gems.web.controller import *  # noqa: F401,F403

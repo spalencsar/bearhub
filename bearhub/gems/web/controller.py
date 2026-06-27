@@ -15,30 +15,30 @@ import yaml
 from colorama import Fore
 from requests import Response
 
-from bauh import __app_name__
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, TransactionResult, \
+from bearhub import __app_name__
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, TransactionResult, \
     SoftwareAction, SettingsView, SettingsController
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import SoftwarePackage, CustomSoftwareAction, PackageSuggestion, PackageUpdate, \
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import SoftwarePackage, CustomSoftwareAction, PackageSuggestion, PackageUpdate, \
     PackageHistory, \
     SuggestionPriority, PackageStatus
-from bauh.api.abstract.view import MessageType, MultipleSelectComponent, InputOption, SingleSelectComponent, \
+from bearhub.api.abstract.view import MessageType, MultipleSelectComponent, InputOption, SingleSelectComponent, \
     SelectViewType, TextInputComponent, FormComponent, FileChooserComponent, PanelComponent, ViewComponentAlignment
-from bauh.api.paths import DESKTOP_ENTRIES_DIR
-from bauh.commons import resource
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.commons.system import ProcessHandler, get_dir_size, SimpleProcess
-from bauh.commons.view_utils import get_human_size_str
-from bauh.gems.web import INSTALLED_PATH, nativefier, DESKTOP_ENTRY_PATH_PATTERN, URL_FIX_PATTERN, ENV_PATH, \
+from bearhub.api.paths import DESKTOP_ENTRIES_DIR
+from bearhub.commons import resource
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.commons.system import ProcessHandler, get_dir_size, SimpleProcess
+from bearhub.commons.view_utils import get_human_size_str
+from bearhub.gems.web import INSTALLED_PATH, nativefier, DESKTOP_ENTRY_PATH_PATTERN, URL_FIX_PATTERN, ENV_PATH, \
     ROOT_DIR, TEMP_PATH, FIX_FILE_PATH, ELECTRON_CACHE_DIR, UA_CHROME, get_icon_path, URL_PROPS_PATTERN
-from bauh.gems.web.config import WebConfigManager
-from bauh.gems.web.environment import EnvironmentUpdater, EnvironmentComponent
-from bauh.gems.web.model import WebApplication
-from bauh.gems.web.search import SearchIndexManager
-from bauh.gems.web.worker import SuggestionsManager, UpdateEnvironmentSettings, \
+from bearhub.gems.web.config import WebConfigManager
+from bearhub.gems.web.environment import EnvironmentUpdater, EnvironmentComponent
+from bearhub.gems.web.model import WebApplication
+from bearhub.gems.web.search import SearchIndexManager
+from bearhub.gems.web.worker import SuggestionsManager, UpdateEnvironmentSettings, \
     SuggestionsLoader, SearchIndexGenerator
 
 try:

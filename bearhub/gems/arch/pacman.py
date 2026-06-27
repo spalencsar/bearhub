@@ -9,10 +9,10 @@ from typing import List, Set, Tuple, Dict, Iterable, Optional, Any, Pattern, Col
 
 from colorama import Fore
 
-from bauh.commons import system
-from bauh.commons.system import run_cmd, new_subprocess, new_root_subprocess, SystemProcess, SimpleProcess
-from bauh.commons.util import size_to_byte
-from bauh.gems.arch.exceptions import PackageNotFoundException, PackageInHoldException
+from bearhub.commons import system
+from bearhub.commons.system import run_cmd, new_subprocess, new_root_subprocess, SystemProcess, SimpleProcess
+from bearhub.commons.util import size_to_byte
+from bearhub.gems.arch.exceptions import PackageNotFoundException, PackageInHoldException
 
 RE_DEPS = re.compile(r'[\w\-_]+:[\s\w_\-.]+\s+\[\w+]')
 RE_OPTDEPS = re.compile(r'[\w._\-]+\s*:')

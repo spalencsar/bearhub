@@ -9,11 +9,11 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QIcon
 from colorama import Fore
 
-from bauh import __app_name__
-from bauh.api.abstract.controller import SoftwareManager
-from bauh.api.paths import CONFIG_DIR, CACHE_DIR, TEMP_DIR
-from bauh.commons.system import run_cmd
-from bauh.view.util import resource
+from bearhub import __app_name__
+from bearhub.api.abstract.controller import SoftwareManager
+from bearhub.api.paths import CONFIG_DIR, CACHE_DIR, TEMP_DIR
+from bearhub.commons.system import run_cmd
+from bearhub.view.util import resource
 
 
 def notify_user(msg: str, icon_path: str = None):

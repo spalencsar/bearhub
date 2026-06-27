@@ -1,7 +1,7 @@
 import os
 from unittest import TestCase
 
-from bauh.gems.arch import aur
+from bearhub.gems.arch import aur
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 

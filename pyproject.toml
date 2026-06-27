@@ -50,14 +50,14 @@ Repository = "https://github.com/spalencsar/bearhub"
 license-files = ["LICENSE"]
 
 [tool.setuptools.dynamic]
-version = {attr = "bauh.__version__"}
+version = {attr = "bearhub.__version__"}
 
 [tool.setuptools.packages.find]
 exclude = ["tests.*", "tests"]
 
 [tool.setuptools.package-data]
-bearhub = ["desktop/*"]
-bauh = [
+bearhub = [
+    "desktop/*",
     "view/resources/locale/*",
     "view/resources/img/*",
     "view/resources/style/*",
@@ -65,3 +65,4 @@ bauh = [
     "gems/*/resources/img/*",
     "gems/*/resources/locale/*",
 ]
+bauh = []

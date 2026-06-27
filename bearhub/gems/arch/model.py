@@ -1,9 +1,9 @@
 from typing import List, Set, Optional, Iterable, Tuple
 
-from bauh.api.abstract.model import SoftwarePackage, CustomSoftwareAction
-from bauh.commons import resource
-from bauh.gems.arch import ROOT_DIR, ARCH_CACHE_DIR
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.model import SoftwarePackage, CustomSoftwareAction
+from bearhub.commons import resource
+from bearhub.gems.arch import ROOT_DIR, ARCH_CACHE_DIR
+from bearhub.view.util.translation import I18n
 
 
 class ArchPackage(SoftwarePackage):

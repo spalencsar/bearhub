@@ -7,9 +7,9 @@ from typing import Type, Dict, Any, Optional
 
 import yaml
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.disk import DiskCacheLoader, DiskCacheLoaderFactory
-from bauh.api.abstract.model import SoftwarePackage
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.disk import DiskCacheLoader, DiskCacheLoaderFactory
+from bearhub.api.abstract.model import SoftwarePackage
 
 
 class AsyncDiskCacheLoader(Thread, DiskCacheLoader):

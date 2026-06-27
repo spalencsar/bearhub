@@ -5,10 +5,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QCursor
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QHeaderView, QLabel
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.model import PackageHistory
-from bauh.view.qt.view_model import PackageView
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.model import PackageHistory
+from bearhub.view.qt.view_model import PackageView
+from bearhub.view.util.translation import I18n
 
 
 class HistoryDialog(QDialog):

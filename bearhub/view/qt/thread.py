@@ -16,28 +16,28 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget
 
-from bauh.api import user
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.controller import SoftwareManager, UpgradeRequirement, UpgradeRequirements, SoftwareAction
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.api.abstract.model import PackageStatus, SoftwarePackage, CustomSoftwareAction
-from bauh.api.abstract.view import MessageType, MultipleSelectComponent, InputOption, TextComponent, \
+from bearhub.api import user
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.controller import SoftwareManager, UpgradeRequirement, UpgradeRequirements, SoftwareAction
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.api.abstract.model import PackageStatus, SoftwarePackage, CustomSoftwareAction
+from bearhub.api.abstract.view import MessageType, MultipleSelectComponent, InputOption, TextComponent, \
     FormComponent, ViewComponent
-from bauh.api.exception import NoInternetException
-from bauh.api.paths import LOGS_DIR
-from bauh.commons.html import bold
-from bauh.commons.internet import InternetChecker
-from bauh.commons.regex import RE_URL
-from bauh.commons.system import ProcessHandler, SimpleProcess
-from bauh.commons.view_utils import get_human_size_str
-from bauh.view.core import timeshift
-from bauh.view.core.config import CoreConfigManager, BACKUP_REMOVE_METHODS, BACKUP_DEFAULT_REMOVE_METHOD
-from bauh.view.qt import commons
-from bauh.view.qt.commons import sort_packages, PackageFilters
-from bauh.view.qt.qt_utils import get_current_screen_geometry
-from bauh.view.qt.view_index import query_packages
-from bauh.view.qt.view_model import PackageView, PackageViewStatus
-from bauh.view.util.translation import I18n
+from bearhub.api.exception import NoInternetException
+from bearhub.api.paths import LOGS_DIR
+from bearhub.commons.html import bold
+from bearhub.commons.internet import InternetChecker
+from bearhub.commons.regex import RE_URL
+from bearhub.commons.system import ProcessHandler, SimpleProcess
+from bearhub.commons.view_utils import get_human_size_str
+from bearhub.view.core import timeshift
+from bearhub.view.core.config import CoreConfigManager, BACKUP_REMOVE_METHODS, BACKUP_DEFAULT_REMOVE_METHOD
+from bearhub.view.qt import commons
+from bearhub.view.qt.commons import sort_packages, PackageFilters
+from bearhub.view.qt.qt_utils import get_current_screen_geometry
+from bearhub.view.qt.view_index import query_packages
+from bearhub.view.qt.view_model import PackageView, PackageViewStatus
+from bearhub.view.util.translation import I18n
 
 RE_VERSION_IN_NAME = re.compile(r'\s+version\s+[\w.]+\s*$')
 

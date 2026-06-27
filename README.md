@@ -201,13 +201,14 @@ Bearhub is currently distributed through source releases and AUR:
 
 #### <a name="maintainer_docs">Maintainer docs</a>
 
-- Namespace migration notes: `NAMESPACE_MIGRATION.md`
+- Namespace migration notes: `NAMESPACE_MIGRATION.md` (runtime is native under `bearhub/`; `bauh/` is shim-only until Phase D completion)
+- Unreleased migration changelog: `CHANGELOG.md` → `[Unreleased]`
 - Qt6 migration plan: `docs/qt6-migration.md`
 - Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` (synced into `bearhub/view/resources/img/logo.svg` for runtime/packaging)
 - AppImage build (from `linux_dist/appimage/`):
 
 ```bash
-export BEARHUB_VERSION=0.10.7-bearhub.6  # release tag to build
+export BEARHUB_VERSION=0.10.7-bearhub.7  # next tag after CHANGELOG [Unreleased] is released
 ./build.sh
 ```
 
@@ -530,11 +531,13 @@ It is a separate repository with some files downloaded during runtime.
 
 #### <a name="code">Code structure</a>
 
-- `view`: code associated with the graphical interface
-- `gems`: code responsible to work with the different packaging technologies (every submodule deals with one or more types)
-- `api`: code abstractions representing the main actions that a user can do with Linux packages (search, install, ...). These abstractions are implemented by the `gems`, and
-the `view` code is only attached to them (it does not know how the `gems` handle these actions)
-- `commons`: common code used by `gems` and `view`
+Canonical Python package: **`bearhub/`** (import paths like `bearhub.gems.arch`, `bearhub.view.qt`).
+
+- `bearhub/view`: graphical interface (`qt`, `core`, `util`)
+- `bearhub/gems`: packaging backends (Arch/AUR, Flatpak, AppImage, Web)
+- `bearhub/api`: abstractions for package actions (search, install, …); implemented by `gems`, consumed by `view`
+- `bearhub/commons`: shared utilities for `gems` and `view`
+- `bauh/`: legacy compatibility shims only (`import bauh` still works during migration)
 
 #### <a name="roadmap">Roadmap</a>
 - Support for other packaging technologies

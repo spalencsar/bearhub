@@ -1,9 +1,9 @@
 from typing import Iterable, Optional
 
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.api.abstract.view import MessageType
-from bauh.commons.html import bold
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.api.abstract.view import MessageType
+from bearhub.commons.html import bold
+from bearhub.view.util.translation import I18n
 
 
 def show_deps_not_installed(watcher: ProcessWatcher, pkgname: str, depnames: Iterable[str], i18n: I18n):

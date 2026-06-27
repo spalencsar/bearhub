@@ -7,8 +7,8 @@ from typing import Optional
 
 import yaml
 
-from bauh.api.paths import CONFIG_DIR
-from bauh.commons import util
+from bearhub.api.paths import CONFIG_DIR
+from bearhub.commons import util
 
 
 def read_config(file_path: str, template: dict, update_file: bool = False, update_async: bool = False) -> dict:

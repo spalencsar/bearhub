@@ -1,7 +1,7 @@
 import warnings
 from unittest import TestCase
 
-from bauh.commons.version_util import match_required_version
+from bearhub.commons.version_util import match_required_version
 
 
 class MatchRequiredVersionTest(TestCase):

@@ -2,8 +2,8 @@ import warnings
 from unittest import TestCase
 from unittest.mock import Mock
 
-from bauh.gems.arch.mapper import AURDataMapper
-from bauh.gems.arch.model import ArchPackage
+from bearhub.gems.arch.mapper import AURDataMapper
+from bearhub.gems.arch.model import ArchPackage
 
 
 class ArchDataMapperTest(TestCase):

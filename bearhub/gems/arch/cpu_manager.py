@@ -6,8 +6,8 @@ from logging import Logger
 from pathlib import Path
 from typing import Optional, Set, Tuple, Dict
 
-from bauh.api.paths import TEMP_DIR
-from bauh.commons.system import new_root_subprocess
+from bearhub.api.paths import TEMP_DIR
+from bearhub.commons.system import new_root_subprocess
 
 
 def supports_performance_mode() -> bool:

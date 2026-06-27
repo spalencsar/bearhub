@@ -1,7 +1,7 @@
 from logging import Logger
 from typing import Dict, Optional, Tuple
 
-from bauh.api.abstract.model import SuggestionPriority
+from bearhub.api.abstract.model import SuggestionPriority
 
 
 def parse(suggestions_str: str, logger: Optional[Logger] = None, type_: Optional[str] = None,

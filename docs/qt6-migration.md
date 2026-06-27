@@ -19,7 +19,7 @@ Related roadmap milestone: `ROADMAP.md` → **M6: Qt6 Migration**.
 
 ## Prerequisites
 
-- **M3** namespace migration is complete enough that UI modules live under stable `bearhub.*` import paths.
+- **M3** Phase B is complete: UI modules live under stable `bearhub.*` import paths (`bearhub/view/qt/*`, etc.). Wait for an M3 stable tag before starting PR-6.2.
 - **M2** thread/uninstall crash paths are documented and reproducible.
 - Unit test CI is green (`tests/`, GitHub workflow `tests.yml`).
 
@@ -30,11 +30,11 @@ Runtime PyQt5 usage is concentrated in:
 | Area | Files | Notes |
 |---|---|---|
 | App entry | `bearhub/app_main.py`, `bearhub/context.py`, `bearhub/manage.py`, `bearhub/tray.py` | app attributes, screen scale env |
-| Main window/UI | `bauh/view/qt/window.py`, `apps_table.py`, `components.py`, `dialog.py` | largest migration surface |
-| Async/threading | `bauh/view/qt/thread.py`, `prepare.py`, `systray.py`, `settings.py`, `root.py` | `QThread`, `pyqtSignal` |
-| Utility/UI helpers | `bauh/view/qt/qt_utils.py`, `about.py`, `info.py`, `history.py`, `screenshots.py` | includes `QDesktopWidget` |
-| Settings integration | `bauh/view/core/settings.py` | `QStyleFactory` |
-| Misc | `bauh/view/util/util.py` | icon helpers |
+| Main window/UI | `bearhub/view/qt/window.py`, `apps_table.py`, `components.py`, `dialog.py` | largest migration surface |
+| Async/threading | `bearhub/view/qt/thread.py`, `prepare.py`, `systray.py`, `settings.py`, `root.py` | `QThread`, `pyqtSignal` |
+| Utility/UI helpers | `bearhub/view/qt/qt_utils.py`, `about.py`, `info.py`, `history.py`, `screenshots.py` | includes `QDesktopWidget` |
+| Settings integration | `bearhub/view/core/settings.py` | `QStyleFactory` |
+| Misc | `bearhub/view/util/util.py` | icon helpers |
 
 Known Qt5-specific patterns in code today:
 

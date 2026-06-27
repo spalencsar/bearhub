@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Type, Optional, Any, Dict
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.model import SoftwarePackage
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.model import SoftwarePackage
 
 
 class DiskCacheLoader:

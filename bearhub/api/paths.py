@@ -3,8 +3,8 @@ import shutil
 from getpass import getuser
 from pathlib import Path
 
-from bauh import __app_name__
-from bauh.api import user
+from bearhub import __app_name__
+from bearhub.api import user
 
 
 def get_temp_dir(username: str) -> str:

@@ -6,13 +6,13 @@ from datetime import datetime
 from threading import Thread
 from typing import List, Dict, Set, Iterable, Optional, Tuple
 
-from bauh.api.exception import NoInternetException
-from bauh.commons import system
-from bauh.commons.system import new_subprocess, run_cmd, SimpleProcess, ProcessHandler, DEFAULT_LANG
-from bauh.commons.util import size_to_byte
-from bauh.commons.version_util import map_str_version
-from bauh.gems.flatpak import EXPORTS_PATH, VERSION_1_3, VERSION_1_2, VERSION_1_5, VERSION_1_12
-from bauh.gems.flatpak.constants import FLATHUB_URL
+from bearhub.api.exception import NoInternetException
+from bearhub.commons import system
+from bearhub.commons.system import new_subprocess, run_cmd, SimpleProcess, ProcessHandler, DEFAULT_LANG
+from bearhub.commons.util import size_to_byte
+from bearhub.commons.version_util import map_str_version
+from bearhub.gems.flatpak import EXPORTS_PATH, VERSION_1_3, VERSION_1_2, VERSION_1_5, VERSION_1_12
+from bearhub.gems.flatpak.constants import FLATHUB_URL
 
 RE_SEVERAL_SPACES = re.compile(r'\s+')
 RE_COMMIT = re.compile(r'(Latest commit|Commit)\s*:\s*(.+)')

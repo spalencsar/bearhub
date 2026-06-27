@@ -1,8 +1,8 @@
 import os
 from typing import Optional
 
-from bauh.api.paths import CONFIG_DIR, TEMP_DIR, CACHE_DIR, get_temp_dir
-from bauh.commons import resource
+from bearhub.api.paths import CONFIG_DIR, TEMP_DIR, CACHE_DIR, get_temp_dir
+from bearhub.commons import resource
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 ARCH_CACHE_DIR = f'{CACHE_DIR}/arch'

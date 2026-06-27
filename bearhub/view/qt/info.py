@@ -10,11 +10,11 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QGroupBox, \
     QLineEdit, QLabel, QGridLayout, QPushButton, QPlainTextEdit, QScrollArea, QFrame, QWidget, QSizePolicy, \
     QHBoxLayout
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.commons.regex import RE_URL
-from bauh.view.qt.components import new_spacer
-from bauh.view.qt.qt_utils import get_current_screen_geometry
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.commons.regex import RE_URL
+from bearhub.view.qt.components import new_spacer
+from bearhub.view.qt.qt_utils import get_current_screen_geometry
+from bearhub.view.util.translation import I18n
 
 IGNORED_ATTRS = {'name', '__app__'}
 

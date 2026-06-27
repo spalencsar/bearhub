@@ -2,12 +2,12 @@ import logging
 import os
 from pathlib import Path
 
-from bauh import __app_name__, __version__
-from bauh.api.http import HttpClient
-from bauh.api.paths import CACHE_DIR
-from bauh.commons.html import bold, link
-from bauh.commons.version_util import normalize_version
-from bauh.view.util.translation import I18n
+from bearhub import __app_name__, __version__
+from bearhub.api.http import HttpClient
+from bearhub.api.paths import CACHE_DIR
+from bearhub.commons.html import bold, link
+from bearhub.commons.version_util import normalize_version
+from bearhub.view.util.translation import I18n
 
 
 def check_for_update(logger: logging.Logger, http_client: HttpClient, i18n: I18n, tray: bool = False) -> str:

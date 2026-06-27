@@ -1,6 +1,6 @@
 from typing import Optional
 
-from bauh.commons.system import SystemProcess, new_subprocess
+from bearhub.commons.system import SystemProcess, new_subprocess
 
 
 def receive_key(key: str, server: Optional[str] = None) -> SystemProcess:

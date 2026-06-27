@@ -12,42 +12,42 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCheckBox, QHeaderView, QToolB
     QLabel, QPlainTextEdit, QProgressBar, QPushButton, QComboBox, QApplication, QListView, QSizePolicy, \
     QMenu, QHBoxLayout
 
-from bauh.api import user
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager, SoftwareAction
-from bauh.api.abstract.model import SoftwarePackage
-from bauh.api.abstract.view import MessageType
-from bauh.api.http import HttpClient
-from bauh.api.paths import LOGS_DIR
-from bauh.commons.html import bold
-from bauh.context import set_theme
-from bauh.stylesheet import read_all_themes_metadata, ThemeMetadata
-from bauh.view.core.config import CoreConfigManager
-from bauh.view.core.tray_client import notify_tray
-from bauh.view.qt import dialog, commons, qt_utils
-from bauh.view.qt.about import AboutDialog
-from bauh.view.qt.apps_table import PackagesTable, UpgradeToggleButton
-from bauh.view.qt.commons import sum_updates_displayed, PackageFilters
-from bauh.view.qt.components import new_spacer, IconButton, QtComponentsManager, to_widget, QSearchBar, \
+from bearhub.api import user
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager, SoftwareAction
+from bearhub.api.abstract.model import SoftwarePackage
+from bearhub.api.abstract.view import MessageType
+from bearhub.api.http import HttpClient
+from bearhub.api.paths import LOGS_DIR
+from bearhub.commons.html import bold
+from bearhub.context import set_theme
+from bearhub.stylesheet import read_all_themes_metadata, ThemeMetadata
+from bearhub.view.core.config import CoreConfigManager
+from bearhub.view.core.tray_client import notify_tray
+from bearhub.view.qt import dialog, commons, qt_utils
+from bearhub.view.qt.about import AboutDialog
+from bearhub.view.qt.apps_table import PackagesTable, UpgradeToggleButton
+from bearhub.view.qt.commons import sum_updates_displayed, PackageFilters
+from bearhub.view.qt.components import new_spacer, IconButton, QtComponentsManager, to_widget, QSearchBar, \
     QCustomMenuAction, QCustomToolbar
-from bauh.view.qt.dialog import ConfirmationDialog
-from bauh.view.qt.history import HistoryDialog
-from bauh.view.qt.info import InfoDialog
-from bauh.view.qt.qt_utils import get_current_screen_geometry
-from bauh.view.qt.root import RootDialog
-from bauh.view.qt.screenshots import ScreenshotsDialog
-from bauh.view.qt.settings import SettingsWindow
-from bauh.view.qt.thread import UpgradeSelected, RefreshApps, UninstallPackage, DowngradePackage, ShowPackageInfo, \
+from bearhub.view.qt.dialog import ConfirmationDialog
+from bearhub.view.qt.history import HistoryDialog
+from bearhub.view.qt.info import InfoDialog
+from bearhub.view.qt.qt_utils import get_current_screen_geometry
+from bearhub.view.qt.root import RootDialog
+from bearhub.view.qt.screenshots import ScreenshotsDialog
+from bearhub.view.qt.settings import SettingsWindow
+from bearhub.view.qt.thread import UpgradeSelected, RefreshApps, UninstallPackage, DowngradePackage, ShowPackageInfo, \
     ShowPackageHistory, SearchPackages, InstallPackage, AnimateProgress, NotifyPackagesReady, FindSuggestions, \
     ListWarnings, \
     AsyncAction, LaunchPackage, ApplyFilters, CustomSoftwareAction, ShowScreenshots, CustomAction, \
     NotifyInstalledLoaded, \
     IgnorePackageUpdates, SaveTheme, StartAsyncAction
-from bauh.view.qt.view_index import add_to_index, new_package_index
-from bauh.view.qt.view_model import PackageView, PackageViewStatus
-from bauh.view.util import util, resource
-from bauh.view.util.translation import I18n
+from bearhub.view.qt.view_index import add_to_index, new_package_index
+from bearhub.view.qt.view_model import PackageView, PackageViewStatus
+from bearhub.view.util import util, resource
+from bearhub.view.util.translation import I18n
 
 DARK_ORANGE = '#FF4500'
 

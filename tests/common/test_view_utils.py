@@ -1,7 +1,7 @@
 import locale
 from unittest import TestCase
 
-from bauh.commons.view_utils import get_human_size_str
+from bearhub.commons.view_utils import get_human_size_str
 
 
 class GetHumanSizeStrTest(TestCase):

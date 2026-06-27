@@ -10,17 +10,17 @@ from PyQt5.QtGui import QPixmap, QIcon, QCursor
 from PyQt5.QtWidgets import QTableWidget, QTableView, QMenu, QToolButton, QWidget, \
     QHeaderView, QLabel, QHBoxLayout, QToolBar, QSizePolicy
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.model import PackageStatus, CustomSoftwareAction
-from bauh.api.abstract.view import MessageType
-from bauh.commons.html import strip_html, bold
-from bauh.commons.regex import RE_URL
-from bauh.view.qt.components import IconButton, QCustomMenuAction, QCustomToolbar
-from bauh.view.qt.dialog import ConfirmationDialog
-from bauh.view.qt.qt_utils import get_current_screen_geometry
-from bauh.view.qt.thread import URLFileDownloader
-from bauh.view.qt.view_model import PackageView
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.model import PackageStatus, CustomSoftwareAction
+from bearhub.api.abstract.view import MessageType
+from bearhub.commons.html import strip_html, bold
+from bearhub.commons.regex import RE_URL
+from bearhub.view.qt.components import IconButton, QCustomMenuAction, QCustomToolbar
+from bearhub.view.qt.dialog import ConfirmationDialog
+from bearhub.view.qt.qt_utils import get_current_screen_geometry
+from bearhub.view.qt.thread import URLFileDownloader
+from bearhub.view.qt.view_model import PackageView
+from bearhub.view.util.translation import I18n
 
 
 class UpgradeToggleButton(QToolButton):

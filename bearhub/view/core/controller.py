@@ -5,24 +5,24 @@ from subprocess import Popen, STDOUT
 from threading import Thread
 from typing import List, Set, Type, Tuple, Dict, Optional, Generator, Callable
 
-from bauh.api.abstract.controller import SoftwareManager, SearchResult, ApplicationContext, UpgradeRequirements, \
+from bearhub.api.abstract.controller import SoftwareManager, SearchResult, ApplicationContext, UpgradeRequirements, \
     UpgradeRequirement, TransactionResult, SoftwareAction, SettingsView, SettingsController
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import SoftwarePackage, PackageUpdate, PackageHistory, PackageSuggestion, \
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import SoftwarePackage, PackageUpdate, PackageHistory, PackageSuggestion, \
     CustomSoftwareAction
-from bauh.api.abstract.view import TabGroupComponent, MessageType
-from bauh.api.exception import NoInternetException
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.commons.regex import RE_URL
-from bauh.commons.util import sanitize_command_input
-from bauh.view.core.config import CoreConfigManager
-from bauh.view.core.settings import GenericSettingsManager
-from bauh.view.core.update import check_for_update
-from bauh.view.util import resource
-from bauh.view.util.resource import get_path
-from bauh.view.util.util import clean_app_files, restart_app
+from bearhub.api.abstract.view import TabGroupComponent, MessageType
+from bearhub.api.exception import NoInternetException
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.commons.regex import RE_URL
+from bearhub.commons.util import sanitize_command_input
+from bearhub.view.core.config import CoreConfigManager
+from bearhub.view.core.settings import GenericSettingsManager
+from bearhub.view.core.update import check_for_update
+from bearhub.view.util import resource
+from bearhub.view.util.resource import get_path
+from bearhub.view.util.util import clean_app_files, restart_app
 
 
 class GenericUpgradeRequirements(UpgradeRequirements):

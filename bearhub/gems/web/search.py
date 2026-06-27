@@ -6,7 +6,7 @@ from typing import Optional
 
 import yaml
 
-from bauh.gems.web import SEARCH_INDEX_FILE
+from bearhub.gems.web import SEARCH_INDEX_FILE
 
 
 class SearchIndexManager:

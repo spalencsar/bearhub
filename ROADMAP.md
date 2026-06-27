@@ -37,6 +37,8 @@ Definition of Done:
 
 ### M3: Namespace Migration (`bauh` -> `bearhub`) (3-5 weeks)
 
+Status (2026-06-27): **~95 % complete** — runtime code native under `bearhub/`; `bauh/` is shim-only; version flip done; full shim removal pending one stable release. See `NAMESPACE_MIGRATION.md` and `CHANGELOG.md` `[Unreleased]`.
+
 Scope:
 - Migrate Python package namespace from `bauh` to `bearhub`.
 - Provide temporary import compatibility layer for transition period.
@@ -46,6 +48,11 @@ Definition of Done:
 - Main entry points import from `bearhub`.
 - Compatibility shim exists and is marked for removal date.
 - Packaging and tests run successfully with new namespace.
+
+Remaining for M3 closure:
+- Ship `[Unreleased]` migration changes as a tagged release (`0.10.7-bearhub.7` or `0.10.8`)
+- Validate AUR `bearhub` / `bearhub-git` on real Arch systems
+- Remove `bauh/*` shims after one stable cycle (Phase D completion)
 
 ### M4: Backend Governance (2-3 weeks)
 
@@ -86,7 +93,7 @@ Prerequisites:
 
 Scope:
 - Choose Qt6 binding target: **PySide6** (preferred default: LGPL) or **PyQt6** (if GPL-only strategy is confirmed).
-- Migrate `bauh/view/qt/*` and app entry modules to Qt6 APIs.
+- Migrate `bearhub/view/qt/*` and app entry modules to Qt6 APIs.
 - Update themes/QSS validation and tray behavior on Wayland.
 - Update packaging (AUR deps, AppImage Qt6 bundle, CI GUI smoke checks).
 
@@ -146,7 +153,8 @@ Rollback strategy:
 
 ## Immediate Next Actions
 
-1. Close remaining M1 gaps (smoke-test checklist, `NAMESPACE_MIGRATION.md` refresh).
-2. Build M2 issue list from current crash reports and prioritize top 3.
-3. Continue M3 namespace migration (`gems/` move order + shim removal date).
-4. Schedule M6 spike after M3 core move (do not start full Qt6 migration in parallel).
+1. Tag release with `CHANGELOG.md` `[Unreleased]` namespace migration entries.
+2. Close remaining M1 gaps (smoke-test checklist on real Arch desktop).
+3. Build M2 issue list from current crash reports and prioritize top 3.
+4. Complete M3 Phase D after one stable release (remove `bauh/*` shims, drop `provides=('bauh')` in AUR).
+5. Schedule M6 Qt6 PR-6.2 after M3 tag (namespace stable; do not parallelize full Qt6 migration).

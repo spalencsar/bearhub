@@ -12,18 +12,18 @@ from typing import Dict, List, Optional
 import requests
 import yaml
 
-from bauh.api.abstract.download import FileDownloader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.view import MessageType
-from bauh.api.http import HttpClient
-from bauh.commons import system
-from bauh.commons.html import bold
-from bauh.commons.system import SimpleProcess, ProcessHandler
-from bauh.gems.web import ENV_PATH, NODE_DIR_PATH, NODE_BIN_PATH, NODE_MODULES_PATH, NATIVEFIER_BIN_PATH, \
+from bearhub.api.abstract.download import FileDownloader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.view import MessageType
+from bearhub.api.http import HttpClient
+from bearhub.commons import system
+from bearhub.commons.html import bold
+from bearhub.commons.system import SimpleProcess, ProcessHandler
+from bearhub.gems.web import ENV_PATH, NODE_DIR_PATH, NODE_BIN_PATH, NODE_MODULES_PATH, NATIVEFIER_BIN_PATH, \
     ELECTRON_CACHE_DIR, URL_ENVIRONMENT_SETTINGS, NPM_BIN_PATH, NODE_PATHS, \
     nativefier, ENVIRONMENT_SETTINGS_CACHED_FILE, ENVIRONMENT_SETTINGS_TS_FILE, get_icon_path
-from bauh.gems.web.model import WebApplication
-from bauh.view.util.translation import I18n
+from bearhub.gems.web.model import WebApplication
+from bearhub.view.util.translation import I18n
 
 
 class EnvironmentComponent:

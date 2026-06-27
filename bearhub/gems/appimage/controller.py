@@ -12,29 +12,29 @@ from typing import Set, Type, List, Tuple, Optional, Iterable, Generator
 
 from colorama import Fore
 
-from bauh import __app_name__
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, UpgradeRequirement, \
+from bearhub import __app_name__
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager, SearchResult, UpgradeRequirements, UpgradeRequirement, \
     TransactionResult, SoftwareAction, SettingsView, SettingsController
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import SoftwarePackage, PackageHistory, PackageUpdate, PackageSuggestion, \
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import SoftwarePackage, PackageHistory, PackageUpdate, PackageSuggestion, \
     SuggestionPriority, CustomSoftwareAction
-from bauh.api.abstract.view import MessageType, FormComponent, InputOption, SingleSelectComponent, \
+from bearhub.api.abstract.view import MessageType, FormComponent, InputOption, SingleSelectComponent, \
     SelectViewType, TextInputComponent, PanelComponent, FileChooserComponent, ViewObserver
-from bauh.api.paths import DESKTOP_ENTRIES_DIR
-from bauh.commons import resource
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.commons.system import SystemProcess, new_subprocess, ProcessHandler, SimpleProcess
-from bauh.commons.version_util import normalize_version
-from bauh.gems.appimage import query, INSTALLATION_DIR, APPIMAGE_SHARED_DIR, ROOT_DIR, \
+from bearhub.api.paths import DESKTOP_ENTRIES_DIR
+from bearhub.commons import resource
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.commons.system import SystemProcess, new_subprocess, ProcessHandler, SimpleProcess
+from bearhub.commons.version_util import normalize_version
+from bearhub.gems.appimage import query, INSTALLATION_DIR, APPIMAGE_SHARED_DIR, ROOT_DIR, \
     APPIMAGE_CONFIG_DIR, UPDATES_IGNORED_FILE, util, get_default_manual_installation_file_dir, DATABASE_APPS_FILE, \
     DATABASE_RELEASES_FILE, APPIMAGE_CACHE_DIR, get_icon_path, DOWNLOAD_DIR
-from bauh.gems.appimage.config import AppImageConfigManager
-from bauh.gems.appimage.model import AppImage
-from bauh.gems.appimage.util import replace_desktop_entry_exec_command
-from bauh.gems.appimage.worker import DatabaseUpdater, SymlinksVerifier, AppImageSuggestionsDownloader
+from bearhub.gems.appimage.config import AppImageConfigManager
+from bearhub.gems.appimage.model import AppImage
+from bearhub.gems.appimage.util import replace_desktop_entry_exec_command
+from bearhub.gems.appimage.worker import DatabaseUpdater, SymlinksVerifier, AppImageSuggestionsDownloader
 
 RE_DESKTOP_ICON = re.compile(r'Icon\s*=\s*.+\n')
 RE_ICON_ENDS_WITH = re.compile(r'.+\.(png|svg)$')

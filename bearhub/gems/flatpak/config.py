@@ -1,5 +1,5 @@
-from bauh.commons.config import YAMLConfigManager
-from bauh.gems.flatpak import CONFIG_FILE
+from bearhub.commons.config import YAMLConfigManager
+from bearhub.gems.flatpak import CONFIG_FILE
 
 
 class FlatpakConfigManager(YAMLConfigManager):

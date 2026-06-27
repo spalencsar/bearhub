@@ -1,7 +1,7 @@
 from enum import Enum
 
-from bauh.api.abstract.model import SoftwarePackage, PackageStatus
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.model import SoftwarePackage, PackageStatus
+from bearhub.view.util.translation import I18n
 
 
 class PackageViewStatus(Enum):

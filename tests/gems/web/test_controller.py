@@ -1,10 +1,10 @@
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
-from bauh.gems.web.controller import DEFAULT_LANGUAGE_HEADER
-from bauh.gems.web.controller import WebApplicationManager
+from bearhub.gems.web.controller import DEFAULT_LANGUAGE_HEADER
+from bearhub.gems.web.controller import WebApplicationManager
 
-LOCALE_TARGET = 'bauh.gems.web.controller.locale.getlocale'
+LOCALE_TARGET = 'bearhub.gems.web.controller.locale.getlocale'
 
 
 class ControllerTest(TestCase):

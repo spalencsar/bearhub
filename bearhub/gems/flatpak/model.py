@@ -1,9 +1,9 @@
 from typing import Tuple
 
-from bauh.api.abstract.model import SoftwarePackage, PackageStatus
-from bauh.commons import resource
-from bauh.gems.flatpak import ROOT_DIR, VERSION_1_2
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.model import SoftwarePackage, PackageStatus
+from bearhub.commons import resource
+from bearhub.gems.flatpak import ROOT_DIR, VERSION_1_2
+from bearhub.view.util.translation import I18n
 
 
 class FlatpakApplication(SoftwarePackage):

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from bauh.gems.arch import sorting
+from bearhub.gems.arch import sorting
 
 
 class SortingTest(TestCase):

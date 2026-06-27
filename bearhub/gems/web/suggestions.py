@@ -8,10 +8,10 @@ from typing import Optional
 import requests
 import yaml
 
-from bauh.api.http import HttpClient
-from bauh.commons.util import map_timestamp_file
-from bauh.gems.web import WEB_CACHE_DIR
-from bauh.view.util.translation import I18n
+from bearhub.api.http import HttpClient
+from bearhub.commons.util import map_timestamp_file
+from bearhub.gems.web import WEB_CACHE_DIR
+from bearhub.view.util.translation import I18n
 
 
 class SuggestionsManager:

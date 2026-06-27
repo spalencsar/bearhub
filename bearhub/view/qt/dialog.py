@@ -5,10 +5,10 @@ from PyQt5.QtGui import QIcon, QCursor
 from PyQt5.QtWidgets import QMessageBox, QLabel, QWidget, QHBoxLayout, QDialog, QVBoxLayout, QSizePolicy, QPushButton, \
     QScrollArea, QFrame
 
-from bauh.api.abstract.view import MessageType
-from bauh.view.qt.components import new_spacer
-from bauh.view.util import resource
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.view import MessageType
+from bearhub.view.qt.components import new_spacer
+from bearhub.view.util import resource
+from bearhub.view.util.translation import I18n
 
 MSG_TYPE_MAP = {
     MessageType.ERROR: QMessageBox.Critical,

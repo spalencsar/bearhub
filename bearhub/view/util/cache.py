@@ -2,7 +2,7 @@ import datetime
 from threading import Lock
 from typing import Optional
 
-from bauh.api.abstract.cache import MemoryCache, MemoryCacheFactory
+from bearhub.api.abstract.cache import MemoryCache, MemoryCacheFactory
 
 
 class DefaultMemoryCache(MemoryCache):

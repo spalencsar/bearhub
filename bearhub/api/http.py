@@ -6,8 +6,8 @@ from typing import Optional
 import requests
 import yaml
 
-from bauh.commons import system
-from bauh.commons.view_utils import get_human_size_str
+from bearhub.commons import system
+from bearhub.commons.view_utils import get_human_size_str
 
 
 class HttpClient:

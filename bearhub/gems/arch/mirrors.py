@@ -6,7 +6,7 @@ from datetime import datetime
 from logging import Logger
 from pathlib import Path
 
-from bauh.api.paths import CACHE_DIR
+from bearhub.api.paths import CACHE_DIR
 
 SYNC_FILE = f'{CACHE_DIR}/arch/mirrors_sync'
 

@@ -7,17 +7,17 @@ from typing import List, Tuple, Optional, Dict, Type, Iterable
 
 from PyQt5.QtWidgets import QApplication, QStyleFactory
 
-from bauh import ROOT_DIR, __app_name__
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager, SettingsController, SettingsView
-from bauh.api.abstract.view import TabComponent, InputOption, TextComponent, MultipleSelectComponent, \
+from bearhub import ROOT_DIR, __app_name__
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager, SettingsController, SettingsView
+from bearhub.api.abstract.view import TabComponent, InputOption, TextComponent, MultipleSelectComponent, \
     PanelComponent, FormComponent, TabGroupComponent, SingleSelectComponent, SelectViewType, TextInputComponent, \
     FileChooserComponent, RangeInputComponent, ViewComponentAlignment
-from bauh.commons.view_utils import new_select
-from bauh.view.core import timeshift
-from bauh.view.core.config import CoreConfigManager, BACKUP_REMOVE_METHODS, BACKUP_DEFAULT_REMOVE_METHOD
-from bauh.view.core.downloader import AdaptableFileDownloader
-from bauh.view.util import translation
+from bearhub.commons.view_utils import new_select
+from bearhub.view.core import timeshift
+from bearhub.view.core.config import CoreConfigManager, BACKUP_REMOVE_METHODS, BACKUP_DEFAULT_REMOVE_METHOD
+from bearhub.view.core.downloader import AdaptableFileDownloader
+from bearhub.view.util import translation
 
 
 class GenericSettingsManager(SettingsController):

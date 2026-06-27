@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bauh.api.paths import CACHE_DIR
+from bearhub.api.paths import CACHE_DIR
 
 TRAY_CHECK_FILE = f'{CACHE_DIR}/notify_tray'  # it is a file that signals to the tray icon it should recheck for updates
 

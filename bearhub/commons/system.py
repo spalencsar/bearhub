@@ -8,7 +8,7 @@ from subprocess import PIPE
 from typing import List, Tuple, Set, Dict, Optional, Iterable, Union, IO, Any
 
 # default environment variables for subprocesses.
-from bauh.api.abstract.handler import ProcessWatcher
+from bearhub.api.abstract.handler import ProcessWatcher
 
 PY_VERSION = "{}.{}".format(sys.version_info.major, sys.version_info.minor)
 GLOBAL_PY_LIBS = '/usr/lib/python{}'.format(PY_VERSION)

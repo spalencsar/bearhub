@@ -4,8 +4,8 @@ import re
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Callable
 
-from bauh.gems.arch import pacman
-from bauh.gems.arch.model import ArchPackage
+from bearhub.gems.arch import pacman
+from bearhub.gems.arch.model import ArchPackage
 
 RE_DESKTOP_ENTRY = re.compile(r'[\n^](Exec|Icon|NoDisplay)\s*=\s*(.+)')
 RE_CLEAN_NAME = re.compile(r'[+*?%]')

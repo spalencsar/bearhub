@@ -3,8 +3,8 @@ import shutil
 from pathlib import Path
 from typing import Set
 
-from bauh.commons import system
-from bauh.gems.arch import IGNORED_REBUILD_CHECK_FILE
+from bearhub.commons import system
+from bearhub.gems.arch import IGNORED_REBUILD_CHECK_FILE
 
 
 def is_installed() -> bool:

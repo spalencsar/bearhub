@@ -15,44 +15,44 @@ from typing import List, Set, Type, Tuple, Dict, Iterable, Optional, Collection,
 
 from dateutil.parser import parse as parse_date
 
-from bauh import __app_name__
-from bauh.api.abstract.controller import SearchResult, SoftwareManager, ApplicationContext, UpgradeRequirements, \
+from bearhub import __app_name__
+from bearhub.api.abstract.controller import SearchResult, SoftwareManager, ApplicationContext, UpgradeRequirements, \
     TransactionResult, SoftwareAction, SettingsView, SettingsController
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import PackageUpdate, PackageHistory, SoftwarePackage, PackageStatus, \
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import PackageUpdate, PackageHistory, SoftwarePackage, PackageStatus, \
     CustomSoftwareAction, PackageSuggestion
-from bauh.api.abstract.view import MessageType, FormComponent, InputOption, SingleSelectComponent, SelectViewType, \
+from bearhub.api.abstract.view import MessageType, FormComponent, InputOption, SingleSelectComponent, SelectViewType, \
     ViewComponent, PanelComponent, MultipleSelectComponent, TextInputComponent, TextInputType, \
     FileChooserComponent, TextComponent
-from bauh.api.exception import NoInternetException
-from bauh.api.paths import TEMP_DIR
-from bauh.commons import system
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.category import CategoriesDownloader
-from bauh.commons.html import bold
-from bauh.commons.suggestions import sort_by_priority
-from bauh.commons.system import SystemProcess, ProcessHandler, new_subprocess, run_cmd, SimpleProcess
-from bauh.commons.util import datetime_as_milis
-from bauh.commons.view_utils import new_select
-from bauh.gems.arch import aur, pacman, message, confirmation, disk, git, \
+from bearhub.api.exception import NoInternetException
+from bearhub.api.paths import TEMP_DIR
+from bearhub.commons import system
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.category import CategoriesDownloader
+from bearhub.commons.html import bold
+from bearhub.commons.suggestions import sort_by_priority
+from bearhub.commons.system import SystemProcess, ProcessHandler, new_subprocess, run_cmd, SimpleProcess
+from bearhub.commons.util import datetime_as_milis
+from bearhub.commons.view_utils import new_select
+from bearhub.gems.arch import aur, pacman, message, confirmation, disk, git, \
     gpg, URL_CATEGORIES_FILE, CATEGORIES_FILE_PATH, CUSTOM_MAKEPKG_FILE, \
     get_icon_path, database, mirrors, sorting, cpu_manager, UPDATES_IGNORED_FILE, \
     ARCH_CONFIG_DIR, EDITABLE_PKGBUILDS_FILE, URL_GPG_SERVERS, rebuild_detector, makepkg, sshell, get_repo_icon_path
-from bauh.gems.arch.aur import AURClient
-from bauh.gems.arch.config import get_build_dir, ArchConfigManager
-from bauh.gems.arch.confirmation import confirm_missing_deps
-from bauh.gems.arch.dependencies import DependenciesAnalyser
-from bauh.gems.arch.download import MultithreadedDownloadService, ArchDownloadException
-from bauh.gems.arch.exceptions import PackageNotFoundException, PackageInHoldException
-from bauh.gems.arch.mapper import AURDataMapper
-from bauh.gems.arch.model import ArchPackage
-from bauh.gems.arch.output import TransactionStatusHandler
-from bauh.gems.arch.pacman import RE_DEP_OPERATORS
-from bauh.gems.arch.proc_util import write_as_user
-from bauh.gems.arch.suggestions import RepositorySuggestionsDownloader
-from bauh.gems.arch.updates import UpdatesSummarizer
-from bauh.gems.arch.worker import AURIndexUpdater, ArchDiskCacheUpdater, ArchCompilationOptimizer, RefreshMirrors, \
+from bearhub.gems.arch.aur import AURClient
+from bearhub.gems.arch.config import get_build_dir, ArchConfigManager
+from bearhub.gems.arch.confirmation import confirm_missing_deps
+from bearhub.gems.arch.dependencies import DependenciesAnalyser
+from bearhub.gems.arch.download import MultithreadedDownloadService, ArchDownloadException
+from bearhub.gems.arch.exceptions import PackageNotFoundException, PackageInHoldException
+from bearhub.gems.arch.mapper import AURDataMapper
+from bearhub.gems.arch.model import ArchPackage
+from bearhub.gems.arch.output import TransactionStatusHandler
+from bearhub.gems.arch.pacman import RE_DEP_OPERATORS
+from bearhub.gems.arch.proc_util import write_as_user
+from bearhub.gems.arch.suggestions import RepositorySuggestionsDownloader
+from bearhub.gems.arch.updates import UpdatesSummarizer
+from bearhub.gems.arch.worker import AURIndexUpdater, ArchDiskCacheUpdater, ArchCompilationOptimizer, RefreshMirrors, \
     SyncDatabases
 
 URL_GIT = 'https://aur.archlinux.org/{}.git'

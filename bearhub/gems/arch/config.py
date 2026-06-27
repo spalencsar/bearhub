@@ -1,7 +1,7 @@
 from typing import Optional
 
-from bauh.commons.config import YAMLConfigManager
-from bauh.gems.arch import CONFIG_FILE, get_pkgbuild_dir
+from bearhub.commons.config import YAMLConfigManager
+from bearhub.gems.arch import CONFIG_FILE, get_pkgbuild_dir
 
 
 def get_build_dir(arch_config: dict, user: Optional[str]) -> str:

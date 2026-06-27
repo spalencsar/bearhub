@@ -13,20 +13,20 @@ from typing import Optional
 
 import requests
 
-from bauh import __app_name__
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.handler import TaskManager
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.commons.system import new_root_subprocess, ProcessHandler
-from bauh.gems.arch import pacman, disk, CUSTOM_MAKEPKG_FILE, ARCH_CONFIG_DIR, AUR_INDEX_FILE, get_icon_path, database, \
+from bearhub import __app_name__
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.handler import TaskManager
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.commons.system import new_root_subprocess, ProcessHandler
+from bearhub.gems.arch import pacman, disk, CUSTOM_MAKEPKG_FILE, ARCH_CONFIG_DIR, AUR_INDEX_FILE, get_icon_path, database, \
     mirrors, ARCH_CACHE_DIR, AUR_INDEX_TS_FILE, aur
-from bauh.gems.arch.aur import URL_INDEX
-from bauh.view.util.translation import I18n
+from bearhub.gems.arch.aur import URL_INDEX
+from bearhub.view.util.translation import I18n
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from bauh.gems.arch.controller import ArchManager
+    from bearhub.gems.arch.controller import ArchManager
 
 URL_INFO = 'https://aur.archlinux.org/rpc/?v=5&type=info&arg={}'
 

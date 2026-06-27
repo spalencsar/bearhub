@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from bauh.api.paths import CONFIG_DIR, TEMP_DIR, CACHE_DIR, BINARIES_DIR, SHARED_FILES_DIR
-from bauh.commons import resource
+from bearhub.api.paths import CONFIG_DIR, TEMP_DIR, CACHE_DIR, BINARIES_DIR, SHARED_FILES_DIR
+from bearhub.commons import resource
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 APPIMAGE_SHARED_DIR = f'{SHARED_FILES_DIR}/appimage'

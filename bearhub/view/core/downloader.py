@@ -10,13 +10,13 @@ from pathlib import Path
 from threading import Thread
 from typing import Optional, Tuple
 
-from bauh.api.abstract.download import FileDownloader
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.api.http import HttpClient
-from bauh.commons.html import bold
-from bauh.commons.system import ProcessHandler, SimpleProcess
-from bauh.commons.view_utils import get_human_size_str
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.download import FileDownloader
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.api.http import HttpClient
+from bearhub.commons.html import bold
+from bearhub.commons.system import ProcessHandler, SimpleProcess
+from bearhub.commons.view_utils import get_human_size_str
+from bearhub.view.util.translation import I18n
 
 RE_HAS_EXTENSION = re.compile(r'.+\.\w+$')
 

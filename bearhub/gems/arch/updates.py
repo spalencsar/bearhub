@@ -4,16 +4,16 @@ import traceback
 from threading import Thread
 from typing import Dict, Set, List, Tuple, Iterable, Optional, Any
 
-from bauh.api.abstract.controller import UpgradeRequirements, UpgradeRequirement
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.gems.arch import pacman, sorting
-from bauh.gems.arch.aur import AURClient
-from bauh.gems.arch.dependencies import DependenciesAnalyser
-from bauh.gems.arch.exceptions import PackageNotFoundException
-from bauh.gems.arch.model import ArchPackage
-from bauh.gems.arch.pacman import RE_DEP_OPERATORS
-from bauh.commons.version_util import match_required_version
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.controller import UpgradeRequirements, UpgradeRequirement
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.gems.arch import pacman, sorting
+from bearhub.gems.arch.aur import AURClient
+from bearhub.gems.arch.dependencies import DependenciesAnalyser
+from bearhub.gems.arch.exceptions import PackageNotFoundException
+from bearhub.gems.arch.model import ArchPackage
+from bearhub.gems.arch.pacman import RE_DEP_OPERATORS
+from bearhub.commons.version_util import match_required_version
+from bearhub.view.util.translation import I18n
 
 
 class UpdateRequirementsContext:

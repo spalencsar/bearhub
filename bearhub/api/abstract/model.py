@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 from enum import Enum
 from typing import List, Optional, Iterable
 
-from bauh.api.paths import CACHE_DIR
+from bearhub.api.paths import CACHE_DIR
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from bauh.api.abstract.controller import SoftwareManager
+    from bearhub.api.abstract.controller import SoftwareManager
 
 
 class CustomSoftwareAction:

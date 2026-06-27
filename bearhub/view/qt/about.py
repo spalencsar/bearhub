@@ -3,9 +3,9 @@ from glob import glob
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QDialog, QLabel, QWidget, QHBoxLayout, QSizePolicy, QApplication
 
-from bauh import __version__, ROOT_DIR
-from bauh.context import generate_i18n
-from bauh.view.util import resource
+from bearhub import __version__, ROOT_DIR
+from bearhub.context import generate_i18n
+from bearhub.view.util import resource
 
 DISPLAY_NAME = 'Bearhub'
 PROJECT_URL = 'https://github.com/spalencsar/bearhub'

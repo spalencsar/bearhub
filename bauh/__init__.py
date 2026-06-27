@@ -1,5 +1,8 @@
-__version__ = '0.10.7'
-__app_name__ = 'bearhub'
+"""
+Legacy namespace compatibility shim.
 
-import os
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+Deprecated: import from `bearhub` instead of `bauh`.
+"""
+from bearhub import ROOT_DIR, __app_name__, __version__
+
+__all__ = ["__app_name__", "__version__", "ROOT_DIR"]

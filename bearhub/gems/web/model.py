@@ -3,12 +3,12 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from bauh import __app_name__
-from bauh.api import user
-from bauh.api.abstract.model import SoftwarePackage
-from bauh.api.paths import AUTOSTART_DIR
-from bauh.commons import resource
-from bauh.gems.web import ROOT_DIR
+from bearhub import __app_name__
+from bearhub.api import user
+from bearhub.api.abstract.model import SoftwarePackage
+from bearhub.api.paths import AUTOSTART_DIR
+from bearhub.commons import resource
+from bearhub.gems.web import ROOT_DIR
 
 
 class WebApplication(SoftwarePackage):

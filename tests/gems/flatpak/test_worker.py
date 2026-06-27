@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from bauh.gems.flatpak.worker import FlatpakAsyncDataLoader
+from bearhub.gems.flatpak.worker import FlatpakAsyncDataLoader
 
 
 class FlatpakAsyncDataLoaderTest(TestCase):

@@ -5,14 +5,14 @@ from datetime import datetime, timezone
 from threading import Thread
 from typing import Optional
 
-from bauh.api.abstract.handler import TaskManager
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import bold
-from bauh.gems.web import get_icon_path
-from bauh.gems.web.environment import EnvironmentUpdater
-from bauh.gems.web.search import SearchIndexManager
-from bauh.gems.web.suggestions import SuggestionsManager
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.handler import TaskManager
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import bold
+from bearhub.gems.web import get_icon_path
+from bearhub.gems.web.environment import EnvironmentUpdater
+from bearhub.gems.web.search import SearchIndexManager
+from bearhub.gems.web.suggestions import SuggestionsManager
+from bearhub.view.util.translation import I18n
 
 
 class SuggestionsLoader(Thread):

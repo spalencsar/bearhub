@@ -2,12 +2,12 @@ import logging
 import sys
 from typing import Optional, Dict
 
-from bauh.api.abstract.cache import MemoryCacheFactory
-from bauh.api.abstract.disk import DiskCacheLoaderFactory
-from bauh.api.abstract.download import FileDownloader
-from bauh.api.http import HttpClient
-from bauh.commons.internet import InternetChecker
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.cache import MemoryCacheFactory
+from bearhub.api.abstract.disk import DiskCacheLoaderFactory
+from bearhub.api.abstract.download import FileDownloader
+from bearhub.api.http import HttpClient
+from bearhub.commons.internet import InternetChecker
+from bearhub.view.util.translation import I18n
 
 
 class ApplicationContext:

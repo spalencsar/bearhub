@@ -2,8 +2,8 @@ import os
 import shutil
 from typing import List, Optional
 
-from bauh.commons.system import SimpleProcess, run_cmd
-from bauh.gems.web import NATIVEFIER_BIN_PATH, NODE_PATHS, ELECTRON_CACHE_DIR
+from bearhub.commons.system import SimpleProcess, run_cmd
+from bearhub.gems.web import NATIVEFIER_BIN_PATH, NODE_PATHS, ELECTRON_CACHE_DIR
 
 
 def install(url: str, name: str, output_dir: str, electron_version: Optional[str], cwd: str, system: bool,

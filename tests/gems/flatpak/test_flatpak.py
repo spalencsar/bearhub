@@ -2,13 +2,13 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 
-from bauh.gems.flatpak import flatpak, VERSION_1_2
+from bearhub.gems.flatpak import flatpak, VERSION_1_2
 
 
 class FlatpakTest(TestCase):
 
-    @patch("bauh.gems.flatpak.flatpak.SimpleProcess")
-    @patch("bauh.gems.flatpak.flatpak.ProcessHandler.handle_simple", return_value=(True, """
+    @patch("bearhub.gems.flatpak.flatpak.SimpleProcess")
+    @patch("bearhub.gems.flatpak.flatpak.ProcessHandler.handle_simple", return_value=(True, """
     Looking for updates...
 
     \tID\tArch\tBranch\tRemote\tDownload

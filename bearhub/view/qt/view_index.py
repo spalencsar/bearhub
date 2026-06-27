@@ -1,8 +1,8 @@
 from collections import defaultdict
 from typing import Dict, List, Generator, Tuple, Optional, Union
 
-from bauh.view.qt.commons import PackageFilters
-from bauh.view.qt.view_model import PackageView
+from bearhub.view.qt.commons import PackageFilters
+from bearhub.view.qt.view_model import PackageView
 
 
 def new_character_idx() -> Dict[str, List[PackageView]]:

@@ -2,12 +2,12 @@ import traceback
 from io import StringIO
 from threading import Thread
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager
-from bauh.api.abstract.model import PackageStatus
-from bauh.gems.flatpak.constants import FLATHUB_API_URL, FLATHUB_URL
-from bauh.gems.flatpak.model import FlatpakApplication
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager
+from bearhub.api.abstract.model import PackageStatus
+from bearhub.gems.flatpak.constants import FLATHUB_API_URL, FLATHUB_URL
+from bearhub.gems.flatpak.model import FlatpakApplication
 
 
 class FlatpakAsyncDataLoader(Thread):

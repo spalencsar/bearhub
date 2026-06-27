@@ -6,13 +6,13 @@ from pathlib import Path
 from threading import Thread
 from typing import Optional, Dict
 
-from bauh.api.abstract.handler import TaskManager
-from bauh.api.abstract.model import SuggestionPriority
-from bauh.api.http import HttpClient
-from bauh.commons.boot import CreateConfigFile
-from bauh.gems.arch import ARCH_CACHE_DIR, get_icon_path
-from bauh.view.util.translation import I18n
-from bauh.commons.suggestions import parse
+from bearhub.api.abstract.handler import TaskManager
+from bearhub.api.abstract.model import SuggestionPriority
+from bearhub.api.http import HttpClient
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.gems.arch import ARCH_CACHE_DIR, get_icon_path
+from bearhub.view.util.translation import I18n
+from bearhub.commons.suggestions import parse
 
 
 class RepositorySuggestionsDownloader(Thread):

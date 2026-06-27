@@ -6,16 +6,16 @@ from PyQt5.QtCore import Qt, QCoreApplication, QThread, pyqtSignal
 from PyQt5.QtGui import QCursor, QShowEvent
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy, QPushButton, QHBoxLayout, QApplication
 
-from bauh import __app_name__
-from bauh.api.abstract.controller import SoftwareManager
-from bauh.api.abstract.view import MessageType
-from bauh.view.core.controller import GenericSoftwareManager
-from bauh.view.qt import dialog
-from bauh.view.qt.components import to_widget, new_spacer
-from bauh.view.qt.dialog import ConfirmationDialog
-from bauh.view.qt.qt_utils import centralize
-from bauh.view.util import util
-from bauh.view.util.translation import I18n
+from bearhub import __app_name__
+from bearhub.api.abstract.controller import SoftwareManager
+from bearhub.api.abstract.view import MessageType
+from bearhub.view.core.controller import GenericSoftwareManager
+from bearhub.view.qt import dialog
+from bearhub.view.qt.components import to_widget, new_spacer
+from bearhub.view.qt.dialog import ConfirmationDialog
+from bearhub.view.qt.qt_utils import centralize
+from bearhub.view.util import util
+from bearhub.view.util.translation import I18n
 
 
 class ReloadManagePanel(QThread):

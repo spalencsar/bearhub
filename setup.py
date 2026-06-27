@@ -10,7 +10,7 @@ DESCRIPTION = (
 AUTHOR = "Vinicius Moreira"
 AUTHOR_EMAIL = "vinicius_fmoreira@hotmail.com"
 DIST_NAME = 'bearhub'
-APP_PACKAGE = 'bauh'
+APP_PACKAGE = 'bearhub'
 URL = "https://github.com/spalencsar/" + DIST_NAME
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,7 +23,10 @@ else:
 
 
 with open(file_dir + '/{}/__init__.py'.format(APP_PACKAGE), 'r') as f:
-    exec(f.readlines()[0])
+    for line in f:
+        if line.startswith('__version__'):
+            exec(line)
+            break
 
 
 setup(
@@ -38,6 +41,7 @@ setup(
     packages=find_packages(exclude=["tests.*", "tests"]),
     package_data={
         APP_PACKAGE: [
+            "desktop/*",
             "view/resources/locale/*",
             "view/resources/img/*",
             "view/resources/style/*",
@@ -45,7 +49,6 @@ setup(
             "gems/*/resources/img/*",
             "gems/*/resources/locale/*",
         ],
-        "bearhub": ["desktop/*"],
     },
     install_requires=requirements,
     test_suite="tests",

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Iterable, List, Optional, Tuple
 
-from bauh.api.abstract.handler import ProcessWatcher
+from bearhub.api.abstract.handler import ProcessWatcher
 
 
 class FileDownloader(ABC):

@@ -4,12 +4,12 @@ from logging import Logger
 from threading import Thread
 from typing import Set, List, Tuple, Dict, Iterable, Optional, Generator, Pattern
 
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.commons.version_util import match_required_version
-from bauh.gems.arch import pacman, message, sorting, confirmation
-from bauh.gems.arch.aur import AURClient
-from bauh.gems.arch.exceptions import PackageNotFoundException
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.commons.version_util import match_required_version
+from bearhub.gems.arch import pacman, message, sorting, confirmation
+from bearhub.gems.arch.aur import AURClient
+from bearhub.gems.arch.exceptions import PackageNotFoundException
+from bearhub.view.util.translation import I18n
 
 
 class DependenciesAnalyser:

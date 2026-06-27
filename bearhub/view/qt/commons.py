@@ -1,7 +1,7 @@
 from typing import List, Dict, Any, NamedTuple, Optional, Union, Collection, Iterable
 
-from bauh.api.abstract.model import SoftwarePackage
-from bauh.view.qt.view_model import PackageView
+from bearhub.api.abstract.model import SoftwarePackage
+from bearhub.view.qt.view_model import PackageView
 
 
 class PackageFilters(NamedTuple):

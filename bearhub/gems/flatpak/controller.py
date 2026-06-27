@@ -7,26 +7,26 @@ from pathlib import Path
 from threading import Thread
 from typing import List, Set, Type, Tuple, Optional, Generator, Dict
 
-from bauh.api import user
-from bauh.api.abstract.controller import SearchResult, SoftwareManager, ApplicationContext, UpgradeRequirements, \
+from bearhub.api import user
+from bearhub.api.abstract.controller import SearchResult, SoftwareManager, ApplicationContext, UpgradeRequirements, \
     UpgradeRequirement, TransactionResult, SoftwareAction, SettingsView, SettingsController
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import PackageHistory, PackageUpdate, SoftwarePackage, PackageSuggestion, \
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import PackageHistory, PackageUpdate, SoftwarePackage, PackageSuggestion, \
     PackageStatus, CustomSoftwareAction, SuggestionPriority
-from bauh.api.abstract.view import MessageType, FormComponent, SingleSelectComponent, InputOption, SelectViewType, \
+from bearhub.api.abstract.view import MessageType, FormComponent, SingleSelectComponent, InputOption, SelectViewType, \
     PanelComponent, ViewComponentAlignment
-from bauh.commons import suggestions
-from bauh.commons.boot import CreateConfigFile
-from bauh.commons.html import strip_html, bold
-from bauh.commons.system import ProcessHandler
-from bauh.gems.flatpak import flatpak, CONFIG_FILE, UPDATES_IGNORED_FILE, FLATPAK_CONFIG_DIR, \
+from bearhub.commons import suggestions
+from bearhub.commons.boot import CreateConfigFile
+from bearhub.commons.html import strip_html, bold
+from bearhub.commons.system import ProcessHandler
+from bearhub.gems.flatpak import flatpak, CONFIG_FILE, UPDATES_IGNORED_FILE, FLATPAK_CONFIG_DIR, \
     EXPORTS_PATH, \
     get_icon_path, VERSION_1_5, VERSION_1_2, VERSION_1_12
-from bauh.gems.flatpak.config import FlatpakConfigManager
-from bauh.gems.flatpak.constants import FLATHUB_API_URL
-from bauh.gems.flatpak.model import FlatpakApplication
-from bauh.gems.flatpak.worker import FlatpakAsyncDataLoader
+from bearhub.gems.flatpak.config import FlatpakConfigManager
+from bearhub.gems.flatpak.constants import FLATHUB_API_URL
+from bearhub.gems.flatpak.model import FlatpakApplication
+from bearhub.gems.flatpak.worker import FlatpakAsyncDataLoader
 
 DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.000Z'
 RE_INSTALL_REFS = re.compile(r'\d+\)\s+(.+)')

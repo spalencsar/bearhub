@@ -9,16 +9,16 @@ from PyQt5.QtGui import QIcon, QCursor, QCloseEvent, QShowEvent
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QTableWidget, QHeaderView, QPushButton, \
     QProgressBar, QPlainTextEdit, QToolButton, QHBoxLayout
 
-from bauh import __app_name__
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.controller import SoftwareManager, SoftwareAction
-from bauh.api.abstract.handler import TaskManager
-from bauh.api import user
-from bauh.view.qt.components import new_spacer, QCustomToolbar
-from bauh.view.qt.qt_utils import centralize, get_current_screen_geometry
-from bauh.view.qt.root import RootDialog
-from bauh.view.qt.thread import AnimateProgress
-from bauh.view.util.translation import I18n
+from bearhub import __app_name__
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.controller import SoftwareManager, SoftwareAction
+from bearhub.api.abstract.handler import TaskManager
+from bearhub.api import user
+from bearhub.view.qt.components import new_spacer, QCustomToolbar
+from bearhub.view.qt.qt_utils import centralize, get_current_screen_geometry
+from bearhub.view.qt.root import RootDialog
+from bearhub.view.qt.thread import AnimateProgress
+from bearhub.view.util.translation import I18n
 
 
 class Prepare(QThread, TaskManager):

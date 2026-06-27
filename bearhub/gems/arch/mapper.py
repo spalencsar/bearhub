@@ -2,11 +2,11 @@ import logging
 import os
 from typing import Optional, List, Dict
 
-from bauh.api.abstract.model import PackageStatus
-from bauh.api.http import HttpClient
-from bauh.gems.arch.model import ArchPackage
-from bauh.commons.version_util import normalize_version
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.model import PackageStatus
+from bearhub.api.http import HttpClient
+from bearhub.gems.arch.model import ArchPackage
+from bearhub.commons.version_util import normalize_version
+from bearhub.view.util.translation import I18n
 
 URL_PKG_DOWNLOAD = 'https://aur.archlinux.org/{}'
 

@@ -3,9 +3,9 @@ from logging import Logger
 from threading import Thread
 from typing import Optional
 
-from bauh.api.abstract.handler import TaskManager
-from bauh.commons.config import ConfigManager
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.handler import TaskManager
+from bearhub.commons.config import ConfigManager
+from bearhub.view.util.translation import I18n
 
 
 class CreateConfigFile(Thread):

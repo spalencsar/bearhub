@@ -1,0 +1,1 @@
+from bearhub.gems.appimage import *  # noqa: F401,F403

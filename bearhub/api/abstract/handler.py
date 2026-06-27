@@ -1,6 +1,6 @@
 from typing import List, Tuple, Optional
 
-from bauh.api.abstract.view import MessageType, ViewComponent
+from bearhub.api.abstract.view import MessageType, ViewComponent
 
 
 class ProcessWatcher:

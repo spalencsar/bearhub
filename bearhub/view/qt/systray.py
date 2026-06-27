@@ -13,17 +13,17 @@ from PyQt5.QtCore import QThread, pyqtSignal, QCoreApplication, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QSystemTrayIcon, QMenu
 
-from bauh import __app_name__, ROOT_DIR
-from bauh.api.abstract.model import PackageUpdate
-from bauh.api.http import HttpClient
-from bauh.commons import system
-from bauh.context import generate_i18n
-from bauh.view.core.tray_client import TRAY_CHECK_FILE
-from bauh.view.core.update import check_for_update
-from bauh.view.qt.about import AboutDialog
-from bauh.view.qt.qt_utils import load_resource_icon
-from bauh.view.util import util, resource
-from bauh.view.util.translation import I18n
+from bearhub import __app_name__, ROOT_DIR
+from bearhub.api.abstract.model import PackageUpdate
+from bearhub.api.http import HttpClient
+from bearhub.commons import system
+from bearhub.context import generate_i18n
+from bearhub.view.core.tray_client import TRAY_CHECK_FILE
+from bearhub.view.core.update import check_for_update
+from bearhub.view.qt.about import AboutDialog
+from bearhub.view.qt.qt_utils import load_resource_icon
+from bearhub.view.util import util, resource
+from bearhub.view.util.translation import I18n
 
 CLI_NAME = f'{__app_name__}-cli'
 

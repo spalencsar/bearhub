@@ -1,9 +1,9 @@
 import os
 
-from bauh import __app_name__
-from bauh.api.paths import DESKTOP_ENTRIES_DIR, CONFIG_DIR, TEMP_DIR, CACHE_DIR, SHARED_FILES_DIR
-from bauh.commons import resource
-from bauh.commons.util import map_timestamp_file
+from bearhub import __app_name__
+from bearhub.api.paths import DESKTOP_ENTRIES_DIR, CONFIG_DIR, TEMP_DIR, CACHE_DIR, SHARED_FILES_DIR
+from bearhub.commons import resource
+from bearhub.commons.util import map_timestamp_file
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_SHARED_DIR = f'{SHARED_FILES_DIR}/web'

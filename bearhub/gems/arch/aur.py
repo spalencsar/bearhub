@@ -6,9 +6,9 @@ from typing import Set, List, Iterable, Dict, Optional, Generator, Tuple
 
 import requests
 
-from bauh.api.http import HttpClient
-from bauh.gems.arch import AUR_INDEX_FILE, git
-from bauh.gems.arch.exceptions import PackageNotFoundException
+from bearhub.api.http import HttpClient
+from bearhub.gems.arch import AUR_INDEX_FILE, git
+from bearhub.gems.arch.exceptions import PackageNotFoundException
 
 URL_INFO = 'https://aur.archlinux.org/rpc/?v=5&type=info&'
 URL_SRC_INFO = 'https://aur.archlinux.org/cgit/aur.git/plain/.SRCINFO?h='

@@ -1,0 +1,1 @@
+from bearhub.gems.web.worker import *  # noqa: F401,F403

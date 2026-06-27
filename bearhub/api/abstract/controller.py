@@ -8,12 +8,12 @@ from typing import List, Set, Type, Tuple, Optional, Generator, TypeVar
 
 import yaml
 
-from bauh.api.abstract.context import ApplicationContext
-from bauh.api.abstract.disk import DiskCacheLoader
-from bauh.api.abstract.handler import ProcessWatcher, TaskManager
-from bauh.api.abstract.model import SoftwarePackage, PackageUpdate, PackageHistory, PackageSuggestion, \
+from bearhub.api.abstract.context import ApplicationContext
+from bearhub.api.abstract.disk import DiskCacheLoader
+from bearhub.api.abstract.handler import ProcessWatcher, TaskManager
+from bearhub.api.abstract.model import SoftwarePackage, PackageUpdate, PackageHistory, PackageSuggestion, \
     CustomSoftwareAction
-from bauh.api.abstract.view import ViewComponent
+from bearhub.api.abstract.view import ViewComponent
 
 P = TypeVar('P', bound=SoftwarePackage)
 

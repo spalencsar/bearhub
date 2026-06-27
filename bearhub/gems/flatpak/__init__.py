@@ -1,10 +1,10 @@
 import os
 from pathlib import Path
 
-from bauh.api import user
-from bauh.api.paths import CONFIG_DIR
-from bauh.commons import resource
-from bauh.commons.version_util import map_str_version
+from bearhub.api import user
+from bearhub.api.paths import CONFIG_DIR
+from bearhub.commons import resource
+from bearhub.commons.version_util import map_str_version
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_FILE = f'{CONFIG_DIR}/flatpak.yml'

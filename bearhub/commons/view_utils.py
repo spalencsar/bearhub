@@ -1,7 +1,7 @@
 import locale
 from typing import Tuple, Optional, Iterable
 
-from bauh.api.abstract.view import SelectViewType, InputOption, SingleSelectComponent
+from bearhub.api.abstract.view import SelectViewType, InputOption, SingleSelectComponent
 
 
 def new_select(label: str, tip: Optional[str], id_: str, opts: Iterable[Tuple[Optional[str], object, Optional[str]]], value: object, max_width: Optional[int] = None,

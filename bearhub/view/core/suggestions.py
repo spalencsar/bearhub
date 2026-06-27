@@ -1,6 +1,6 @@
 import os
 from typing import Optional, Dict
-from bauh import __app_name__
+from bearhub import __app_name__
 
 
 def read_suggestions_mapping() -> Optional[Dict[str, str]]:

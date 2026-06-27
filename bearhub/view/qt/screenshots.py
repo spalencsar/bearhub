@@ -9,13 +9,13 @@ from PyQt5.QtGui import QIcon, QPixmap, QCursor
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QVBoxLayout, QProgressBar, QApplication, QWidget, \
     QSizePolicy, QHBoxLayout
 
-from bauh.api.abstract.cache import MemoryCache
-from bauh.api.http import HttpClient
-from bauh.view.qt import qt_utils
-from bauh.view.qt.components import new_spacer
-from bauh.view.qt.thread import AnimateProgress
-from bauh.view.qt.view_model import PackageView
-from bauh.view.util.translation import I18n
+from bearhub.api.abstract.cache import MemoryCache
+from bearhub.api.http import HttpClient
+from bearhub.view.qt import qt_utils
+from bearhub.view.qt.components import new_spacer
+from bearhub.view.qt.thread import AnimateProgress
+from bearhub.view.qt.view_model import PackageView
+from bearhub.view.util.translation import I18n
 
 
 class ScreenshotsDialog(QDialog):

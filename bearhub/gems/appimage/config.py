@@ -1,5 +1,5 @@
-from bauh.commons.config import YAMLConfigManager
-from bauh.gems.appimage import CONFIG_FILE
+from bearhub.commons.config import YAMLConfigManager
+from bearhub.gems.appimage import CONFIG_FILE
 
 
 class AppImageConfigManager(YAMLConfigManager):

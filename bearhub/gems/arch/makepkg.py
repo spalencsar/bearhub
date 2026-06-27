@@ -2,10 +2,10 @@ import os
 import re
 from typing import Optional, Set, Tuple
 
-from bauh.commons import system
-from bauh.commons.system import ProcessHandler, SimpleProcess
-from bauh.gems.arch import CUSTOM_MAKEPKG_FILE
-from bauh.gems.arch.proc_util import write_as_user
+from bearhub.commons import system
+from bearhub.commons.system import ProcessHandler, SimpleProcess
+from bearhub.gems.arch import CUSTOM_MAKEPKG_FILE
+from bearhub.gems.arch.proc_util import write_as_user
 
 RE_UNKNOWN_GPG_KEY = re.compile(r'\(unknown public key (\w+)\)')
 RE_DEPS_PATTERN = re.compile(r'\n?\s+->\s(.+)\n')

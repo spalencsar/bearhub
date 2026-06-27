@@ -1,14 +1,14 @@
 from io import StringIO
 from typing import Set, Tuple, Dict, Collection
 
-from bauh.api.abstract.handler import ProcessWatcher
-from bauh.api.abstract.view import MultipleSelectComponent, InputOption, FormComponent, SingleSelectComponent, \
+from bearhub.api.abstract.handler import ProcessWatcher
+from bearhub.api.abstract.view import MultipleSelectComponent, InputOption, FormComponent, SingleSelectComponent, \
     SelectViewType
-from bauh.commons import resource
-from bauh.commons.html import bold
-from bauh.commons.view_utils import get_human_size_str
-from bauh.gems.arch import ROOT_DIR, get_repo_icon_path, get_icon_path, pacman
-from bauh.view.util.translation import I18n
+from bearhub.commons import resource
+from bearhub.commons.html import bold
+from bearhub.commons.view_utils import get_human_size_str
+from bearhub.gems.arch import ROOT_DIR, get_repo_icon_path, get_icon_path, pacman
+from bearhub.view.util.translation import I18n
 
 def _get_repo_icon(repository: str):
     return resource.get_path('img/{}.svg'.format('arch' if repository == 'aur' else 'repo'), ROOT_DIR)

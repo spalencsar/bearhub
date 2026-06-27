@@ -9,10 +9,10 @@ from typing import Dict, List, Optional
 
 import requests
 
-from bauh.api.abstract.controller import SoftwareManager
-from bauh.api.http import HttpClient
-from bauh.commons.internet import InternetChecker
-from bauh.commons.util import map_timestamp_file
+from bearhub.api.abstract.controller import SoftwareManager
+from bearhub.api.http import HttpClient
+from bearhub.commons.internet import InternetChecker
+from bearhub.commons.util import map_timestamp_file
 
 
 class CategoriesDownloader(Thread):

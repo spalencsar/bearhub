@@ -4,6 +4,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+- Native gem loader at `bearhub/view/core/gems.py` (scans `bearhub/gems/` first, falls back to `bauh/gems/` during transition)
+- Namespace compatibility tests for migrated packages:
+  - `tests/gems/appimage/test_namespace.py`
+  - `tests/gems/flatpak/test_namespace.py`
+  - `tests/gems/web/test_namespace.py`
+  - `tests/gems/arch/test_namespace.py`
+  - `tests/api/test_namespace.py`
+  - `tests/view/util/test_namespace.py`
+  - `tests/view/core/test_namespace.py`
+  - `tests/view/qt/test_namespace.py`
+  - `tests/test_namespace_phase_d.py`
+
+### Changed
+- **M3 namespace migration (Phase B):** all runtime implementation moved from `bauh/` to `bearhub/`:
+  - `bearhub/gems/` — AppImage, Flatpak, Web, Arch/AUR (28+ modules per backend)
+  - `bearhub/api/` and `bearhub/commons/` — full API and shared utility layer
+  - `bearhub/view/util/` — cache, disk, logs, translation, util (`resource.py` already Bearhub-native)
+  - `bearhub/view/core/` — controller, downloader, settings, suggestions, timeshift, tray_client, update (`config`, `gems` already native)
+  - `bearhub/view/qt/` — all 18 Qt UI modules (window, thread, systray, components, …)
+- **M3 namespace migration (Phase D, partial):**
+  - `__version__` and `__app_name__` canonical in `bearhub/__init__.py`
+  - `bauh/__init__.py` and `bauh/stylesheet.py` reduced to compatibility shims
+  - `pyproject.toml` reads version from `bearhub.__version__`
+  - `setup.py` uses `APP_PACKAGE = 'bearhub'` and ships resources only from `bearhub/`
+- Unit tests updated to import from `bearhub.*` where modules were migrated (gems, api, commons, arch patches)
+- Test suite expanded from 132 to 159 tests (all passing locally)
+
+### Deprecated
+- `import bauh` and `import bauh.*` — still supported via re-export shims under `bauh/`, but `bearhub` is the canonical namespace for new code
+- `bauh/view/resources/` — kept in `MANIFEST.in` only as legacy fallback for `bearhub/view/util/resource.py`; scheduled for removal after shim deprecation window
+
+### Documentation
+- `NAMESPACE_MIGRATION.md` rewritten and kept current through G.1–G.4, B.3–B.6, and Phase D slices
+- Gem migration plan documented (G.1 AppImage → G.4 Arch order)
+- Phase D completion criteria and remaining shim-removal steps documented
+- `docs/qt6-migration.md`, `ROADMAP.md` M6, and `NAMESPACE_MIGRATION.md` history sections updated to `bearhub/*` paths
+- `packaging/aur/README.md` release checklist aligned with next tag after `[Unreleased]`
+
+### Compatibility
+- `bauh/api/*`, `bauh/commons/*`, `bauh/gems/*`, `bauh/view/*` remain installable as thin re-export shims (`from bearhub.<module> import *`)
+- `bauh/app.py`, `bauh/manage.py`, `bauh/tray.py`, `bauh/context.py`, `bauh/app_args.py` continue to delegate to `bearhub` entry modules
+- No intentional user-facing behavior changes; migration is import-path and packaging structure only
+
 ## [0.10.7-bearhub.6] 2026-06-26
 ### Fixed
 - Arch metadata URLs no longer point to non-existent `bearhub-files` (restored `bauh-files` data sources)

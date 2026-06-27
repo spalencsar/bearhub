@@ -13,13 +13,13 @@ Before publishing:
 
 ## Stable release checklist (`bearhub`)
 
-1. Update `CHANGELOG.md` and packaging paths for the new tag (e.g. `0.10.7-bearhub.6`).
+1. Move `CHANGELOG.md` `[Unreleased]` entries under the new tag (e.g. `0.10.7-bearhub.7` or `0.10.8`).
 2. Commit all release changes on `main`.
 3. Create and push the git tag:
    ```bash
-   git tag -a 0.10.7-bearhub.6 -m "Release 0.10.7-bearhub.6"
+   git tag -a 0.10.7-bearhub.7 -m "Release 0.10.7-bearhub.7"
    git push origin main
-   git push origin 0.10.7-bearhub.6
+   git push origin 0.10.7-bearhub.7
    ```
 4. Refresh tarball checksum in `bearhub/PKGBUILD`:
    ```bash
@@ -32,4 +32,4 @@ Before publishing:
    scripts/sync-aur-packaging.sh
    ```
 6. Build-test both AUR packages, then publish AUR commits.
-7. Optional: create GitHub release from tag `0.10.7-bearhub.6`.
+7. Optional: create GitHub release from the new tag.

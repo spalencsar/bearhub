@@ -7,8 +7,8 @@ from logging import Logger
 from pathlib import Path
 from typing import Optional
 
-from bauh.api.paths import CACHE_DIR
-from bauh.commons.system import ProcessHandler
+from bearhub.api.paths import CACHE_DIR
+from bearhub.commons.system import ProcessHandler
 
 SYNC_FILE = f'{CACHE_DIR}/arch/db_sync'
 

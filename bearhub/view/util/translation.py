@@ -3,7 +3,7 @@ import locale
 import os
 from typing import Tuple, Set
 
-from bauh.view.util import resource
+from bearhub.view.util import resource
 
 
 class I18n(dict):

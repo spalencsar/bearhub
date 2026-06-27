@@ -2,8 +2,8 @@ import re
 import shutil
 from typing import Optional, Generator
 
-from bauh import __app_name__
-from bauh.commons.system import SimpleProcess, new_root_subprocess
+from bearhub import __app_name__
+from bearhub.commons.system import SimpleProcess, new_root_subprocess
 
 RE_SNAPSHOTS = re.compile(r'\d+\s+>\s+([\w\-_]+)\s+.+<{}>'.format(__app_name__))
 
