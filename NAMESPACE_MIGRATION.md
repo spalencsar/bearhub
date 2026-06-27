@@ -382,4 +382,5 @@ Run after every migration slice:
 - `docs/qt6-migration.md` — Qt6 inventory under `bearhub/view/qt/*` and `bearhub/view/core/*`
 - `CHANGELOG.md` — `[Unreleased]` on `main` (Phase B + partial Phase D); tagged `0.10.7-bearhub.4` … `.6`
 - `packaging/aur/README.md` — AUR publish workflow (GitHub ≠ AUR)
+- `docs/known-issues.md` — recurring bugs and maintainer pitfalls (update when learning new ones)
 - `AGENTS.md` — **local** AI/maintainer handoff (gitignored, not on GitHub)

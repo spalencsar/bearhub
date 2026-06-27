@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `docs/qt6-migration.md`, `ROADMAP.md` M6, and `NAMESPACE_MIGRATION.md` history sections updated to `bearhub/*` paths
 - `packaging/aur/README.md` — AUR workflow (GitHub vs AUR separation), current `pkgrel=11`
 - `ROADMAP.md`, `README.md` maintainer sections updated for post-migration state
+- `docs/known-issues.md` added — living doc for recurring issues (AUR, CI, release gaps)
 
 ### Compatibility
 - `bauh/api/*`, `bauh/commons/*`, `bauh/gems/*`, `bauh/view/*` remain installable as thin re-export shims (`from bearhub.<module> import *`)
