@@ -22,3 +22,4 @@ AGENTS.md
 packaging/aur/**/*.tar.gz
 packaging/aur/**/src
 packaging/aur/**/pkg
+
