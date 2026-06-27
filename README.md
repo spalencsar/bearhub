@@ -20,7 +20,8 @@ Current focus:
 - keeping the application working on current Arch Linux
 - improving the experience for Arch and AUR package management
 - maintaining compatibility with modern Python versions
-- stabilizing the existing feature set before larger changes
+- completing namespace migration (M3, ~95 % — code on `main`, release tag pending)
+- stabilizing the existing feature set before larger changes (UI still largely looks like upstream bauh until M1)
 
 ## Why This Fork Exists
 
@@ -201,14 +202,18 @@ Bearhub is currently distributed through source releases and AUR:
 
 #### <a name="maintainer_docs">Maintainer docs</a>
 
-- Namespace migration notes: `NAMESPACE_MIGRATION.md` (runtime is native under `bearhub/`; `bauh/` is shim-only until Phase D completion)
-- Unreleased migration changelog: `CHANGELOG.md` → `[Unreleased]`
-- Qt6 migration plan: `docs/qt6-migration.md`
-- Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` (synced into `bearhub/view/resources/img/logo.svg` for runtime/packaging)
-- AppImage build (from `linux_dist/appimage/`):
+- Namespace migration: `NAMESPACE_MIGRATION.md` (runtime native under `bearhub/`; `bauh/` shims until Phase D)
+- Changelog (on `main`, not yet tagged): `CHANGELOG.md` → `[Unreleased]`
+- Roadmap: `ROADMAP.md` (M1 identity, M3 namespace, M6 Qt6)
+- Qt6 plan: `docs/qt6-migration.md`
+- AUR templates + publish workflow: `packaging/aur/README.md` (**GitHub push ≠ AUR**; local AUR clone + SSH push)
+- AUR stable (2026-06-27): `bearhub 0.10.7-11` — source still tag `0.10.7-bearhub.6` until next release
+- Local agent handoff: `AGENTS.md` (gitignored, maintainer machine only)
+- Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` → `bearhub/view/resources/img/logo.svg`
+- AppImage build (`linux_dist/appimage/`):
 
 ```bash
-export BEARHUB_VERSION=0.10.7-bearhub.7  # next tag after CHANGELOG [Unreleased] is released
+export BEARHUB_VERSION=0.10.7-bearhub.7  # after CHANGELOG [Unreleased] is tagged
 ./build.sh
 ```
 

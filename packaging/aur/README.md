@@ -1,35 +1,66 @@
 # AUR Packaging
 
-This directory contains starter `PKGBUILD` files for publishing Bearhub on the AUR:
+This directory contains **PKGBUILD templates** for publishing Bearhub on the AUR:
 
-- `bearhub/PKGBUILD`: stable package from tagged releases
+- `bearhub/PKGBUILD`: stable package from **tagged** GitHub releases
 - `bearhub-git/PKGBUILD`: rolling package from `main`
 
-Before publishing:
+**Important:** GitHub and AUR are separate. Updating files here and pushing to GitHub does **not** update the AUR. Publishing requires a **local AUR git clone** and `git push` to `aur.archlinux.org` (see below).
 
-1. Generate `.SRCINFO` with `makepkg --printsrcinfo > .SRCINFO` inside each package directory.
-2. Build-test locally with `makepkg -si`.
-3. Push each package to its own AUR Git repository (`aur@aur.archlinux.org:bearhub.git` and `aur@aur.archlinux.org:bearhub-git.git`).
+## Current stable snapshot (2026-06-27)
+
+| Field | Value |
+|-------|--------|
+| `pkgver` | `0.10.7` |
+| `pkgrel` | `11` |
+| Source tag | `0.10.7-bearhub.6` |
+| Source archive | `bearhub-0.10.7-bearhub.6.tar.gz` |
+
+`main` on GitHub already contains the M3 namespace migration (`[Unreleased]` in `CHANGELOG.md`). Stable AUR still builds the **`0.10.7-bearhub.6`** tarball until the next release tag and PKGBUILD URL update.
+
+## Before first publish
+
+1. Generate `.SRCINFO`: `makepkg --printsrcinfo > .SRCINFO` in each package directory.
+2. Build-test: `makepkg -si`.
+3. Clone AUR repos locally (once):
+   ```bash
+   git clone ssh://aur@aur.archlinux.org/bearhub.git ~/Projekte/development/current/aur/bearhub
+   git clone ssh://aur@aur.archlinux.org/bearhub-git.git ~/Projekte/development/current/aur/bearhub-git
+   ```
+4. Register SSH public key at https://aur.archlinux.org (key file e.g. `~/.ssh/aur`, mode `600`).
+
+## Publishing workflow (maintainer, local)
+
+1. Edit `packaging/aur/bearhub/PKGBUILD` and `.SRCINFO` in **this** repo; commit and push to **GitHub**.
+2. Copy into local AUR clone and push to AUR:
+   - **Option A:** local script `scripts/sync-aur-packaging.sh --push` (maintainer machine only — **not** in GitHub repo).
+   - **Option B:** manually:
+     ```bash
+     cp packaging/aur/bearhub/PKGBUILD ~/Projekte/development/current/aur/bearhub/
+     cp packaging/aur/bearhub/.SRCINFO ~/Projekte/development/current/aur/bearhub/
+     cd ~/Projekte/development/current/aur/bearhub
+     git add PKGBUILD .SRCINFO
+     git commit -m "updpkgsums: …"
+     git push origin master
+     ```
+3. Users refresh index: `yay -Sy`. If SHA256 fails, clear stale cache: `rm -rf ~/.cache/yay/bearhub`.
 
 ## Stable release checklist (`bearhub`)
 
-1. Move `CHANGELOG.md` `[Unreleased]` entries under the new tag (e.g. `0.10.7-bearhub.7` or `0.10.8`).
-2. Commit all release changes on `main`.
+1. Move `CHANGELOG.md` `[Unreleased]` under a new tag (e.g. `0.10.7-bearhub.7` or `0.10.8`).
+2. Commit release changes on `main` and push to GitHub.
 3. Create and push the git tag:
    ```bash
    git tag -a 0.10.7-bearhub.7 -m "Release 0.10.7-bearhub.7"
    git push origin main
    git push origin 0.10.7-bearhub.7
    ```
-4. Refresh tarball checksum in `bearhub/PKGBUILD`:
+4. Update `bearhub/PKGBUILD`: `_pkgver_tag`, source URL, `sha256sums`; regenerate `.SRCINFO`:
    ```bash
    cd packaging/aur/bearhub
-   makepkg -g >> PKGBUILD  # or updpkgsums after source URL is reachable
+   makepkg --verifysource
    makepkg --printsrcinfo > .SRCINFO
    ```
-5. Sync to local AUR clones:
-   ```bash
-   scripts/sync-aur-packaging.sh
-   ```
-6. Build-test both AUR packages, then publish AUR commits.
-7. Optional: create GitHub release from the new tag.
+5. Commit PKGBUILD changes on GitHub `main`.
+6. Publish to AUR (local clone + push — step 2 above).
+7. Build-test; optional GitHub Release with assets.

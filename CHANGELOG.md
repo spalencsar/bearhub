@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+> **Status (2026-06-27):** This section is merged on GitHub `main` (159 tests, CI green). Not yet in a release tag. AUR stable `bearhub 0.10.7-11` still builds source tag `0.10.7-bearhub.6` until `0.10.7-bearhub.7` (or `0.10.8`) is published.
+
 ### Added
 - Native gem loader at `bearhub/view/core/gems.py` (scans `bearhub/gems/` first, falls back to `bauh/gems/` during transition)
 - Namespace compatibility tests for migrated packages:
@@ -43,7 +45,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Gem migration plan documented (G.1 AppImage → G.4 Arch order)
 - Phase D completion criteria and remaining shim-removal steps documented
 - `docs/qt6-migration.md`, `ROADMAP.md` M6, and `NAMESPACE_MIGRATION.md` history sections updated to `bearhub/*` paths
-- `packaging/aur/README.md` release checklist aligned with next tag after `[Unreleased]`
+- `packaging/aur/README.md` — AUR workflow (GitHub vs AUR separation), current `pkgrel=11`
+- `ROADMAP.md`, `README.md` maintainer sections updated for post-migration state
 
 ### Compatibility
 - `bauh/api/*`, `bauh/commons/*`, `bauh/gems/*`, `bauh/view/*` remain installable as thin re-export shims (`from bearhub.<module> import *`)

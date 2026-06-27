@@ -2,7 +2,7 @@
 
 This document defines the technical migration strategy for moving the Python package namespace from `bauh` to `bearhub` safely.
 
-Last updated: 2026-06-27 (Phase D slice: version flip + packaging canonicalization).
+Last updated: 2026-06-27 (M3 merged on GitHub `main`; Phase D partial; release tag pending).
 
 ## Current State
 
@@ -16,7 +16,9 @@ Last updated: 2026-06-27 (Phase D slice: version flip + packaging canonicalizati
 | `gems/` backends | AppImage, Flatpak, Web, Arch/AUR — all under `bearhub/gems/` |
 | Gem loader | Native `bearhub/view/core/gems.py` (dual-root scan + import fallback) |
 | Tests | 159 unit tests, all passing (CI: Python 3.11, 3.12) |
-| Compatibility shims | `bauh/*` re-exports `bearhub.*`; documented in `CHANGELOG.md` `[Unreleased]` |
+| Compatibility shims | `bauh/*` re-exports `bearhub.*`; on `main`, documented in `CHANGELOG.md` `[Unreleased]` |
+| GitHub `main` vs release tag | **Migration on `main`**; latest tag `0.10.7-bearhub.6` is behind `main` |
+| AUR stable | `0.10.7-11` builds tarball from tag **`0.10.7-bearhub.6`** until next release |
 
 ### Progress Overview (~95 % of M3 — Phase B complete, Phase D in progress)
 
@@ -376,6 +378,8 @@ Run after every migration slice:
 
 ## Related Documents
 
-- `ROADMAP.md` — milestone M3 (namespace) and M6 (Qt6, after M3 tag)
+- `ROADMAP.md` — milestones M1–M6 (M1 identity/branding still open)
 - `docs/qt6-migration.md` — Qt6 inventory under `bearhub/view/qt/*` and `bearhub/view/core/*`
-- `CHANGELOG.md` — `[Unreleased]` holds full Phase B + partial Phase D notes; tagged slices from `0.10.7-bearhub.4` through `.6`
+- `CHANGELOG.md` — `[Unreleased]` on `main` (Phase B + partial Phase D); tagged `0.10.7-bearhub.4` … `.6`
+- `packaging/aur/README.md` — AUR publish workflow (GitHub ≠ AUR)
+- `AGENTS.md` — **local** AI/maintainer handoff (gitignored, not on GitHub)

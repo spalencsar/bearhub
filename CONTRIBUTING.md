@@ -30,3 +30,13 @@ The way to go here is to ask yourself if the improvement would be useful for mor
 - `bearhub/gems/web/resources/locale`
 
 New code should use `bearhub.*` imports. Legacy `bauh.*` imports still work via compatibility shims (see `NAMESPACE_MIGRATION.md`).
+
+Run tests before submitting changes:
+
+```bash
+pip install -r requirements.txt
+pip install -e .
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+CI (`.github/workflows/tests.yml`) runs the same on push to `main` (Python 3.11 and 3.12).
