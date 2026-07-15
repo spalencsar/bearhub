@@ -1,7 +1,7 @@
 import os
 
-__version__ = '0.10.7'
-__app_name__ = 'bearhub'
+__app_name__ = "bearhub"
+__version__ = "0.10.7"
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
