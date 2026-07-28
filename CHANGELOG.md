@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- AUR packages now declare `qt5-svg` so bundled SVG repository and action icons render on minimal Arch installations
+- AUR packages now declare `hicolor-icon-theme`, which owns the icon-theme hierarchy used by the installed Bearhub application icon
+- `bearhub-git` now derives `pkgver` from the canonical `bearhub` namespace instead of the compatibility-only `bauh` namespace
+
 ## [0.10.7-bearhub.7] 2026-07-28
 
 ### Fixed
