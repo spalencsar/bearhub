@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-> **Status (2026-06-27):** This section is merged on GitHub `main` (159 tests, CI green). Not yet in a release tag. AUR stable `bearhub 0.10.7-11` still builds source tag `0.10.7-bearhub.6` until `0.10.7-bearhub.7` (or `0.10.8`) is published.
+## [0.10.7-bearhub.7] 2026-07-28
+
+### Fixed
+- Clean source builds no longer require an older installed Bearhub/bauh package to expose `bauh.__version__`
+- Stable AUR validation now performs a complete clean package build instead of checking only metadata and source checksums
 
 ### Added
 - Native gem loader at `bearhub/view/core/gems.py` (scans `bearhub/gems/` first, falls back to `bauh/gems/` during transition)

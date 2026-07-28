@@ -39,7 +39,7 @@ Definition of Done:
 
 ### M3: Namespace Migration (`bauh` -> `bearhub`) (3-5 weeks)
 
-Status (2026-06-27): **~95 % complete** — runtime code native under `bearhub/`; `bauh/` is shim-only; version flip done; **merged on GitHub `main`** (`CHANGELOG.md` `[Unreleased]`); **not yet in a release tag**; AUR stable still builds `0.10.7-bearhub.6`. Full shim removal pending one stable release. See `NAMESPACE_MIGRATION.md`.
+Status (2026-07-28): **~95 % complete** — runtime code native under `bearhub/`; `bauh/` is shim-only; version flip released as `0.10.7-bearhub.7`. Full shim removal remains pending one stable release cycle. See `NAMESPACE_MIGRATION.md`.
 
 Scope:
 - Migrate Python package namespace from `bauh` to `bearhub`.
@@ -52,7 +52,6 @@ Definition of Done:
 - Packaging and tests run successfully with new namespace.
 
 Remaining for M3 closure:
-- Tag `[Unreleased]` on `main` as `0.10.7-bearhub.7` (or `0.10.8`) and update AUR stable PKGBUILD source URL + checksum
 - Publish PKGBUILD to AUR via **local maintainer workflow** (not GitHub push alone)
 - Validate `bearhub` / `bearhub-git` on real Arch systems (`yay -Sy` after publish)
 - Remove `bauh/*` shims after one stable cycle (Phase D completion)
@@ -156,9 +155,8 @@ Rollback strategy:
 
 ## Immediate Next Actions
 
-1. Tag release: move `CHANGELOG.md` `[Unreleased]` → `0.10.7-bearhub.7` (or `0.10.8`); update `packaging/aur/bearhub/PKGBUILD` source tag + `sha256sums`.
-2. Publish AUR stable (`pkgrel` bump as needed); users run `yay -Sy` — see `packaging/aur/README.md`.
-3. Close M1 gaps (user-facing Bearhub branding; smoke-test on real Arch desktop).
-4. Build M2 issue list from crash reports; prioritize uninstall/Qt teardown.
-5. Complete M3 Phase D after one stable release (remove `bauh/*` shims, drop `provides=('bauh')` in AUR).
-6. Schedule M6 Qt6 PR-6.2 only after M3 tag is validated.
+1. Publish `0.10.7-bearhub.7` through AUR stable; users run `yay -Sy` — see `packaging/aur/README.md`.
+2. Close M1 gaps (user-facing Bearhub branding; smoke-test on real Arch desktop).
+3. Build M2 issue list from crash reports; prioritize uninstall/Qt teardown.
+4. Complete M3 Phase D after one stable release (remove `bauh/*` shims, drop `provides=('bauh')` in AUR).
+5. Schedule M6 Qt6 PR-6.2 only after M3 tag is validated.

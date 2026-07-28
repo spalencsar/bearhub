@@ -203,7 +203,7 @@ Bearhub is currently distributed through source releases and AUR:
 #### <a name="maintainer_docs">Maintainer docs</a>
 
 - Namespace migration: `NAMESPACE_MIGRATION.md` (runtime native under `bearhub/`; `bauh/` shims until Phase D)
-- Changelog (on `main`, not yet tagged): `CHANGELOG.md` → `[Unreleased]`
+- Changelog: `CHANGELOG.md` → `0.10.7-bearhub.7` and `[Unreleased]`
 - Roadmap: `ROADMAP.md` (M1 identity, M3 namespace, M6 Qt6)
 - Qt6 plan: `docs/qt6-migration.md`
 - AUR templates + publish workflow: `packaging/aur/README.md` (**GitHub push ≠ AUR**; local AUR clone + SSH push)
@@ -214,7 +214,7 @@ Bearhub is currently distributed through source releases and AUR:
 - AppImage build (`linux_dist/appimage/`):
 
 ```bash
-export BEARHUB_VERSION=0.10.7-bearhub.7  # after CHANGELOG [Unreleased] is tagged
+export BEARHUB_VERSION=0.10.7-bearhub.7
 ./build.sh
 ```
 

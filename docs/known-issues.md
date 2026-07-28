@@ -3,7 +3,7 @@
 Living document for recurring problems, gaps, and non-obvious workflow traps.  
 Update this file when you hit a new issue that cost debugging time.
 
-Last updated: 2026-06-27.
+Last updated: 2026-07-28.
 
 ## How to use this file
 
@@ -20,14 +20,14 @@ AI agents: read this **after** `AGENTS.md` (local) and before invasive changes.
 
 ## Release and packaging gaps
 
-### `main` ahead of latest GitHub tag
+### Release tag and stable AUR can diverge
 
 | | |
 |---|---|
-| **Symptom** | Code on `main` has M3 migration; `pip install` from tag or AUR stable behaves differently than `main`. |
-| **Cause** | Latest tag is `0.10.7-bearhub.6`; `[Unreleased]` on `main` is not tagged yet. |
-| **Fix** | Tag `0.10.7-bearhub.7` (or `0.10.8`), update `packaging/aur/bearhub/PKGBUILD` source URL + `sha256sums`, publish to AUR. |
-| **Prevent** | Ship release checklist in `packaging/aur/README.md` after every milestone on `main`. |
+| **Symptom** | GitHub contains a fix, while `yay -S bearhub` still installs an older source tag. |
+| **Cause** | GitHub tags and AUR are published separately; changing `main` or creating a tag does not update the AUR clone. |
+| **Fix** | Update the stable PKGBUILD tag and checksum, regenerate `.SRCINFO`, then push the local AUR clone. |
+| **Prevent** | Complete every step in `packaging/aur/README.md`; verify the source tag shown by AUR after publication. |
 
 ### AUR stable builds old tarball
 
@@ -50,6 +50,15 @@ AI agents: read this **after** `AGENTS.md` (local) and before invasive changes.
 ---
 
 ## AUR / yay / makepkg
+
+### Fresh install fails while an upgrade build succeeds
+
+| | |
+|---|---|
+| **Symptom** | `yay -S bearhub` fails with `ModuleNotFoundError: No module named 'bauh'` on a clean system, but rebuilding on a maintainer host succeeds. |
+| **Cause** | The `0.10.7-bearhub.6` build imported version metadata through `bauh`; an older installed Bearhub supplied that module and masked the missing clean-build path. |
+| **Fix** | Use `0.10.7-bearhub.7` or newer, where version metadata is available without a previously installed package. |
+| **Prevent** | AUR CI must run a complete `makepkg --cleanbuild` in a fresh Arch container, not only `--verifysource`. |
 
 ### SHA256 failed: `bearhub-0.10.7.tar.gz`
 
