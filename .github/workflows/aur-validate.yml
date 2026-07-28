@@ -37,6 +37,8 @@ jobs:
         run: |
           useradd -m builder
           chown -R builder:builder "$GITHUB_WORKSPACE"
+          printf 'builder ALL=(ALL) NOPASSWD: /usr/bin/pacman\n' > /etc/sudoers.d/builder
+          chmod 0440 /etc/sudoers.d/builder
 
       - name: Validate PKGBUILD and .SRCINFO
         shell: bash
@@ -52,4 +54,9 @@ jobs:
 
             makepkg --verifysource --noconfirm
             namcap PKGBUILD .SRCINFO
+
+            # A checksum-only validation missed a stable source archive which
+            # built only when an older Bearhub was already installed. Build
+            # the package from a clean Arch container to cover first installs.
+            makepkg --syncdeps --cleanbuild --noconfirm
           "
