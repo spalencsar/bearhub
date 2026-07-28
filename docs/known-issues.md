@@ -35,7 +35,7 @@ AI agents: read this **after** `AGENTS.md` (local) and before invasive changes.
 |---|---|
 | **Symptom** | `yay -S bearhub` installs code without latest `main` changes. |
 | **Cause** | AUR `bearhub` uses a **tagged** tarball (`0.10.7-bearhub.6`), not `main`. Only `bearhub-git` tracks `main`. |
-| **Fix** | Use `bearhub-git` for bleeding edge, or cut a new release tag + PKGBUILD update. |
+| **Fix** | Use `bearhub-git` for bleeding edge, or cut a new release tag + PKGBUILD update. Fixed for the M3 migration by stable package `0.10.7-12` using tag `.7`. |
 | **Prevent** | Document in README maintainer section (done). |
 
 ### GitHub push does not update AUR
@@ -66,7 +66,7 @@ AI agents: read this **after** `AGENTS.md` (local) and before invasive changes.
 |---|---|
 | **Symptom** | `makepkg` / `yay`: `bearhub-0.10.7.tar.gz ... FEHLGESCHLAGEN` |
 | **Cause** | Stale cache file with generic name; old `pkgrel` used `bearhub-0.10.7.tar.gz` instead of tag-specific archive. |
-| **Fix** | `rm -rf ~/.cache/yay/bearhub`; `yay -Sy`; ensure PKGBUILD uses `bearhub-0.10.7-bearhub.6.tar.gz`. |
+| **Fix** | `rm -rf ~/.cache/yay/bearhub`; `yay -Sy`; ensure PKGBUILD uses a tag-specific filename such as `bearhub-0.10.7-bearhub.7.tar.gz`. |
 | **Prevent** | Always use tag in source filename; bump `pkgrel` when forcing cache refresh. |
 
 ### yay shows old `pkgrel` (e.g. `-9` or `-10` while AUR git has `-11`)

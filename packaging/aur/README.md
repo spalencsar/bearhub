@@ -7,16 +7,17 @@ This directory contains **PKGBUILD templates** for publishing Bearhub on the AUR
 
 **Important:** GitHub and AUR are separate. Updating files here and pushing to GitHub does **not** update the AUR. Publishing requires a **local AUR git clone** and `git push` to `aur.archlinux.org` (see below).
 
-## Current stable snapshot (2026-06-27)
+## Current stable snapshot (2026-07-28)
 
 | Field | Value |
 |-------|--------|
 | `pkgver` | `0.10.7` |
-| `pkgrel` | `11` |
-| Source tag | `0.10.7-bearhub.6` |
-| Source archive | `bearhub-0.10.7-bearhub.6.tar.gz` |
+| `pkgrel` | `12` |
+| Source tag | `0.10.7-bearhub.7` |
+| Source archive | `bearhub-0.10.7-bearhub.7.tar.gz` |
 
-`main` on GitHub already contains the M3 namespace migration (`[Unreleased]` in `CHANGELOG.md`). Stable AUR still builds the **`0.10.7-bearhub.6`** tarball until the next release tag and PKGBUILD URL update.
+The M3 namespace migration and the clean first-install build fix are released
+in `0.10.7-bearhub.7` and published by the stable AUR template.
 
 ## Before first publish
 

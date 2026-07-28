@@ -52,7 +52,6 @@ Definition of Done:
 - Packaging and tests run successfully with new namespace.
 
 Remaining for M3 closure:
-- Publish PKGBUILD to AUR via **local maintainer workflow** (not GitHub push alone)
 - Validate `bearhub` / `bearhub-git` on real Arch systems (`yay -Sy` after publish)
 - Remove `bauh/*` shims after one stable cycle (Phase D completion)
 
@@ -155,7 +154,7 @@ Rollback strategy:
 
 ## Immediate Next Actions
 
-1. Publish `0.10.7-bearhub.7` through AUR stable; users run `yay -Sy` — see `packaging/aur/README.md`.
+1. Validate `bearhub 0.10.7-12` as a clean first install on UrsaOS and Arch.
 2. Close M1 gaps (user-facing Bearhub branding; smoke-test on real Arch desktop).
 3. Build M2 issue list from crash reports; prioritize uninstall/Qt teardown.
 4. Complete M3 Phase D after one stable release (remove `bauh/*` shims, drop `provides=('bauh')` in AUR).

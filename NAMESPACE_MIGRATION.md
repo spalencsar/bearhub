@@ -18,7 +18,7 @@ Last updated: 2026-07-28 (M3 released as `0.10.7-bearhub.7`; Phase D partial).
 | Tests | 159 unit tests, all passing (CI: Python 3.11, 3.12) |
 | Compatibility shims | `bauh/*` re-exports `bearhub.*`; released in `0.10.7-bearhub.7` |
 | GitHub `main` vs release tag | M3 migration released as `0.10.7-bearhub.7` |
-| AUR stable | Release `0.10.7-bearhub.7` prepared for stable AUR publication |
+| AUR stable | `0.10.7-12` builds release tag `0.10.7-bearhub.7` |
 
 ### Progress Overview (~95 % of M3 — Phase B complete, Phase D in progress)
 

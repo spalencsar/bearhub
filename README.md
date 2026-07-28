@@ -207,7 +207,7 @@ Bearhub is currently distributed through source releases and AUR:
 - Roadmap: `ROADMAP.md` (M1 identity, M3 namespace, M6 Qt6)
 - Qt6 plan: `docs/qt6-migration.md`
 - AUR templates + publish workflow: `packaging/aur/README.md` (**GitHub push ≠ AUR**; local AUR clone + SSH push)
-- AUR stable (2026-06-27): `bearhub 0.10.7-11` — source still tag `0.10.7-bearhub.6` until next release
+- AUR stable (2026-07-28): `bearhub 0.10.7-12` — source tag `0.10.7-bearhub.7`
 - Known issues / pitfalls: `docs/known-issues.md` (AUR, CI, release gaps — **keep updated**)
 - Local agent handoff: `AGENTS.md` (gitignored, maintainer machine only)
 - Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` → `bearhub/view/resources/img/logo.svg`
