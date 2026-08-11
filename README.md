@@ -10,7 +10,7 @@
 
 The original project was created by Vinicius Moreira. This fork continues from that codebase under the original license and keeps the history and authorship intact.
 
-Legacy `bauh` config and cache directories are migrated automatically on first start when present. Screenshots may still show the original upstream UI.
+Legacy `bauh` config and cache directories are migrated automatically on first start when present.
 
 ## Status
 
@@ -21,7 +21,7 @@ Current focus:
 - improving Arch and AUR package management (updates, installed, search/install)
 - maintaining compatibility with modern Python versions
 - completing namespace migration (M3, ~95 % — code on `main`, release tag pending)
-- M1 hub identity + UX structure (`docs/product-position.md`, `docs/ux-v1.md`)
+- M1 hub shell UX (sidebar **Updates | Installed**, always-visible search) — see `docs/product-position.md`, `docs/ux-v1.md`
 
 ## Why This Fork Exists
 
@@ -37,19 +37,22 @@ Focused on:
 - Arch Linux and AUR as the primary platform and package source
 - Flatpak / AppImage / Web where useful, secondary in product chrome
 - compatibility, bug fixes, packaging, and runtime maintenance
-- evolving UX toward **Updates | Installed** list modes + always-visible search (see `docs/ux-v1.md`)
+- package-hub UX: **Updates | Installed** modes + always-visible search (see `docs/ux-v1.md`)
 
 Debian / Apt support is intentionally removed from Bearhub.
 
 Key features
-- A management panel where you can: search, install, uninstall, upgrade, downgrade and launch your applications
-- Tray mode: it launches attached to the system tray and publishes notifications when there are software updates available
-- System backup: it integrates with [Timeshift](https://github.com/teejee2008/timeshift) to provide a simple and safe backup process before applying changes to your system
-- Custom themes: it's possible to customize the tool's style/appearance. More at [Custom themes](#custom_themes) 
-
+- Package hub: search, install, uninstall, upgrade, downgrade, and launch software (Arch/AUR first)
+- Tray mode: runs in the system tray and notifies when updates are available
+- System backup: integrates with [Timeshift](https://github.com/teejee2008/timeshift) before applying changes
+- Custom themes: customize style/appearance — see [Custom themes](#custom_themes)
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/vinifmor/bauh-files/master/pictures/panel-themes.gif">
+  <img src="gfx/screenshots/main-window.png" alt="Bearhub main window — Updates view" width="720">
+</p>
+
+<p align="center">
+  <img src="gfx/screenshots/about-dialog.png" alt="Bearhub About dialog" width="360">
 </p>
 
 
@@ -100,11 +103,6 @@ Key features
     - `chmod a+x bearhub-${version}-x86_64.AppImage` (replace `${version}` by the respective downloaded version)
     - `./bearhub-${version}-x86_64.AppImage`
 - If you want to integrate Bearhub to your desktop: click on Bearhub's settings menu ("sandwich") and then `Install Bearhub`
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/vinifmor/bauh-files/master/pictures/releases/0.10.0/appim_self.png">
-</p>
-
 
 #### <a name="inst_arch">Arch-based distros</a>
 
@@ -200,18 +198,19 @@ Bearhub is currently distributed through source releases and AUR:
 #### <a name="maintainer_docs">Maintainer docs</a>
 
 - Namespace migration: `NAMESPACE_MIGRATION.md` (runtime native under `bearhub/`; `bauh/` shims until Phase D)
-- Changelog: `CHANGELOG.md` → `0.10.7-bearhub.7` and `[Unreleased]`
+- Changelog: `CHANGELOG.md` → `0.10.8` / tag `0.10.8-bearhub.1` (when released)
 - Roadmap: `ROADMAP.md` (M1 identity, M3 namespace, M6 Qt6)
 - Qt6 plan: `docs/qt6-migration.md`
 - AUR templates + publish workflow: `packaging/aur/README.md` (**GitHub push ≠ AUR**; local AUR clone + SSH push)
-- AUR stable (2026-07-28): `bearhub 0.10.7-12` — source tag `0.10.7-bearhub.7`
+- AUR stable (2026-07-28): `bearhub 0.10.7-12` — source tag `0.10.7-bearhub.7` (0.10.8 packaging prepared, publish pending)
 - Known issues / pitfalls: `docs/known-issues.md` (AUR, CI, release gaps — **keep updated**)
 - Local agent handoff: `AGENTS.md` (gitignored, maintainer machine only)
-- Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` → `bearhub/view/resources/img/logo.svg`
+- Brand assets: `gfx/bearhub.svg`, `gfx/bearhub.png` → `bearhub/view/resources/img/logo.png` (+ `logo.svg`)
+- Screenshots: `gfx/screenshots/` (main window, About)
 - AppImage build (`linux_dist/appimage/`):
 
 ```bash
-export BEARHUB_VERSION=0.10.7-bearhub.7
+export BEARHUB_VERSION=0.10.8-bearhub.1
 ./build.sh
 ```
 
