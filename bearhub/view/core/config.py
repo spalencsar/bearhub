@@ -44,6 +44,8 @@ class CoreConfigManager(YAMLConfigManager):
                 'hdpi': True,
                 "auto_scale": False,
                 "scale_factor": 1.0,
+                # Default stays the proven upstream-style theme until a real UI redesign lands.
+                # Optional: set to 'ursine' for a dark recolor only (no layout changes).
                 'theme': 'light',
                 'system_theme': False
 

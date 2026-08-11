@@ -308,46 +308,80 @@ PackagesTable QLabel#app_version[ignored = "true"] {
     font-weight: bold;
 }
 
+/* About dialog — structural redesign (header / body / actions / footer) */
+AboutDialog#about_dialog {
+    min-width: 480px;
+}
+
 AboutDialog QLabel {
-    qproperty-alignment: AlignCenter;
+    background: transparent;
+}
+
+AboutDialog QWidget#about_header {
+    min-height: 120px;
 }
 
 AboutDialog QLabel#logo {
-    qproperty-pixmap: url("@images/logo.svg");
-    qproperty-scaledContents: true;
-    min-height: 55px;
-    max-height: 55px;
-    min-width: 64px;
-    max-width: 64px;
+    min-height: 88px;
+    max-height: 88px;
+    min-width: 88px;
+    max-width: 88px;
+    background: transparent;
 }
 
 AboutDialog QLabel#app_name {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
+}
+
+AboutDialog QLabel#app_tagline {
+    font-size: 13px;
 }
 
 AboutDialog QLabel#app_version {
     font-size: 11px;
+}
+
+AboutDialog QLabel#about_section {
+    font-size: 11px;
     font-weight: bold;
+    letter-spacing: 0.4px;
 }
 
 AboutDialog QLabel#app_description {
-    min-width: 400px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
+    min-width: 400px;
+    max-width: 480px;
 }
 
-AboutDialog QLabel#app_more_information, AboutDialog QLabel#app_license {
-    font-size: 11px;
+AboutDialog QFrame#about_source_tile {
+    border-radius: 8px;
+    min-width: 160px;
 }
 
-AboutDialog > QLabel#app_trouble_question, AboutDialog > QLabel#app_rate_question {
+AboutDialog QLabel#about_source_name {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+AboutDialog QPushButton[about_action = "true"] {
+    min-height: 30px;
+    padding: 6px 14px;
+    border-radius: 6px;
+}
+
+AboutDialog QLabel#about_footer_note {
     font-size: 10px;
-    font-weight: bold;
+    max-width: 320px;
 }
 
-AboutDialog > QLabel#app_trouble_answer, AboutDialog > QLabel#app_rate_answer {
-    font-size: 10px;
+AboutDialog QPushButton#about_close {
+    min-width: 100px;
+    min-height: 30px;
+    padding: 6px 18px;
+    border-radius: 6px;
+    font-weight: 600;
 }
 
 RootDialog QLineEdit#password {
@@ -452,3 +486,18 @@ SettingsWindow FormMultipleSelectQt#gems QLabel[help_icon = "true"], SettingsWin
 QMenu QPushButton[current = "true"] {
     font-weight: bold;
 }
+
+/* Bearhub shell — product chrome (engine stays in content) */
+QWidget#shell_sidebar, QFrame#shell_sidebar {
+    min-width: 196px;
+    max-width: 196px;
+}
+QLabel#shell_title { font-size: 15px; font-weight: bold; }
+QLabel#shell_subtitle, QLabel#shell_nav_label, QLabel#shell_version { font-size: 10px; }
+QPushButton[shell_nav="true"] {
+    text-align: left;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px;
+}
+QPushButton[shell_nav="true"][active="true"] { font-weight: bold; }

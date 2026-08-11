@@ -133,6 +133,7 @@ class TrayIcon(QSystemTrayIcon):
         self.logger = logger
         self.http_client = HttpClient(logger=logger)
 
+        # Prefer Bearhub theme icons; keep legacy bauh names as fallback for upgrades.
         if config['ui']['tray']['default_icon']:
             self.icon_default = QIcon(config['ui']['tray']['default_icon'])
         else:
@@ -141,7 +142,10 @@ class TrayIcon(QSystemTrayIcon):
                 self.icon_default = QIcon.fromTheme('bauh_tray_default')
 
         if self.icon_default.isNull():
-            self.icon_default = load_resource_icon('img/logo.svg', 24)
+            # Full PNG identity, smooth scale (not squashed SVG)
+            self.icon_default = load_resource_icon('img/logo.png', 24)
+            if self.icon_default.isNull():
+                self.icon_default = load_resource_icon('img/logo.svg', 24)
 
         if config['ui']['tray']['updates_icon']:
             self.icon_updates = QIcon(config['ui']['tray']['updates_icon'])
@@ -151,7 +155,9 @@ class TrayIcon(QSystemTrayIcon):
                 self.icon_updates = QIcon.fromTheme('bauh_tray_updates')
 
         if self.icon_updates.isNull():
-            self.icon_updates = load_resource_icon('img/logo_update.svg', 24)
+            self.icon_updates = load_resource_icon('img/logo.png', 24)
+            if self.icon_updates.isNull():
+                self.icon_updates = load_resource_icon('img/logo_update.svg', 24)
 
         self.setIcon(self.icon_default)
 

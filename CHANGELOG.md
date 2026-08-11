@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.8-bearhub.1] 2026-08-11
+
+### Added
+- Product position: Arch-first **package hub** (not app store) — `docs/product-position.md`, `docs/ux-v1.md`
+- **Bearhub shell**: left sidebar (brand, Updates / Installed) + content area for package engine UI
+- Optional dark theme **Ursine** (slate + amber colors)
+- Identity **PNG** logo with alpha (`gfx/bearhub.png` → `bearhub/view/resources/img/logo.png`)
+- Redesigned **About** dialog (header / body / source tiles / actions / footer)
+
+### Fixed
+- No second top-level window from parentless toolbars; prepare panel hides before manage shows
+- Package table columns fit half-width / tiled windows (stretch name + description)
+- Updates checkbox no longer overlaps filter row (sidebar owns Updates)
+- Logo scaling uses PNG with KeepAspectRatio + smooth transform
+
+### Changed
+- Manage window chrome is sidebar-based; package table/filters remain the engine
+- About copy and layout aligned with Arch package hub positioning
+- Default theme remains `light` (Ursine optional)
+
 ## [0.10.7-bearhub.7] 2026-07-28
 
 ### Fixed

@@ -31,6 +31,11 @@ def get_default_icon(system: bool = True) -> Tuple[str, QIcon]:
         if not system_icon.isNull():
             return system_icon.name(), system_icon
 
+    # Prefer full-resolution PNG identity mark (not the huge AI SVG squashed to 16–32px)
+    png = resource.get_path('img/logo.png')
+    if os.path.isfile(png):
+        return png, QIcon(png)
+
     path = resource.get_path('img/logo.svg')
     return path, QIcon(path)
 

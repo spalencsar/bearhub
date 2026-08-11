@@ -6,12 +6,13 @@ import time
 from pathlib import Path
 from typing import List, Type, Set, Tuple, Optional, Dict, Any
 
-from PyQt5.QtCore import QEvent, Qt, pyqtSignal, QRect
-from PyQt5.QtGui import QIcon, QWindowStateChangeEvent, QCursor, QCloseEvent, QShowEvent
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCheckBox, QHeaderView, QToolBar, \
+from PyQt5.QtCore import QEvent, Qt, pyqtSignal, QRect, QSize
+from PyQt5.QtGui import QIcon, QPixmap, QWindowStateChangeEvent, QCursor, QCloseEvent, QShowEvent
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCheckBox, QHeaderView, \
     QLabel, QPlainTextEdit, QProgressBar, QPushButton, QComboBox, QApplication, QListView, QSizePolicy, \
-    QMenu, QHBoxLayout
+    QMenu, QHBoxLayout, QFrame
 
+from bearhub import __version__
 from bearhub.api import user
 from bearhub.api.abstract.cache import MemoryCache
 from bearhub.api.abstract.context import ApplicationContext
@@ -122,44 +123,147 @@ class ManageWindow(QWidget):
 
         self.icon_app = icon
         self.setWindowIcon(self.icon_app)
+        self.setWindowTitle(f'Bearhub — {__version__}')
 
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
+        # ── Bearhub shell: one top-level window only ─────────────────────────
+        # Engine UI (filters/table/actions) lives in content; product nav in sidebar.
+        # Never use parentless QToolBar — it becomes a second top-level window on niri.
+        self._shell_nav = 'installed'  # installed | updates | search
+        self._nav_busy = False
+        self._pending_nav: Optional[str] = None
 
-        self.toolbar_status = QToolBar()
+        root = QHBoxLayout()
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
+        self.setLayout(root)
+
+        # Sidebar (product chrome)
+        self.sidebar = QFrame(self)
+        self.sidebar.setObjectName('shell_sidebar')
+        self.sidebar.setFixedWidth(196)
+        side = QVBoxLayout(self.sidebar)
+        side.setContentsMargins(14, 16, 14, 12)
+        side.setSpacing(6)
+
+        brand = QHBoxLayout()
+        brand.setSpacing(10)
+        logo = QLabel(self.sidebar)
+        logo.setObjectName('shell_logo')
+        # Full PNG identity (500x500) — smooth scale, keep aspect ratio (no SVG squash)
+        logo_path = resource.get_path('img/logo.png')
+        if not os.path.isfile(logo_path):
+            logo_path = resource.get_path('img/logo.svg')
+        pm = QPixmap(logo_path)
+        if not pm.isNull():
+            pm = pm.scaled(QSize(36, 36), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            logo.setPixmap(pm)
+        logo.setFixedSize(36, 36)
+        logo.setAlignment(Qt.AlignCenter)
+        brand.addWidget(logo)
+        brand_col = QVBoxLayout()
+        brand_col.setSpacing(0)
+        title = QLabel('Bearhub', self.sidebar)
+        title.setObjectName('shell_title')
+        brand_col.addWidget(title)
+        sub = QLabel(self.i18n.get('manage_window.header.subtitle', 'Arch package hub'), self.sidebar)
+        sub.setObjectName('shell_subtitle')
+        brand_col.addWidget(sub)
+        brand.addLayout(brand_col, 1)
+        side.addLayout(brand)
+        side.addSpacing(16)
+
+        lib_lbl = QLabel(self.i18n.get('manage_window.nav.section', 'Library'), self.sidebar)
+        lib_lbl.setObjectName('shell_nav_label')
+        side.addWidget(lib_lbl)
+
+        self.bt_nav_updates = QPushButton(
+            self.i18n.get('manage_window.mode.updates', self.i18n['updates'].capitalize()),
+            self.sidebar)
+        self.bt_nav_updates.setObjectName('shell_nav_updates')
+        self.bt_nav_updates.setProperty('shell_nav', True)
+        self.bt_nav_updates.setCheckable(True)
+        self.bt_nav_updates.setCursor(QCursor(Qt.PointingHandCursor))
+        self.bt_nav_updates.setToolTip(self.i18n.get('manage_window.mode.updates.tip', ''))
+        self.bt_nav_updates.clicked.connect(lambda: self.goto_nav('updates'))
+        side.addWidget(self.bt_nav_updates)
+
+        self.bt_nav_installed = QPushButton(
+            self.i18n.get('manage_window.mode.installed',
+                          self.i18n['manage_window.bt.installed.text'].capitalize()),
+            self.sidebar)
+        self.bt_nav_installed.setObjectName('shell_nav_installed')
+        self.bt_nav_installed.setProperty('shell_nav', True)
+        self.bt_nav_installed.setCheckable(True)
+        self.bt_nav_installed.setChecked(True)
+        self.bt_nav_installed.setCursor(QCursor(Qt.PointingHandCursor))
+        self.bt_nav_installed.setToolTip(self.i18n.get(
+            'manage_window.mode.installed.tip', self.i18n['manage_window.bt.installed.tooltip']))
+        self.bt_nav_installed.clicked.connect(lambda: self.goto_nav('installed'))
+        side.addWidget(self.bt_nav_installed)
+
+        side.addStretch(1)
+        ver = QLabel(f'v{__version__}', self.sidebar)
+        ver.setObjectName('shell_version')
+        side.addWidget(ver)
+        root.addWidget(self.sidebar)
+
+        # Content (package engine)
+        self.content = QWidget(self)
+        self.content.setObjectName('shell_content')
+        self.layout = QVBoxLayout(self.content)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.setSpacing(0)
+        root.addWidget(self.content, 1)
+
+        # Compact header: status + search (must NOT expand vertically)
+        self.toolbar_status = QWidget(self.content)
         self.toolbar_status.setObjectName('toolbar_status')
-        self.toolbar_status.addWidget(new_spacer())
+        self.toolbar_status.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        self.toolbar_status.setMaximumHeight(52)
+        status_l = QHBoxLayout(self.toolbar_status)
+        status_l.setContentsMargins(12, 8, 12, 4)
+        status_l.setSpacing(8)
 
-        self.label_status = QLabel()
+        self.label_status = QLabel(self.toolbar_status)
         self.label_status.setObjectName('label_status')
         self.label_status.setText('')
-        self.toolbar_status.addWidget(self.label_status)
+        status_l.addWidget(self.label_status)
 
-        self.search_bar = QSearchBar(search_callback=self.search)
+        status_l.addStretch(1)
+
+        self.search_bar = QSearchBar(search_callback=self.search, parent=self.toolbar_status)
         self.search_bar.set_placeholder(i18n['window_manage.search_bar.placeholder'] + "...")
         self.search_bar.set_tooltip(i18n['window_manage.search_bar.tooltip'])
         self.search_bar.set_button_tooltip(i18n['window_manage.search_bar.button_tooltip'])
-        self.comp_manager.register_component(SEARCH_BAR, self.search_bar, self.toolbar_status.addWidget(self.search_bar))
+        self.search_bar.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        status_l.addWidget(self.search_bar)
+        self.comp_manager.register_component(SEARCH_BAR, self.search_bar)
 
-        self.toolbar_status.addWidget(new_spacer())
-        self.layout.addWidget(self.toolbar_status)
+        status_l.addStretch(1)
+        self.layout.addWidget(self.toolbar_status, 0)
 
-        self.toolbar_filters = QWidget()
+        self.toolbar_filters = QWidget(self.content)
         self.toolbar_filters.setObjectName('table_filters')
-        self.toolbar_filters.setLayout(QHBoxLayout())
-        self.toolbar_filters.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        filters_l = QHBoxLayout(self.toolbar_filters)
+        filters_l.setContentsMargins(8, 4, 8, 6)
+        filters_l.setSpacing(6)
+        self.toolbar_filters.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        self.toolbar_filters.setMaximumHeight(48)
         self.toolbar_filters.setContentsMargins(0, 0, 0, 0)
 
-        self.check_updates = QCheckBox()
+        # Logical updates flag only — NOT in the filter toolbar (sidebar owns "Aktualisierungen").
+        # Must not be a child of toolbar_filters: change_update_state() used to re-show it and
+        # it overlapped "Anwendungen".
+        self.check_updates = QCheckBox(self)
         self.check_updates.setObjectName('check_updates')
-        self.check_updates.setCursor(QCursor(Qt.PointingHandCursor))
         self.check_updates.setText(self.i18n['updates'].capitalize())
         self.check_updates.stateChanged.connect(self._handle_updates_filter)
-        self.check_updates.sizePolicy().setRetainSizeWhenHidden(True)
-        self.toolbar_filters.layout().addWidget(self.check_updates)
+        self.check_updates.hide()
+        self.check_updates.setAttribute(Qt.WA_DontShowOnScreen, True)
+        # Still registered so existing code can toggle checked state; never shown in UI
         self.comp_manager.register_component(CHECK_UPDATES, self.check_updates)
 
-        self.check_installed = QCheckBox()
+        self.check_installed = QCheckBox(self.toolbar_filters)
         self.check_installed.setObjectName('check_installed')
         self.check_installed.setCursor(QCursor(Qt.PointingHandCursor))
         self.check_installed.setText(self.i18n['manage_window.checkbox.only_installed'])
@@ -169,7 +273,7 @@ class ManageWindow(QWidget):
         self.toolbar_filters.layout().addWidget(self.check_installed)
         self.comp_manager.register_component(CHECK_INSTALLED, self.check_installed)
 
-        self.check_apps = QCheckBox()
+        self.check_apps = QCheckBox(self.toolbar_filters)
         self.check_apps.setObjectName('check_apps')
         self.check_apps.setCursor(QCursor(Qt.PointingHandCursor))
         self.check_apps.setText(self.i18n['manage_window.checkbox.only_apps'])
@@ -179,7 +283,7 @@ class ManageWindow(QWidget):
         self.toolbar_filters.layout().addWidget(self.check_apps)
         self.comp_manager.register_component(CHECK_APPS, self.check_apps)
 
-        self.check_verified = QCheckBox()
+        self.check_verified = QCheckBox(self.toolbar_filters)
         self.check_verified.setObjectName('check_verified')
         self.check_verified.setCursor(QCursor(Qt.PointingHandCursor))
         self.check_verified.setText(self.i18n['manage_window.checkbox.only_verified'])
@@ -283,26 +387,32 @@ class ManageWindow(QWidget):
             if bt_biggest_size > bt_width:
                 bt.setFixedWidth(bt_biggest_size)
 
-        self.layout.addWidget(self.toolbar_filters)
+        self.layout.addWidget(self.toolbar_filters, 0)
 
-        self.table_container = QWidget()
+        self.table_container = QWidget(self.content)
         self.table_container.setObjectName('table_container')
         self.table_container.setContentsMargins(0, 0, 0, 0)
-        self.table_container.setLayout(QVBoxLayout())
-        self.table_container.layout().setContentsMargins(0, 0, 0, 0)
+        self.table_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        tc_layout = QVBoxLayout(self.table_container)
+        tc_layout.setContentsMargins(0, 0, 0, 0)
+        tc_layout.setSpacing(0)
 
+        # parent must be ManageWindow — PackagesTable reads self.window.i18n
         self.table_apps = PackagesTable(parent=self,
                                         icon_cache=self.icon_cache,
                                         download_icons=bool(self.config['download']['icons']),
                                         logger=logger)
+        self.table_apps.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.table_apps.change_headers_policy()
-        self.table_container.layout().addWidget(self.table_apps)
+        tc_layout.addWidget(self.table_apps)
 
-        self.layout.addWidget(self.table_container)
+        # Only the table grows; chrome rows use stretch 0
+        self.layout.addWidget(self.table_container, 1)
 
-        self.toolbar_console = QWidget()
+        self.toolbar_console = QWidget(self.content)
         self.toolbar_console.setObjectName('console_toolbar')
-        self.toolbar_console.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.toolbar_console.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        self.toolbar_console.setMaximumHeight(36)
         self.toolbar_console.setLayout(QHBoxLayout())
         self.toolbar_console.setContentsMargins(0, 0, 0, 0)
 
@@ -323,26 +433,30 @@ class ManageWindow(QWidget):
         self.toolbar_console.layout().addWidget(self.label_displayed)
         self.label_displayed.hide()
 
-        self.layout.addWidget(self.toolbar_console)
+        self.layout.addWidget(self.toolbar_console, 0)
 
-        self.textarea_details = QPlainTextEdit(self)
+        self.textarea_details = QPlainTextEdit(self.content)
         self.textarea_details.setObjectName('textarea_details')
         self.textarea_details.setProperty('console', 'true')
-        self.textarea_details.resize(self.table_apps.size())
-        self.layout.addWidget(self.textarea_details)
+        self.textarea_details.setMaximumHeight(120)
+        self.layout.addWidget(self.textarea_details, 0)
         self.textarea_details.setVisible(False)
         self.textarea_details.setReadOnly(True)
 
-        self.toolbar_substatus = QToolBar()
+        self.toolbar_substatus = QWidget(self.content)
         self.toolbar_substatus.setObjectName('toolbar_substatus')
-        self.toolbar_substatus.addWidget(new_spacer())
+        self.toolbar_substatus.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        self.toolbar_substatus.setMaximumHeight(28)
+        sub_l = QHBoxLayout(self.toolbar_substatus)
+        sub_l.setContentsMargins(10, 2, 10, 2)
+        sub_l.addWidget(new_spacer())
 
-        self.label_substatus = QLabel()
+        self.label_substatus = QLabel(self.toolbar_substatus)
         self.label_substatus.setObjectName('label_substatus')
         self.label_substatus.setCursor(QCursor(Qt.WaitCursor))
-        self.toolbar_substatus.addWidget(self.label_substatus)
-        self.toolbar_substatus.addWidget(new_spacer())
-        self.layout.addWidget(self.toolbar_substatus)
+        sub_l.addWidget(self.label_substatus)
+        sub_l.addWidget(new_spacer())
+        self.layout.addWidget(self.toolbar_substatus, 0)
         self._change_label_substatus('')
 
         self.thread_update = self._bind_async_action(UpgradeSelected(manager=self.manager, i18n=self.i18n,
@@ -382,11 +496,12 @@ class ManageWindow(QWidget):
         self.thread_reload = StartAsyncAction(delay_in_milis=5)
         self.thread_reload.signal_start.connect(self._reload)
 
-        self.container_bottom = QWidget()
+        self.container_bottom = QWidget(self.content)
         self.container_bottom.setObjectName('container_bottom')
-        self.container_bottom.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.container_bottom.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+        self.container_bottom.setMaximumHeight(40)
         self.container_bottom.setLayout(QHBoxLayout())
-        self.container_bottom.layout().setContentsMargins(0, 0, 0, 0)
+        self.container_bottom.layout().setContentsMargins(8, 4, 8, 4)
 
         self.container_bottom.layout().addWidget(new_spacer())
 
@@ -432,20 +547,21 @@ class ManageWindow(QWidget):
         self.container_bottom.layout().addWidget(bt_about)
         self.comp_manager.register_component(BT_ABOUT, bt_about)
 
-        self.layout.addWidget(self.container_bottom)
+        self.layout.addWidget(self.container_bottom, 0)
 
-        self.container_progress = QCustomToolbar(spacing=0, policy_height=QSizePolicy.Fixed)
+        self.container_progress = QCustomToolbar(spacing=0, policy_height=QSizePolicy.Fixed, parent=self.content)
         self.container_progress.setObjectName('container_progress')
+        self.container_progress.setMaximumHeight(12)
         self.container_progress.add_space()
 
-        self.progress_bar = QProgressBar()
+        self.progress_bar = QProgressBar(self.container_progress)
         self.progress_bar.setObjectName('progress_manage')
         self.progress_bar.setCursor(QCursor(Qt.WaitCursor))
 
         self.progress_bar.setTextVisible(False)
         self.container_progress.add_widget(self.progress_bar)
         self.container_progress.add_space()
-        self.layout.addWidget(self.container_progress)
+        self.layout.addWidget(self.container_progress, 0)
 
         self.filter_only_apps = True
         self.filter_only_verified = False
@@ -474,11 +590,60 @@ class ManageWindow(QWidget):
         self._screen_geometry: Optional[QRect] = None
         self.searched_term: Optional[str] = None  # last searched term
         self._can_open_urls: Optional[bool] = None  # whether URLs can be opened in the browser
+        self._paint_nav()
 
         qt_utils.centralize(self)
 
+    def _paint_nav(self):
+        for btn, on in (
+            (self.bt_nav_updates, self._shell_nav == 'updates'),
+            (self.bt_nav_installed, self._shell_nav == 'installed'),
+        ):
+            btn.blockSignals(True)
+            btn.setChecked(on)
+            btn.setProperty('active', on)
+            btn.style().unpolish(btn)
+            btn.style().polish(btn)
+            btn.blockSignals(False)
+
+    def goto_nav(self, nav: str):
+        """Sidebar navigation: updates | installed. Search uses the search bar only."""
+        if self._nav_busy or self.working or nav not in ('updates', 'installed'):
+            self._paint_nav()
+            return
+        self._nav_busy = True
+        try:
+            if self.search_performed or self.suggestions_requested:
+                self._shell_nav = nav
+                self._paint_nav()
+                self._pending_nav = nav
+                self._begin_loading_installed()
+                return
+            if nav == 'updates':
+                self._shell_nav = 'updates'
+                self._paint_nav()
+                if self.filter_only_apps:
+                    self._change_checkbox(self.check_apps, False, 'filter_only_apps', trigger=False)
+                self._change_checkbox(self.check_updates, True, 'filter_updates', trigger=True)
+            else:
+                self._shell_nav = 'installed'
+                self._paint_nav()
+                self._change_checkbox(self.check_updates, False, 'filter_updates', trigger=True)
+        finally:
+            self._nav_busy = False
+
+    def _sync_nav_from_state(self):
+        if self.search_performed or self.suggestions_requested:
+            self._shell_nav = 'search'
+        elif self.filter_updates:
+            self._shell_nav = 'updates'
+        else:
+            self._shell_nav = 'installed'
+        self._paint_nav()
+
     def _register_groups(self):
-        common_filters = (CHECK_APPS, CHECK_VERIFIED, CHECK_UPDATES, COMBO_CATEGORIES, COMBO_TYPES, INP_NAME)
+        # CHECK_UPDATES intentionally omitted from UI groups (sidebar nav only)
+        common_filters = (CHECK_APPS, CHECK_VERIFIED, COMBO_CATEGORIES, COMBO_TYPES, INP_NAME)
         self.comp_manager.register_group(GROUP_FILTERS, False, CHECK_INSTALLED, *common_filters)
 
         self.comp_manager.register_group(GROUP_VIEW_SEARCH, False,
@@ -490,7 +655,7 @@ class ManageWindow(QWidget):
                                          *common_filters)
 
         self.comp_manager.register_group(GROUP_UPPER_BAR, False,
-                                         CHECK_APPS, CHECK_VERIFIED, CHECK_UPDATES, CHECK_INSTALLED, COMBO_CATEGORIES,
+                                         CHECK_APPS, CHECK_VERIFIED, CHECK_INSTALLED, COMBO_CATEGORIES,
                                          COMBO_TYPES, INP_NAME, BT_INSTALLED, BT_SUGGESTIONS, BT_REFRESH, BT_UPGRADE)
 
         self.comp_manager.register_group(GROUP_LOWER_BTS, False, BT_SUGGESTIONS, BT_THEMES, BT_CUSTOM_ACTIONS,
@@ -642,7 +807,20 @@ class ManageWindow(QWidget):
     def _finish_loading_installed(self):
         self._finish_action()
         self.comp_manager.set_group_visible(GROUP_VIEW_INSTALLED, True)
-        self.update_pkgs(new_pkgs=None, as_installed=True)
+        pending = self._pending_nav
+        self._pending_nav = None
+        if pending == 'updates':
+            self.filter_updates = True
+            self._change_checkbox(self.check_updates, True, 'filter_updates', trigger=False)
+            if self.filter_only_apps:
+                self._change_checkbox(self.check_apps, False, 'filter_only_apps', trigger=False)
+            self._shell_nav = 'updates'
+        else:
+            self.filter_updates = False
+            self._change_checkbox(self.check_updates, False, 'filter_updates', trigger=False)
+            self._shell_nav = 'installed'
+        self.update_pkgs(new_pkgs=None, as_installed=True, keep_filters=True)
+        self._paint_nav()
         self._hide_filters_no_packages()
         self._update_bts_installed_and_suggestions()
         self._set_lower_buttons_visible(True)
@@ -665,6 +843,9 @@ class ManageWindow(QWidget):
 
     def _handle_updates_filter(self, status: int):
         self.filter_updates = status == 2
+        if not self._nav_busy and not self.search_performed and not self.suggestions_requested:
+            self._shell_nav = 'updates' if self.filter_updates else 'installed'
+            self._paint_nav()
         self.begin_apply_filters()
 
     def _handle_filter_only_apps(self, status: int):
@@ -728,7 +909,7 @@ class ManageWindow(QWidget):
 
             if not self._maximized:
                 self._reorganize()
-                self.adjustSize()
+                # Do not adjustSize() — it collapses the shell to sizeHint and breaks the table area
 
     def event(self, e: QEvent) -> bool:
         res = super(ManageWindow, self).event(e)
@@ -788,6 +969,8 @@ class ManageWindow(QWidget):
 
         if self.first_refresh:
             self.first_refresh = False
+            self._shell_nav = 'updates' if self.filter_updates else 'installed'
+            self._paint_nav()
             qt_utils.centralize(self)
 
         self.load_suggestions = False
@@ -975,9 +1158,7 @@ class ManageWindow(QWidget):
 
         if pkgs_info['updates'] > 0:
             if pkgs_info['not_installed'] == 0:
-                if not self.comp_manager.is_visible(CHECK_UPDATES):
-                    self.comp_manager.set_component_visible(CHECK_UPDATES, True)
-
+                # Do not show check_updates in the filter bar (sidebar owns Updates)
                 if not self.filter_updates and not keep_selected:
                     self._change_checkbox(self.check_updates, True, 'filter_updates', trigger_filters)
 
@@ -987,7 +1168,8 @@ class ManageWindow(QWidget):
             if not keep_selected:
                 self._change_checkbox(self.check_updates, False, 'filter_updates', trigger_filters)
 
-            self.comp_manager.set_component_visible(CHECK_UPDATES, False)
+        # Always keep the legacy updates checkbox off-screen
+        self.check_updates.hide()
 
     def _change_checkbox(self, checkbox: QCheckBox, checked: bool, attr: str = None, trigger: bool = True):
         if not trigger:
@@ -1089,6 +1271,9 @@ class ManageWindow(QWidget):
 
         if not self.installed_loaded and as_installed:
             self.installed_loaded = True
+
+        if not self._nav_busy:
+            self._sync_nav_from_state()
 
         return True
 
@@ -1214,20 +1399,18 @@ class ManageWindow(QWidget):
             return {self.combo_categories.itemData(idx) for idx in range(self.combo_categories.count()) if idx > 0}
 
     def _resize(self, accept_lower_width: bool = True):
-        table_width = self.table_apps.get_width()
-        toolbar_width = self.toolbar_filters.sizeHint().width()
-        topbar_width = self.toolbar_status.sizeHint().width()
-
-        new_width = max(table_width, toolbar_width, topbar_width)
-        new_width *= 1.05  # this extra size is not because of the toolbar button, but the table upgrade buttons
-        new_width = int(new_width)
-
-        if new_width >= self.maximumWidth():
-            new_width = self.maximumWidth()
-
-        if (self.pkgs and accept_lower_width) or new_width > self.width():
-            self.resize(new_width, self.height())
-            self.setMinimumWidth(new_width)
+        # Columns stretch to the viewport — do not force a huge minimum width
+        # (that broke 50% tiling: table content wider than half the screen → clipped).
+        if not self._screen_geometry:
+            return
+        side_w = self.sidebar.width() if hasattr(self, 'sidebar') else 0
+        # Allow half-screen tiles; only enforce a modest floor for usability
+        floor = int(self._screen_geometry.width() * 0.35) + side_w
+        floor = min(floor, int(self._screen_geometry.width() * 0.95))
+        if self.minimumWidth() > floor:
+            self.setMinimumWidth(floor)
+        # Re-apply column fit after size changes
+        self.table_apps.change_headers_policy(maximized=self._maximized)
 
     def set_progress_controll(self, enabled: bool):
         self.progress_controll_enabled = enabled
@@ -1431,6 +1614,8 @@ class ManageWindow(QWidget):
             self._handle_console(False)
             self.filter_updates = False
             self.filter_installed = False
+            self._shell_nav = 'search'
+            self._paint_nav()
             label = f"{self.i18n['manage_window.status.searching']} {word if word else ''}"
             self._begin_action(action_label=label, action_id=ACTION_SEARCH)
             self.comp_manager.set_components_visible(False)
@@ -1441,6 +1626,8 @@ class ManageWindow(QWidget):
     def _finish_search(self, res: dict):
         self._finish_action()
         self.search_performed = True
+        self._shell_nav = 'search'
+        self._paint_nav()
 
         if not res['error']:
             self.comp_manager.set_group_visible(GROUP_VIEW_SEARCH, True)

@@ -17,27 +17,31 @@ MSG_TYPE_MAP = {
 }
 
 
-def show_message(title: str, body: str, type_: MessageType, icon: QIcon = QIcon(resource.get_path('img/logo.svg'))):
+def _app_icon() -> QIcon:
+    # Lazy: QIcon(path) must not run at import time (before QApplication)
+    return QIcon(resource.get_path('img/logo.png'))
+
+
+def show_message(title: str, body: str, type_: MessageType, icon: Optional[QIcon] = None):
     popup = QMessageBox()
     popup.setWindowTitle(title)
     popup.setText(body)
     popup.setIcon(MSG_TYPE_MAP[type_])
-
-    if icon:
-        popup.setWindowIcon(icon)
-
+    popup.setWindowIcon(icon if icon is not None else _app_icon())
     popup.exec_()
 
 
 class ConfirmationDialog(QDialog):
 
-    def __init__(self, title: str, body: Optional[str], i18n: I18n, icon: QIcon = QIcon(resource.get_path('img/logo.svg')),
+    def __init__(self, title: str, body: Optional[str], i18n: I18n, icon: Optional[QIcon] = None,
                  widgets: Optional[List[QWidget]] = None, confirmation_button: bool = True, deny_button: bool = True,
                  window_cancel: bool = False, confirmation_label: Optional[str] = None, deny_label: Optional[str] = None,
                  confirmation_icon: bool = True, min_width: Optional[int] = None,
                  min_height: Optional[int] = None, max_width: Optional[int] = None,
                  confirmation_icon_type: MessageType = MessageType.INFO):
         super(ConfirmationDialog, self).__init__()
+        if icon is None:
+            icon = _app_icon()
 
         if not window_cancel:
             self.setWindowFlags(Qt.CustomizeWindowHint | Qt.WindowTitleHint)
@@ -131,7 +135,7 @@ class ConfirmationDialog(QDialog):
         return self.confirmed
 
 
-def ask_confirmation(title: str, body: str, i18n: I18n, icon: QIcon = QIcon(resource.get_path('img/logo.svg')),
+def ask_confirmation(title: str, body: str, i18n: I18n, icon: Optional[QIcon] = None,
                      widgets: List[QWidget] = None) -> bool:
     popup = ConfirmationDialog(title=title, body=body, i18n=i18n, icon=icon, widgets=widgets)
     popup.exec_()

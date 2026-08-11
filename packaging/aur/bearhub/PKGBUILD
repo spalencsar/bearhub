@@ -1,6 +1,6 @@
 pkgname=bearhub
-pkgver=0.10.7
-pkgrel=12
+pkgver=0.10.8
+pkgrel=1
 pkgdesc="Arch-first package manager hub (community-maintained fork of bauh)"
 arch=('any')
 url="https://github.com/spalencsar/bearhub"
@@ -12,6 +12,8 @@ depends=(
   'python-colorama'
   'python-pyyaml'
   'python-dateutil'
+  'qt5-svg'
+  'hicolor-icon-theme'
 )
 optdepends=(
   'python-lxml: web application support'
@@ -22,17 +24,18 @@ optdepends=(
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 provides=('bearhub' 'bauh')
 conflicts=('bearhub-git' 'bauh' 'bauh-git')
-_pkgver_tag="${pkgver}-bearhub.7"
+_pkgver_tag="${pkgver}-bearhub.1"
 source=("$pkgname-${_pkgver_tag}.tar.gz::$url/archive/refs/tags/${_pkgver_tag}.tar.gz")
-sha256sums=('6077e5c489dc05ed2ba49df7014f7998de72caacf5d422cf971c086fd73d0428')
+# Update after tag exists: makepkg --verifysource && makepkg --printsrcinfo > .SRCINFO
+sha256sums=('SKIP')
 
 build() {
-  cd "$srcdir/$pkgname-${pkgver}-bearhub.7"
+  cd "$srcdir/$pkgname-${pkgver}-bearhub.1"
   python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$srcdir/$pkgname-${pkgver}-bearhub.7"
+  cd "$srcdir/$pkgname-${pkgver}-bearhub.1"
 
   sed -i 's|^Exec=/usr/bin/bearhub$|Exec=env QT_QPA_PLATFORM=xcb /usr/bin/bearhub|' "bearhub/desktop/bearhub.desktop"
   sed -i 's|^Exec=/usr/bin/bearhub-tray$|Exec=env QT_QPA_PLATFORM=xcb /usr/bin/bearhub-tray|' "bearhub/desktop/bearhub_tray.desktop"
@@ -45,4 +48,9 @@ package() {
     "$pkgdir/usr/share/applications/bearhub-tray.desktop"
   install -Dm644 "bearhub/view/resources/img/logo.svg" \
     "$pkgdir/usr/share/icons/hicolor/scalable/apps/bearhub.svg"
+  # Prefer PNG for raster hicolor if present
+  if [[ -f "bearhub/view/resources/img/logo.png" ]]; then
+    install -Dm644 "bearhub/view/resources/img/logo.png" \
+      "$pkgdir/usr/share/icons/hicolor/512x512/apps/bearhub.png"
+  fi
 }

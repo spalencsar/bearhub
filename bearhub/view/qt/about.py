@@ -1,7 +1,13 @@
+import os
 from glob import glob
+from typing import Optional
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QVBoxLayout, QDialog, QLabel, QWidget, QHBoxLayout, QSizePolicy, QApplication
+from PyQt5.QtCore import Qt, QSize, QUrl
+from PyQt5.QtGui import QIcon, QPixmap, QCursor, QDesktopServices, QFont
+from PyQt5.QtWidgets import (
+    QVBoxLayout, QDialog, QLabel, QWidget, QHBoxLayout, QSizePolicy,
+    QApplication, QFrame, QPushButton, QGridLayout,
+)
 
 from bearhub import __version__, ROOT_DIR
 from bearhub.context import generate_i18n
@@ -10,103 +16,236 @@ from bearhub.view.util import resource
 DISPLAY_NAME = 'Bearhub'
 PROJECT_URL = 'https://github.com/spalencsar/bearhub'
 LICENSE_URL = 'https://raw.githubusercontent.com/spalencsar/bearhub/main/LICENSE'
+ISSUES_URL = 'https://github.com/spalencsar/bearhub/issues'
+STARS_URL = 'https://github.com/spalencsar/bearhub'
+
+
+def _open_url(url: str) -> None:
+    QDesktopServices.openUrl(QUrl(url))
+
+
+def _logo_path() -> str:
+    png = resource.get_path('img/logo.png')
+    if os.path.isfile(png):
+        return png
+    return resource.get_path('img/logo.svg')
+
+
+def _scaled_logo(size: int) -> QPixmap:
+    pm = QPixmap(_logo_path())
+    if pm.isNull():
+        return pm
+    return pm.scaled(QSize(size, size), Qt.KeepAspectRatio, Qt.SmoothTransformation)
 
 
 class AboutDialog(QDialog):
+    """
+    Bearhub About — structured layout (not the old bauh stack of centered labels).
+
+    Sections:
+      1. Header: logo left + title/version right
+      2. Product blurb
+      3. Source matrix (icon + name per backend)
+      4. Action row (GitHub / Issues / License)
+      5. Footer close
+    """
 
     def __init__(self, app_config: dict):
         super(AboutDialog, self).__init__()
-        i18n = generate_i18n(app_config, resource.get_path('locale/about'))
-        self.setWindowTitle('{} ({})'.format(i18n['about.title'].capitalize(), DISPLAY_NAME))
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.setObjectName('about_dialog')
+        self.i18n = generate_i18n(app_config, resource.get_path('locale/about'))
+        i18n = self.i18n
 
-        logo_container = QWidget()
-        logo_container.setObjectName('logo_container')
-        logo_container.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        logo_container.setLayout(QHBoxLayout())
+        self.setWindowTitle(f"{i18n['about.title']} — {DISPLAY_NAME}")
+        self.setWindowIcon(QIcon(_logo_path()))
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
-        label_logo = QLabel()
-        label_logo.setObjectName('logo')
+        root = QVBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
 
-        logo_container.layout().addWidget(label_logo)
-        layout.addWidget(logo_container)
+        # ── 1. Header band ──────────────────────────────────────────────
+        header = QWidget(self)
+        header.setObjectName('about_header')
+        header_l = QHBoxLayout(header)
+        header_l.setContentsMargins(24, 22, 24, 18)
+        header_l.setSpacing(18)
 
-        label_name = QLabel(DISPLAY_NAME)
-        label_name.setObjectName('app_name')
-        layout.addWidget(label_name)
+        logo = QLabel(header)
+        logo.setObjectName('logo')
+        logo.setFixedSize(88, 88)
+        logo.setAlignment(Qt.AlignCenter)
+        pm = _scaled_logo(88)
+        if not pm.isNull():
+            logo.setPixmap(pm)
+        header_l.addWidget(logo, 0, Qt.AlignVCenter)
 
-        label_version = QLabel(i18n['about.version'].lower() + ' ' + __version__)
-        label_version.setObjectName('app_version')
-        layout.addWidget(label_version)
+        title_col = QVBoxLayout()
+        title_col.setSpacing(4)
+        title_col.setContentsMargins(0, 4, 0, 4)
 
-        layout.addWidget(QLabel(''))
+        name = QLabel(DISPLAY_NAME, header)
+        name.setObjectName('app_name')
+        name_font = QFont(name.font())
+        name_font.setPointSize(max(16, name_font.pointSize() + 4))
+        name_font.setBold(True)
+        name.setFont(name_font)
+        title_col.addWidget(name)
 
-        line_desc = QLabel(i18n['about.info.desc'])
-        line_desc.setObjectName('app_description')
-        layout.addWidget(line_desc)
+        tagline = QLabel(i18n.get('about.info.tagline', 'Arch package hub'), header)
+        tagline.setObjectName('app_tagline')
+        title_col.addWidget(tagline)
 
-        layout.addWidget(QLabel(''))
+        version = QLabel(f"{i18n.get('about.version', 'Version')} {__version__}", header)
+        version.setObjectName('app_version')
+        title_col.addWidget(version)
+        title_col.addStretch(1)
 
-        available_gems = [f for f in glob('{}/gems/*'.format(ROOT_DIR)) if not f.endswith('.py') and not f.endswith('__pycache__')]
-        available_gems.sort()
+        header_l.addLayout(title_col, 1)
+        root.addWidget(header)
 
-        gems_widget = QWidget()
-        gems_widget.setLayout(QHBoxLayout())
+        # ── 2. Body ─────────────────────────────────────────────────────
+        body = QWidget(self)
+        body.setObjectName('about_body')
+        body_l = QVBoxLayout(body)
+        body_l.setContentsMargins(24, 16, 24, 8)
+        body_l.setSpacing(14)
 
-        gems_widget.layout().addWidget(QLabel())
-        gem_logo_size = int(0.032552083 * QApplication.primaryScreen().size().height())
+        section_what = self._section_title(i18n.get('about.section.what', 'What is Bearhub?'), body)
+        body_l.addWidget(section_what)
 
-        for gem_path in available_gems:
-            icon = QLabel()
-            icon.setObjectName('gem_logo')
-            icon_path = gem_path + '/resources/img/{}.svg'.format(gem_path.split('/')[-1])
-            icon.setPixmap(QIcon(icon_path).pixmap(gem_logo_size, gem_logo_size))
-            gems_widget.layout().addWidget(icon)
+        desc = QLabel(i18n.get('about.info.desc', ''), body)
+        desc.setObjectName('app_description')
+        desc.setWordWrap(True)
+        desc.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        desc.setMinimumWidth(400)
+        body_l.addWidget(desc)
 
-        gems_widget.layout().addWidget(QLabel())
+        section_src = self._section_title(i18n.get('about.section.sources', 'Package sources'), body)
+        body_l.addWidget(section_src)
 
-        layout.addWidget(gems_widget)
-        layout.addWidget(QLabel(''))
+        sources = self._build_sources_grid(body)
+        body_l.addWidget(sources)
 
-        label_more_info = QLabel()
-        label_more_info.setObjectName('app_more_information')
-        label_more_info.setText(i18n['about.info.link'] + " <a href='{url}'>{url}</a>".format(url=PROJECT_URL))
-        label_more_info.setOpenExternalLinks(True)
-        layout.addWidget(label_more_info)
+        root.addWidget(body)
 
-        label_license = QLabel()
-        label_license.setObjectName('app_license')
-        label_license.setText("<a href='{}'>{}</a>".format(LICENSE_URL, i18n['about.info.license']))
-        label_license.setOpenExternalLinks(True)
-        layout.addWidget(label_license)
+        # ── 3. Actions ──────────────────────────────────────────────────
+        actions = QWidget(self)
+        actions.setObjectName('about_actions')
+        actions_l = QHBoxLayout(actions)
+        actions_l.setContentsMargins(24, 8, 24, 8)
+        actions_l.setSpacing(10)
 
-        layout.addWidget(QLabel(''))
+        actions_l.addWidget(self._link_button(
+            i18n.get('about.action.github', 'GitHub'),
+            PROJECT_URL,
+            'about_btn_github'))
+        actions_l.addWidget(self._link_button(
+            i18n.get('about.action.issues', 'Issues'),
+            ISSUES_URL,
+            'about_btn_issues'))
+        actions_l.addWidget(self._link_button(
+            i18n.get('about.action.license', 'License'),
+            LICENSE_URL,
+            'about_btn_license'))
+        actions_l.addStretch(1)
 
-        label_trouble_question = QLabel(i18n['about.info.trouble.question'])
-        label_trouble_question.setObjectName('app_trouble_question')
+        root.addWidget(actions)
 
-        layout.addWidget(label_trouble_question)
+        # ── 4. Footer ───────────────────────────────────────────────────
+        footer = QWidget(self)
+        footer.setObjectName('about_footer')
+        footer_l = QHBoxLayout(footer)
+        footer_l.setContentsMargins(24, 12, 24, 16)
+        footer_l.setSpacing(12)
 
-        label_trouble_answer = QLabel(i18n['about.info.trouble.answer'])
-        label_trouble_answer.setObjectName('app_trouble_answer')
+        note = QLabel(i18n.get('about.footer.fork', ''), footer)
+        note.setObjectName('about_footer_note')
+        note.setWordWrap(True)
+        note.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        footer_l.addWidget(note, 1)
 
-        layout.addWidget(label_trouble_answer)
+        bt_close = QPushButton(i18n.get('about.close', 'Close'), footer)
+        bt_close.setObjectName('about_close')
+        bt_close.setCursor(QCursor(Qt.PointingHandCursor))
+        bt_close.setDefault(True)
+        bt_close.clicked.connect(self.hide)
+        footer_l.addWidget(bt_close, 0, Qt.AlignRight | Qt.AlignVCenter)
 
-        layout.addWidget(QLabel(''))
-
-        label_rate_question = QLabel(i18n['about.info.rate.question'])
-        label_rate_question.setObjectName('app_rate_question')
-        layout.addWidget(label_rate_question)
-
-        label_rate_answer = QLabel(i18n['about.info.rate.answer'])
-        label_rate_answer.setObjectName('app_rate_answer')
-        layout.addWidget(label_rate_answer)
-
-        layout.addWidget(QLabel(''))
+        root.addWidget(footer)
 
         self.adjustSize()
-        self.setFixedSize(self.size())
+        w = max(480, self.sizeHint().width())
+        h = self.sizeHint().height()
+        self.setFixedSize(w, h)
+
+    def _section_title(self, text: str, parent: QWidget) -> QLabel:
+        lbl = QLabel(text, parent)
+        lbl.setObjectName('about_section')
+        f = QFont(lbl.font())
+        f.setBold(True)
+        f.setPointSize(max(10, f.pointSize()))
+        lbl.setFont(f)
+        return lbl
+
+    def _link_button(self, label: str, url: str, object_name: str) -> QPushButton:
+        bt = QPushButton(label, self)
+        bt.setObjectName(object_name)
+        bt.setProperty('about_action', True)
+        bt.setCursor(QCursor(Qt.PointingHandCursor))
+        bt.clicked.connect(lambda _=False, u=url: _open_url(u))
+        return bt
+
+    def _build_sources_grid(self, parent: QWidget) -> QWidget:
+        """Icon + label tiles for each gem (not a bare icon row)."""
+        wrap = QWidget(parent)
+        wrap.setObjectName('about_sources')
+        grid = QGridLayout(wrap)
+        grid.setContentsMargins(0, 4, 0, 0)
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(10)
+
+        # Friendly labels for known backends
+        labels = {
+            'arch': self.i18n.get('about.source.arch', 'Arch / AUR'),
+            'flatpak': self.i18n.get('about.source.flatpak', 'Flatpak'),
+            'appimage': self.i18n.get('about.source.appimage', 'AppImage'),
+            'web': self.i18n.get('about.source.web', 'Web apps'),
+        }
+
+        available = []
+        for gem_path in sorted(glob(f'{ROOT_DIR}/gems/*')):
+            if gem_path.endswith('.py') or gem_path.endswith('__pycache__'):
+                continue
+            name = gem_path.split('/')[-1]
+            icon_path = f'{gem_path}/resources/img/{name}.svg'
+            if os.path.isfile(icon_path):
+                available.append((name, icon_path, labels.get(name, name.capitalize())))
+
+        gem_px = 32
+        cols = 2
+        for idx, (name, icon_path, label) in enumerate(available):
+            tile = QFrame(wrap)
+            tile.setObjectName('about_source_tile')
+            tile.setProperty('gem', name)
+            tl = QHBoxLayout(tile)
+            tl.setContentsMargins(10, 8, 12, 8)
+            tl.setSpacing(10)
+
+            ic = QLabel(tile)
+            ic.setObjectName('gem_logo')
+            ic.setFixedSize(gem_px, gem_px)
+            ic.setPixmap(QIcon(icon_path).pixmap(gem_px, gem_px))
+            tl.addWidget(ic)
+
+            name_lbl = QLabel(label, tile)
+            name_lbl.setObjectName('about_source_name')
+            tl.addWidget(name_lbl, 1)
+
+            r, c = divmod(idx, cols)
+            grid.addWidget(tile, r, c)
+
+        return wrap
 
     def closeEvent(self, event):
         event.ignore()

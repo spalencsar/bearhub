@@ -14,14 +14,14 @@ Legacy `bauh` config and cache directories are migrated automatically on first s
 
 ## Status
 
-Bearhub is an active community-maintained fork of `bauh` with an Arch-first direction.
+Bearhub is an active community-maintained fork of `bauh` with an **Arch-first package hub** direction (GUI for official repos + AUR; not a full app store).
 
 Current focus:
 - keeping the application working on current Arch Linux
-- improving the experience for Arch and AUR package management
+- improving Arch and AUR package management (updates, installed, search/install)
 - maintaining compatibility with modern Python versions
 - completing namespace migration (M3, ~95 % — code on `main`, release tag pending)
-- stabilizing the existing feature set before larger changes (UI still largely looks like upstream bauh until M1)
+- M1 hub identity + UX structure (`docs/product-position.md`, `docs/ux-v1.md`)
 
 ## Why This Fork Exists
 
@@ -31,18 +31,15 @@ Bearhub exists to continue maintenance and compatibility work for Arch users, es
 
 ## Current Scope
 
-Bearhub is currently focused on:
+**Bearhub** is a graphical **package hub for Arch Linux**: manage official and AUR packages, apply updates, and optionally use Flatpak, AppImage, and Web apps. It is not a curated app store with its own catalog server.
+
+Focused on:
 - Arch Linux and AUR as the primary platform and package source
-- Flatpak support where it remains useful for Arch users
-- compatibility and bug fixes
-- packaging and runtime maintenance
-- preserving the existing user experience where possible
+- Flatpak / AppImage / Web where useful, secondary in product chrome
+- compatibility, bug fixes, packaging, and runtime maintenance
+- evolving UX toward **Updates | Installed** list modes + always-visible search (see `docs/ux-v1.md`)
 
-Large architectural changes or feature redesigns are not the immediate priority.
-
-Debian / Apt support is intentionally removed from Bearhub. Other non-Arch backends that remain in the codebase are secondary to the Arch-focused maintenance target.
-
-**Bearhub** (forked from bauh) is a graphical interface for managing Linux software. In Bearhub, the maintained package formats are Arch Linux packages (including AUR), Flatpak, AppImage and Web applications.
+Debian / Apt support is intentionally removed from Bearhub.
 
 Key features
 - A management panel where you can: search, install, uninstall, upgrade, downgrade and launch your applications

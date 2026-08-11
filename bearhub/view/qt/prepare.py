@@ -152,6 +152,7 @@ class PreparePanel(QWidget, TaskManager):
         self.context = context
         self.app_config = app_config
         self.manage_window = manage_window
+        self.setAttribute(Qt.WA_DeleteOnClose, True)
         self.setWindowTitle('{} ({})'.format(__app_name__, self.i18n['prepare_panel.title.start'].lower()))
 
         self.setLayout(QVBoxLayout())
@@ -440,7 +441,13 @@ class PreparePanel(QWidget, TaskManager):
         now = time.time()
         self.context.logger.info("{0} tasks finished in {1:.9f} seconds".format(self.ftasks, (now - self.started_at)))
         if self.isVisible():
+            # Hide bootstrap window first so it never remains as a second top-level window
+            self.self_close = True
+            self.hide()
+
             self.manage_window.show()
+            self.manage_window.raise_()
+            self.manage_window.activateWindow()
 
             if self.force_suggestions:
                 self.manage_window.begin_load_suggestions(filter_installed=True)
@@ -449,5 +456,5 @@ class PreparePanel(QWidget, TaskManager):
             else:
                 self.manage_window.load_without_packages()
 
-            self.self_close = True
             self.close()
+            self.deleteLater()

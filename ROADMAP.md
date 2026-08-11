@@ -8,22 +8,31 @@ This roadmap defines how Bearhub becomes an independent, Arch-first project whil
 - Prefer small, reversible changes.
 - Ship frequently and document every release-impacting change.
 - Keep legacy compatibility only as long as needed.
+- **Product position:** Arch-first **package hub** (GUI over pacman/AUR + optional backends) — not a full app store. See `docs/product-position.md`.
 
 ## Milestones
 
-### M1: Identity Completion (2 weeks)
+### M1: Identity + Hub UX foundation
 
-Status (2026-06-27): **not started** — UI/themes still look ~99 % like upstream bauh; README screenshots and runtime data URLs still reference `bauh-files` in places. Namespace (M3) ≠ visual rebrand.
+Status (2026-08-11): **direction agreed** — product = Arch package hub; failed skin experiments on `feature/visual-refresh-b` reverted. Spec: `docs/product-position.md`, `docs/ux-v1.md`.
 
 Scope:
-- Remove remaining `bauh` naming from UI text, notifications, tray labels, and docs.
-- Ensure links (issues, docs, release checks) point to Bearhub endpoints.
-- Verify desktop integration uses Bearhub naming and icon assets.
+- Identity: naming, tray, docs, simple flat app mark (readable 16–32px).
+- **UX v1 (structure):** list modes **Updates | Installed** + always-visible search bar; updates-first boot when applicable.
+- Optional colors-only theme (Ursine) allowed; **no** bolted-on chrome without mode IA.
+- Do not implement store carousels or a parallel Qt6 redesign in M1.
 
 Definition of Done:
-- No user-facing `bauh` labels left in default English UI path.
-- README and release notes match actual runtime behavior.
-- Basic smoke test passes (start/search/install/uninstall/update).
+- Product copy matches hub positioning (README / About).
+- App mark looks intentional at tray and about sizes.
+- Mode switch Updates / Installed validated with niri screenshots; search via search bar only.
+- No user-facing `bauh` labels in default English UI path.
+- Smoke test passes (start/search/install/uninstall/update).
+
+Lessons (2026-08-11):
+- Recolor ≠ redesign; half-chrome over bauh reads as broken.
+- Do not ship AI sticker art as the product logo.
+- Prefer “working shell + clear IA” over “almost Bearhub, mostly wrong.”
 
 ### M2: Runtime Stability Baseline (2-3 weeks)
 

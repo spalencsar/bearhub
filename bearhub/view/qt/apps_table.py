@@ -87,8 +87,9 @@ class PackagesTable(QTableWidget):
         self.horizontalHeader().setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
         self.setSelectionBehavior(QTableView.SelectRows)
         self.setHorizontalHeaderLabels(('' for _ in range(self.columnCount())))
-        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        # AsNeeded: at ~50% window width ResizeToContents used to clip columns with AlwaysOff
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.horizontalScrollBar().setCursor(QCursor(Qt.PointingHandCursor))
         self.verticalScrollBar().setCursor(QCursor(Qt.PointingHandCursor))
 
@@ -191,7 +192,11 @@ class PackagesTable(QTableWidget):
             self._setup_file_downloader(max_workers=1, max_downloads=1)
             self.file_downloader.get(pkg.model.icon_url, pkg.table_index)
 
-        self._update_row(pkg, screen_width, change_update_col=change_update_col)
+        # Prefer live layout width over full-screen width (half-window tiling)
+        width = self._layout_width() if screen_width is None or screen_width < 1 else min(screen_width, self._layout_width() or screen_width)
+        if width < 100:
+            width = screen_width
+        self._update_row(pkg, width, change_update_col=change_update_col)
 
     def _uninstall(self, pkg: PackageView):
         if ConfirmationDialog(title=self.i18n['manage_window.apps_table.row.actions.uninstall.popup.title'],
@@ -261,9 +266,10 @@ class PackagesTable(QTableWidget):
         self.setEnabled(True)
 
         if pkgs:
-            screen_width = get_current_screen_geometry(self.parent()).width()
+            layout_width = self._layout_width()
             self.setColumnCount(self.COL_NUMBER if update_check_enabled else self.COL_NUMBER - 1)
             self.setRowCount(len(pkgs))
+            self.change_headers_policy()
 
             file_downloader_defined = False
 
@@ -278,7 +284,7 @@ class PackagesTable(QTableWidget):
 
                     self.file_downloader.get(pkg.model.icon_url, idx)
 
-                self._update_row(pkg, screen_width, update_check_enabled)
+                self._update_row(pkg, layout_width, update_check_enabled)
 
             self.scrollToTop()
 
@@ -602,18 +608,34 @@ class PackagesTable(QTableWidget):
         self.setCellWidget(pkg.table_index, col, toolbar)
 
     def change_headers_policy(self, policy: QHeaderView = QHeaderView.ResizeToContents, maximized: bool = False):
-        header_horizontal = self.horizontalHeader()
+        """
+        Fit columns into the viewport at any window size (incl. ~50% tiles).
+
+        Name (1) and description (3) always stretch. Other columns size to content.
+        `policy` / `maximized` kept for call-site compatibility; both now use the
+        same fit-to-width behavior (old non-max path clipped with ScrollBarAlwaysOff).
+        """
+        header = self.horizontalHeader()
+        stretch_cols = {1, 3}  # name, description
         for i in range(self.columnCount()):
-            if maximized:
-                if i in (2, 3):
-                    header_horizontal.setSectionResizeMode(i, QHeaderView.Stretch)
-                else:
-                    header_horizontal.setSectionResizeMode(i, QHeaderView.ResizeToContents)
+            if i in stretch_cols:
+                header.setSectionResizeMode(i, QHeaderView.Stretch)
             else:
-                header_horizontal.setSectionResizeMode(i, policy)
+                header.setSectionResizeMode(i, QHeaderView.ResizeToContents)
 
     def get_width(self):
         return reduce(operator.add, [self.columnWidth(i) for i in range(self.columnCount())])
+
+    def _layout_width(self) -> int:
+        """Width for truncating cell text — use table/window, not full screen."""
+        w = self.viewport().width()
+        if w > 80:
+            return w
+        win = self.window()
+        if win is not None and win.width() > 80:
+            # shell sidebar ~200px
+            return max(240, win.width() - 220)
+        return get_current_screen_geometry(self).width()
 
     def _setup_file_downloader(self, max_workers: int = 50, max_downloads: int = -1) -> None:
         self.file_downloader = URLFileDownloader(logger=self.logger,
