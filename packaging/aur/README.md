@@ -16,9 +16,10 @@ This directory contains **PKGBUILD templates** for publishing Bearhub on the AUR
 | Source tag | `0.10.8-bearhub.1` |
 | Source archive | `bearhub-0.10.8-bearhub.1.tar.gz` |
 
-Shell UI (sidebar), About redesign, and logo PNG are targeted for
-`0.10.8-bearhub.1`. After tagging: set real `sha256sums` in `bearhub/PKGBUILD`,
-regenerate `.SRCINFO`, then publish AUR when unlocked.
+Shell UI (sidebar), About redesign, and logo PNG ship in tag
+`0.10.8-bearhub.1`. Templates here have real `sha256sums` and matching
+`.SRCINFO`. **AUR publish is blocked** while the AUR account/packages are
+locked (malware review) — GitHub is the release channel until unlock.
 
 ## Before first publish
 

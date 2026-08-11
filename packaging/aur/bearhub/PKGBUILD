@@ -27,7 +27,7 @@ conflicts=('bearhub-git' 'bauh' 'bauh-git')
 _pkgver_tag="${pkgver}-bearhub.1"
 source=("$pkgname-${_pkgver_tag}.tar.gz::$url/archive/refs/tags/${_pkgver_tag}.tar.gz")
 # Update after tag exists: makepkg --verifysource && makepkg --printsrcinfo > .SRCINFO
-sha256sums=('SKIP')
+sha256sums=('4aa0fe5d8ff981bedf05976b10431512241f9d4b4a81ca56bfd2e018fc2d91cd')
 
 build() {
   cd "$srcdir/$pkgname-${pkgver}-bearhub.1"
